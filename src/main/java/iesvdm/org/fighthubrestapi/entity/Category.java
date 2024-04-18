@@ -1,27 +1,26 @@
-package iesvdm.org.fighthubrestapi.domain;
+package iesvdm.org.fighthubrestapi.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Event {
-
-    // *** PROPS
+public class Category {
+    // *** PROPS ***
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private long event_id;
+    private long category_id;
     private String name;
-    private String location;
-
+    // Rel
+    @OneToMany(mappedBy = "category")
+    private Set<Fighter> fighters;
 }
