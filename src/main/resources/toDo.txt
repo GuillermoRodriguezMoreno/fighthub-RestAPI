@@ -1,0 +1,5 @@
+- Terminar Services
+- Implementar entidad pelea
+- Paginacion
+- Filtros
+-

@@ -1,12 +1,11 @@
 package iesvdm.org.fighthubrestapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,7 +14,10 @@ import java.util.Set;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Style {
+
     // *** PROPS ***
+    // *************
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -23,5 +25,7 @@ public class Style {
     private String name;
     // Rel
     @OneToMany(mappedBy = "style")
-    private Set<Fighter> fighters;
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<Fighter> fighters = new HashSet<>();
 }

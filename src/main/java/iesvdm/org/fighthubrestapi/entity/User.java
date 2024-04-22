@@ -1,10 +1,10 @@
 package iesvdm.org.fighthubrestapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -18,25 +18,33 @@ import java.util.Set;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
+
     // *** PROPS ***
+    // *************
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private long user_id;
     private String user_name;
-    private Date date_of_birth;
+    @JsonFormat(pattern = "dd-MM-yyyy",  shape = JsonFormat.Shape.STRING)
+    private LocalDateTime birth_date;
     private String email;
     private String password;
     private String role;
     private LocalDateTime register_date;
-    // rel
-    @OneToMany(mappedBy = "user")
-    private Set<Photo> fotos;
+    // Rel
     @OneToOne()
     @JoinColumn(name = "profile_photo_id", referencedColumnName = "photo_id")
-    private Photo fotoPerfil;
+    private Photo profile_photo;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<Photo> photos = new HashSet<>();
 
     // *** METHODS ***
+    // ***************
+
     // Método para establecer la fecha de registro automáticamente antes de persistir
     @PrePersist
     protected void onCreate() {

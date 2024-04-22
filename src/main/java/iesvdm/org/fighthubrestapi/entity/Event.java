@@ -1,13 +1,15 @@
 package iesvdm.org.fighthubrestapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import iesvdm.org.fighthubrestapi.model.Address;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,7 +18,10 @@ import java.util.Set;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Event {
+
     // *** PROPS ***
+    // *************
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -24,14 +29,20 @@ public class Event {
     private String name;
     private Address address;
     private String description;
-    private Date start_date;
-    private Date open_date;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
+    private LocalDateTime start_date;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
+    private LocalDateTime open_date;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
+    private LocalDateTime end_date;
     // Rel
     @ManyToOne()
     @JoinColumn(name = "organizer_id")
     private Club organizer;
     @ManyToMany(mappedBy = "events")
-    private Set<Fighter> fighters;
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<Fighter> fighters = new HashSet<>();
     @OneToOne
     @JoinColumn(name = "photo_id")
     private Photo photo;

@@ -1,12 +1,11 @@
 package iesvdm.org.fighthubrestapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import iesvdm.org.fighthubrestapi.model.Address;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,7 +14,10 @@ import java.util.Set;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class Club extends User{
+
     // *** PROPS ***
+    // *************
+
     private String name;
     private Address address;
     private String description;
@@ -24,9 +26,13 @@ public class Club extends User{
     @JoinColumn(name = "owner_id")
     private User owner;
     @OneToMany(mappedBy = "organizer")
-    private Set<Event> events;
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<Event> events = new HashSet<>();
     @OneToOne(mappedBy = "user")
     private Photo profile_photo;
     @OneToMany(mappedBy = "user")
-    private Set<Photo> photos;
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<Photo> photos = new HashSet<>();
 }
