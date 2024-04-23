@@ -1,0 +1,82 @@
+Entities:
+
+    Category
+    Club (extends User)
+    ClubMembershipRequest
+    ClubReview
+    Event
+    EventReview
+    Fight
+    Fighter (extends User)
+    Follow (composite key FollowId)
+    FollowRequest
+    InscriptionRequest
+    Photo
+    Style
+    User
+
+// RELACIONES
+
+Usuario: Esta es una clase base para otras entidades como Fighter y Club. Tiene una relación uno a uno con Photo (foto de perfil) y una relación uno a varios con otra colección de Photo para otras fotos.
+
+Fighter: Hereda de Usuario. Tiene relaciones de muchos a muchos con Evento y Estilo, relaciones uno a muchos con Club (donde entrena el luchador), Categoría (clase de peso) y Seguir (a quién sigue el luchador y quién sigue al luchador), y una relación uno a uno con Photo (foto de perfil).
+
+Club: Hereda de Usuario. Tiene una relación uno a uno con Usuario (propietario del club), una relación uno a muchos con Evento (eventos organizados por el club), ClubReview, InscriptionRequest y Photo (logotipo del club), y relaciones de muchos a muchos con Fighter (luchadores que pertenecen al club).
+
+Categoría: Tiene una relación uno a muchos con Fighter (luchadores en la categoría de peso).
+
+Evento: Tiene una relación de muchos a muchos con Fighter (luchadores que participan en el evento), una relación uno a muchos con Fight (peleas que ocurren en el evento), Photo (póster del evento), EventReview y InscriptionRequest, y una relación de muchos a uno con Club (organizador del evento).
+
+Pelea: Tiene una relación de muchos a uno con Evento (el evento donde ocurre la pelea), Categoría (clase de peso de la pelea), Estilo (estilo de lucha utilizado), Fighter (ganador y luchadores en esquinas opuestas), y una relación uno a muchos con InscriptionRequest.
+
+ClubReview: Tiene una relación de muchos a uno con Usuario (quien escribió la reseña) y Club (club reseñado).
+
+EventReview: Tiene una relación de muchos a uno con Usuario (quien escribió la reseña) y Evento (evento reseñado).
+
+InscriptionRequest: Tiene una relación de muchos a uno con Club (club solicitado), Fighter (luchador que solicita la inscripción), Fight (pelea para la que el luchador está solicitando) y una relación uno a muchos con FollowRequest.
+
+Seguir: Esta es una entidad de unión para la relación de muchos a muchos entre las entidades Fighter que representan a quién sigue a quién.
+
+FollowRequest: Tiene una relación de muchos a uno con Fighter (quien envió y recibió la solicitud).
+
+Estilo: Tiene una relación uno a muchos con Fighter (luchadores que usan el estilo).
+
+// Relationship Analysis:
+
+    Category - Fighter: There's no direct relationship between Category and Fighter in your code. However, Fighter has a category property that likely refers to a ManyToOne relationship with Category. Make sure Category has a corresponding Set<Fighter> property with @OneToMany(mappedBy = "category") to establish bidirectionality.
+
+    Club - User (Inheritance): Since Club inherits from User, the user_id in Club likely refers to the User table. This is a unidirectional relationship from Club to User. If you intend for a Club to have a single owner (User), you might consider embedding the User information directly in Club (composition) or using a @OneToOne relationship with a unique constraint on the user_id in Club.
+
+    Club - Event: The @OneToMany(mappedBy = "organizer") in Club suggests a bidirectionality with Event. However, it's recommended to use @JoinColumn(name = "club_id") in Event to explicitly define the foreign key column.
+
+    Club - ClubReview: The @OneToMany(mappedBy = "club") in Club establishes a bidirectionality with ClubReview.
+
+    Club - InscriptionRequest: The @OneToMany(mappedBy = "club") in Club sets up a bidirectionality with InscriptionRequest.
+
+    Event - Fighter: The @ManyToMany relationship with fighter_event join table creates a bidirectional relationship between Event and Fighter.
+
+    Event - Fight: The @OneToMany(mappedBy = "event") in Event establishes a bidirectionality with Fight.
+
+    Event - InscriptionRequest: The @OneToMany(mappedBy = "event") in Event sets up a bidirectionality with InscriptionRequest.
+
+    Fighter - Club: The club_id property in Fighter likely refers to a @ManyToOne relationship with Club. Ensure Club has a corresponding Set<Fighter> property with @OneToMany(mappedBy = "club") for bidirectionality.
+
+    Fighter - Category: Similar to Fighter-Club, the category_id in Fighter suggests a @ManyToOne relationship with Category. Category should have a corresponding Set<Fighter> property with @OneToMany(mappedBy = "category") for bidirectionality.
+
+    Fighter - Event: The @ManyToMany relationship with fighter_event join table creates a bidirectional relationship between Fighter and Event.
+
+    Fighter - Style: The style_id property in Fighter likely refers to a @ManyToOne relationship with Style. Ensure Style has a corresponding Set<Fighter> property with @OneToMany(mappedBy = "style") for bidirectionality.
+
+    Follow (FollowId) - Fighter: Since Follow is a composite key entity with Fighter (sender/receiver), the relationship is inherently bidirectional.
+
+    FollowRequest - Fighter: The @ManyToOne relationships for sender and receiver in FollowRequest establish a bidirectionality with Fighter.
+
+    InscriptionRequest - Club: The club_id property in InscriptionRequest likely refers to a @ManyToOne relationship with Club. Ensure Club has a corresponding Set<InscriptionRequest> property with @OneToMany(mappedBy = "club") for bidirectionality.
+
+    InscriptionRequest - Fighter: The fighter_id property in InscriptionRequest likely refers to a @ManyToOne relationship with Fighter. Ensure Fighter has a corresponding Set<InscriptionRequest> property with @OneToMany(mappedBy = "fighter") for bidirectionality.
+
+    InscriptionRequest - Fight: The fight_id property in InscriptionRequest likely refers to a @ManyToOne relationship with Fight. Ensure Fight has a corresponding Set<InscriptionRequest> property with @OneToMany(mappedBy = "fight") for bidirectionality.
+
+    Photo - User: The @ManyToOne relationship with User in Photo establishes a bidirectionality with User.
+
+    User - Photo: The @OneToMany(mappedBy = "user") in User sets up a bidirectionality with Photo.

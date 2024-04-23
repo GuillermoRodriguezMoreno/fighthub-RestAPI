@@ -21,7 +21,7 @@ public class Style {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private long style_id;
+    private long id;
     private String name;
     // Rel
     @OneToMany(mappedBy = "style")

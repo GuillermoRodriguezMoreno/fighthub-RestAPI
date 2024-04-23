@@ -1,11 +1,9 @@
 package iesvdm.org.fighthubrestapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import iesvdm.org.fighthubrestapi.model.Location;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -52,4 +50,16 @@ public class Fighter extends User{
     private Photo profile_photo;
     @OneToMany(mappedBy = "user")
     private Set<Photo> photos = new HashSet<>();
+    @OneToMany(mappedBy = "followerFighter")
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<Follow> following = new HashSet<>();
+    @OneToMany(mappedBy = "followedFighter")
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<Follow> followers = new HashSet<>();
+    @OneToMany(mappedBy = "sender")
+    private Set<FighterFollowRequest> sentFighterFollowRequests = new HashSet<>();
+    @OneToMany(mappedBy = "receiver")
+    private Set<FighterFollowRequest> receivedFighterFollowRequests = new HashSet<>();
 }

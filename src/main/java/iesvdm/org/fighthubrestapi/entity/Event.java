@@ -5,12 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import iesvdm.org.fighthubrestapi.model.Address;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,7 +23,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private long event_id;
+    private long id;
     private String name;
     private Address address;
     private String description;
@@ -38,7 +35,7 @@ public class Event {
     private LocalDateTime end_date;
     // Rel
     @ManyToOne()
-    @JoinColumn(name = "organizer_id")
+    @JoinColumn(name = "club_id")
     private Club organizer;
     @ManyToMany(mappedBy = "events")
     @JsonIgnore

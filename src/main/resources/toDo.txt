@@ -1,7 +1,11 @@
-- Implementar solicitud club_evento_pelea_luchador
+- Validaciones
 - Terminar Services
 - JSON serializadores
 - Paginacion
 - Filtros
-- Validaciones
 - Tests
+
+// COMENTAR
+- Clases embebidas
+- Herencia de Usuario
+- La necesidad de clave compuesta en Follow

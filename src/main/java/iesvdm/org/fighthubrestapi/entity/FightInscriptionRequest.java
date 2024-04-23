@@ -13,24 +13,30 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventReview {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class FightInscriptionRequest {
 
     // *** PROPS ***
     // *************
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Long id;
-    private String content;
-    private int rating;
+    private String status;
+    private String message;
+    private String response;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime reviewDate;
+    private LocalDateTime responseDate;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
+    private LocalDateTime requestDate;
     // Rel
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "club_id", nullable = false)
+    private Club club;
     @ManyToOne
-    @JoinColumn(name = "event_id", nullable = false)
-    private Event event;
+    @JoinColumn(name = "fighter_id", nullable = false)
+    private Fighter fighter;
+    @ManyToOne
+    @JoinColumn(name = "fight_id", nullable = false)
+    private Fight fight;
 }

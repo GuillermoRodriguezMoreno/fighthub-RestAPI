@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -50,4 +52,6 @@ public class Fight {
     @ManyToOne
     @JoinColumn(name = "style_id")
     private Style style;
+    @OneToMany(mappedBy = "fight")
+    private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
 }

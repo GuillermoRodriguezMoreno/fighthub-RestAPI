@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,7 +23,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private long user_id;
+    private long id;
     private String user_name;
     @JsonFormat(pattern = "dd-MM-yyyy",  shape = JsonFormat.Shape.STRING)
     private LocalDateTime birth_date;
@@ -37,7 +35,7 @@ public class User {
     private LocalDateTime register_date;
     // Rel
     @OneToOne()
-    @JoinColumn(name = "profile_photo_id", referencedColumnName = "photo_id")
+    @JoinColumn(name = "profile_photo_id", referencedColumnName = "id")
     private Photo profile_photo;
     @OneToMany(mappedBy = "user")
     @JsonIgnore

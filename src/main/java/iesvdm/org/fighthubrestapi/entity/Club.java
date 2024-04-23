@@ -25,6 +25,8 @@ public class Club extends User{
     @OneToOne()
     @JoinColumn(name = "owner_id")
     private User owner;
+    @OneToMany(mappedBy = "club")
+    private Set<Fighter> fighters = new HashSet<>();
     @OneToMany(mappedBy = "organizer")
     @JsonIgnore
     @ToString.Exclude
@@ -37,4 +39,6 @@ public class Club extends User{
     private Set<Photo> photos = new HashSet<>();
     @OneToMany(mappedBy = "club")
     private Set<ClubReview> reviews = new HashSet<>();
+    @OneToMany(mappedBy = "club")
+    private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
 }

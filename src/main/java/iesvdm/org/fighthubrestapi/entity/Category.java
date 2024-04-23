@@ -21,7 +21,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private long category_id;
+    private long id;
     private String name;
     // Rel
     @OneToMany(mappedBy = "category")
