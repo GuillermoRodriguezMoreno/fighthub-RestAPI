@@ -1,5 +1,7 @@
+- Implementar solicitud club_evento_pelea_luchador
 - Terminar Services
-- Implementar entidad pelea
+- JSON serializadores
 - Paginacion
 - Filtros
--
+- Validaciones
+- Tests

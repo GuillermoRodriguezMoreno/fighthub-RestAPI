@@ -35,4 +35,6 @@ public class Club extends User{
     @JsonIgnore
     @ToString.Exclude
     private Set<Photo> photos = new HashSet<>();
+    @OneToMany(mappedBy = "club")
+    private Set<ClubReview> reviews = new HashSet<>();
 }

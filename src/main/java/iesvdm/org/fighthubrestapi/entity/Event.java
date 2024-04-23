@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -43,8 +44,11 @@ public class Event {
     @JsonIgnore
     @ToString.Exclude
     private Set<Fighter> fighters = new HashSet<>();
+    @OneToMany(mappedBy = "event")
+    private Set<Fight> fights = new HashSet<>();
     @OneToOne
     @JoinColumn(name = "photo_id")
     private Photo photo;
-
+    @OneToMany(mappedBy = "event")
+    private Set<EventReview> reviews = new HashSet<>();
 }

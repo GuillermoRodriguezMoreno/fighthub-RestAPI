@@ -30,6 +30,8 @@ public class Fighter extends User{
     private int losses;
     private int draws;
     private int kos;
+    private int fights;
+    private int wins_in_a_row;
     // Rel
     @ManyToOne()
     @JoinColumn(name = "style_id")

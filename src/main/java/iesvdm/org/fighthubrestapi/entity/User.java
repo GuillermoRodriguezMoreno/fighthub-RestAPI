@@ -32,6 +32,8 @@ public class User {
     private String email;
     private String password;
     private String role;
+    private String entity_type;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime register_date;
     // Rel
     @OneToOne()
