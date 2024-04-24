@@ -18,29 +18,27 @@ public class StyleService {
 
     // *** METHODS ***
     // ***************
-
     // List all styles
     public List<Style> findAll() {
         return styleRepository.findAll();
     }
-
     // Find style by id
     public Style findById(Long id) {
         return styleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Style.class));
     }
-
     // Save style
     public Style save(Style style) {
         return styleRepository.save(style);
     }
-
     // Update style
     public Style update(Long id, Style style) {
         Style styleToUpdate = findById(id);
         styleToUpdate.setName(style.getName());
         return styleRepository.save(styleToUpdate);
     }
-
     // Delete style
     // Todo - Implement this
+    public void delete(Long id) {
+        styleRepository.deleteById(id);
+    }
 }

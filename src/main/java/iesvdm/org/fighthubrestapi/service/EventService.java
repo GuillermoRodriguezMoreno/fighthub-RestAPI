@@ -13,30 +13,26 @@ public class EventService {
 
     // *** INJECTS ***
     // ***************
-
     @Autowired
     private EventRepository eventRepository;
 
     // *** METHODS ***
     // ***************
-
     // List all events
     public List<Event> findAll() {
         return eventRepository.findAll();
     }
-
     // Find event by id
     public Event findById(Long id) {
         return eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Event.class));
     }
-
     // Save event
     public Event save(Event event) {
         return eventRepository.save(event);
     }
-
     // Update event
     public Event update(Long id, Event event) {
+        // Props
         Event eventToUpdate = findById(id);
         eventToUpdate.setName(event.getName());
         eventToUpdate.setAddress(event.getAddress());
@@ -44,13 +40,16 @@ public class EventService {
         eventToUpdate.setStart_date(event.getStart_date());
         eventToUpdate.setOpen_date(event.getOpen_date());
         eventToUpdate.setEnd_date(event.getEnd_date());
-        // Todo - Fix this
+        // Relationships
+        // Todo - Implement this
         eventToUpdate.setOrganizer(event.getOrganizer());
         eventToUpdate.setFighters(event.getFighters());
         eventToUpdate.setPhoto(event.getPhoto());
         return eventRepository.save(eventToUpdate);
     }
-
     // Delete event
     // Todo - Implement this
+    public void delete(Long id) {
+        eventRepository.deleteById(id);
+    }
 }

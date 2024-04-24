@@ -23,31 +23,32 @@ public class ClubService {
     public List<Club> findAll() {
         return clubRepository.findAll();
     }
-
     // Find club by id
     public Club findById(Long id) {
         return clubRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Club.class));
     }
-
     // Save club
     public Club save(Club club) {
         return clubRepository.save(club);
     }
-
     // Update club
     public Club update(Long id, Club club) {
+        // Props
         Club clubToUpdate = findById(id);
         clubToUpdate.setName(club.getName());
         clubToUpdate.setAddress(club.getAddress());
         clubToUpdate.setDescription(club.getDescription());
         clubToUpdate.setOwner(club.getOwner());
-        // Todo - Fix this
+        // Relationships
+        // Todo - Implement this
         clubToUpdate.setEvents(club.getEvents());
-        clubToUpdate.setProfile_photo(club.getProfile_photo());
+        clubToUpdate.setProfilePhoto(club.getProfilePhoto());
         clubToUpdate.setPhotos(club.getPhotos());
         return clubRepository.save(clubToUpdate);
     }
-
     // Delete club
     // Todo - Implement this
+    public void delete(Long id) {
+        clubRepository.deleteById(id);
+    }
 }

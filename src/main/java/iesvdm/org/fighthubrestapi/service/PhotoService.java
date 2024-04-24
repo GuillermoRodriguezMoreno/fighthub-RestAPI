@@ -13,28 +13,23 @@ public class PhotoService {
 
     // *** INJECTS ***
     // ***************
-
     @Autowired
     private PhotoRepository photoRepository;
 
     // *** METHODS ***
     // ***************
-
     // List all photos
     public List<Photo> findAll() {
         return photoRepository.findAll();
     }
-
     // Find photo by id
     public Photo findById(Long id) {
         return photoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Photo.class));
     }
-
     // Save photo
     public Photo save(Photo photo) {
         return photoRepository.save(photo);
     }
-
     // Update photo
     public Photo update(Long id, Photo photo) {
         Photo photoToUpdate = findById(id);
@@ -43,7 +38,9 @@ public class PhotoService {
         photoToUpdate.setUser(photo.getUser());
         return photoRepository.save(photoToUpdate);
     }
-
     // Delete photo
     // Todo - Implement this
+    public void delete(Long id) {
+        photoRepository.deleteById(id);
+    }
 }

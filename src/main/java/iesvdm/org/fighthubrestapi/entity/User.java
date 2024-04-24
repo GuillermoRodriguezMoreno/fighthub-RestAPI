@@ -3,7 +3,9 @@ package iesvdm.org.fighthubrestapi.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -20,23 +22,47 @@ public class User {
     // *** PROPS ***
     // *************
 
+    // ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private long id;
+    // UserName
+    @Size(min = 3, max = 20, message = "User name must be between 3 and 20 characters")
+    @Column(unique = true)
     private String user_name;
+    // BirthDate
+    @NotNull(message = "The birth date cannot be null")
+    @Past(message = "The birth date must be in the past")
     @JsonFormat(pattern = "dd-MM-yyyy",  shape = JsonFormat.Shape.STRING)
     private LocalDateTime birth_date;
+    // Email
+    @NotBlank
+    @Email
     private String email;
+    // Password
+    @NotBlank
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
+    // Role
+    @Pattern(regexp = "ADMIN|USER", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Role must be ADMIN or USER")
     private String role;
+    // EntityType
+    @Pattern(regexp = "FIGHTER|CLUB", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Entity type must be 'FIGHTER' or 'CLUB'")
     private String entity_type;
+    // RegisterDate
+    @NotNull(message = "The upload date cannot be null")
+    @PastOrPresent(message = "The upload date must be in the past or present")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime register_date;
-    // Rel
+
+    // *** RELATIONSHIPS ***
+
+    // ProfilePhoto
     @OneToOne()
     @JoinColumn(name = "profile_photo_id", referencedColumnName = "id")
     private Photo profile_photo;
+    // Photos
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     @ToString.Exclude

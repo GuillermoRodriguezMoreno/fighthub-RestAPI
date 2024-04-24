@@ -1,11 +1,56 @@
-- Validaciones
-- Terminar Services
-- JSON serializadores
-- Paginacion
-- Filtros
-- Tests
+toDo -- Validaciones
+toDo -- Implementar la relacion inscripcion_pelea en fighter
+ToDo -- Comprobar por ultima vez la bidireccionalidad
+        de las relaciones
+toDo -- Terminar de implementar el metodo PrePersit
+        en todas las entidades que necesiten fecha
+------- Con esto habria terminado las entidades :) ---------
+toDo -- Terminar Services
+toDo -- Terminar Controllers
+toDo -- Paginacion
+toDo -- Filtros
+toDo -- JSON serializadores
+toDo -- Hashear password
+toDo -- Mail Sender
+toDo -- Tests
+toDo -- Terminar Controller Advice
+
+// PREGUNTAR
+
+-   Es buena idea la herencia, Como podria hacer la distincion de usuarios,
+    como plantear que un club tenga un owner que pueda ser luchador?
+
+-   Deberia quitar la relacion Luchador_Evento, ya que va instrinseca en la relacion
+    Luchador_Pelea_Evento ???
+
+-   Como implementar la incripcion a una pelea, mi idea es que a las peleas sean los club quien
+    inscriba a su luchador, ya que un luchador de por si no puede inscribirse a una pelea!!!!
+
+-   En las request, la fecha de respuesta y la respuesta deben poder ser null verdad?
+
+-   Deberia validar las relaciones?
+
+-   Como hacer los servicios, implementar bidireccionalidad (Necesitaria eager...) o cascade?
+
+-   Gran problema con la clave compuesta en el controller de follow
+
+-   Rompedero de cabeza con la serializacion de los JSON, tiene mas sentido
+    traer mas informacion en el JSON o simplemente hacer mas consultas?
+
+- Que es mas eficiente, guardar mas informacion en las entidades o realizar mas consultas?
+
+-   Donde y como deberia guardar las fotos?
 
 // COMENTAR
+BACK
 - Clases embebidas
 - Herencia de Usuario
 - La necesidad de clave compuesta en Follow
+- Pensar en columnas unicas
+- Validacion de fechas
+- Validaciond de regex puedes indicar case insensitive
+- Metodo @PrePersit para fechas
+
+FRONT
+- Nuevas directivas if, for
+- La creacion de servicios para detectar cambios, como por ejemplo error

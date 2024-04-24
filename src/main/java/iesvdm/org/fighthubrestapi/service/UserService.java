@@ -18,24 +18,21 @@ public class UserService {
 
     // *** METHODS ***
     // ***************
-
     // List all users
     public List<User> findAll() {
         return userRepository.findAll();
     }
-
     // Find user by id
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, User.class));
     }
-
     // Save user
     public User save(User user) {
         return userRepository.save(user);
     }
-
     // Update user
     public User update(Long id, User user) {
+        // Props
         User userToUpdate = findById(id);
         userToUpdate.setUser_name(user.getUser_name());
         userToUpdate.setBirth_date(user.getBirth_date());
@@ -43,11 +40,14 @@ public class UserService {
         userToUpdate.setPassword(user.getPassword());
         userToUpdate.setRole(user.getRole());
         userToUpdate.setProfile_photo(user.getProfile_photo());
+        // Relationships
         // Todo - Fix this
         userToUpdate.setPhotos(user.getPhotos());
         return userRepository.save(userToUpdate);
     }
-
     // Delete user
     // Todo - Implement this
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
 }

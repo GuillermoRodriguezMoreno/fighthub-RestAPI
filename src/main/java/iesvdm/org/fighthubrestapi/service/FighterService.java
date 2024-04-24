@@ -13,30 +13,26 @@ public class FighterService {
 
     // *** INJECTS ***
     // ***************
-
     @Autowired
     private FighterRepository fighterRepository;
 
     // *** METHODS ***
     // ***************
-
     // List all fighters
     public List<Fighter> findAll() {
         return fighterRepository.findAll();
     }
-
     // Find fighter by id
     public Fighter findById(Long id) {
         return fighterRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Fighter.class));
     }
-
     // Save fighter
     public Fighter save(Fighter fighter) {
         return fighterRepository.save(fighter);
     }
-
     // Update fighter
     public Fighter update(Long id, Fighter fighter) {
+        // Props
         Fighter fighterToUpdate = findById(id);
         fighterToUpdate.setName(fighter.getName());
         fighterToUpdate.setWeight(fighter.getWeight());
@@ -49,7 +45,8 @@ public class FighterService {
         fighterToUpdate.setLosses(fighter.getLosses());
         fighterToUpdate.setDraws(fighter.getDraws());
         fighterToUpdate.setKos(fighter.getKos());
-        // Todo - Fix this
+        // Relationships
+        // Todo - Implement this
         fighterToUpdate.setClub(fighter.getClub());
         fighterToUpdate.setCategory(fighter.getCategory());
         fighterToUpdate.setEvents(fighter.getEvents());
@@ -57,8 +54,9 @@ public class FighterService {
         fighterToUpdate.setPhotos(fighter.getPhotos());
         return fighterRepository.save(fighterToUpdate);
     }
-
     // Delete fighter
     // Todo - Implement this
-
+    public void delete(Long id) {
+        fighterRepository.deleteById(id);
+    }
 }
