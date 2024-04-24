@@ -2,8 +2,7 @@ toDo -- Validaciones
 toDo -- Implementar la relacion inscripcion_pelea en fighter
 ToDo -- Comprobar por ultima vez la bidireccionalidad
         de las relaciones
-toDo -- Terminar de implementar el metodo PrePersit
-        en todas las entidades que necesiten fecha
+toDo -- Decidir como hacer los JSON
 ------- Con esto habria terminado las entidades :) ---------
 toDo -- Terminar Services
 toDo -- Terminar Controllers
