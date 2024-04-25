@@ -43,7 +43,6 @@ public class EventService {
         // Relationships
         // Todo - Implement this
         eventToUpdate.setOrganizer(event.getOrganizer());
-        eventToUpdate.setFighters(event.getFighters());
         eventToUpdate.setPhoto(event.getPhoto());
         return eventRepository.save(eventToUpdate);
     }

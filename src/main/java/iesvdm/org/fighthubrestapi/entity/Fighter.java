@@ -14,7 +14,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+@DiscriminatorValue("FIGHTER")
 public class Fighter extends User{
+
+    // toDo: Implementar relacion doble con Fight
 
     // *** PROPS ***
     // *************
@@ -50,16 +53,20 @@ public class Fighter extends User{
     // Kos
     private int kos;
     // Fights
-    private int fights;
+    private int numberOfFights;
     // WinsInARow
     private int wins_in_a_row;
 
     // *** RELATIONSHIPS ***
 
     // Style
-    @ManyToOne()
-    @JoinColumn(name = "style_id")
-    private Style style;
+    @ManyToMany()
+    @JoinTable(
+            name = "fighter_style",
+            joinColumns = @JoinColumn(name = "fighter_id"),
+            inverseJoinColumns = @JoinColumn(name = "style_id")
+    )
+    private Set<Style> styles = new HashSet<>();
     // Club
     @ManyToOne()
     @JoinColumn(name = "club_id")
@@ -68,16 +75,14 @@ public class Fighter extends User{
     @ManyToOne()
     @JoinColumn(name = "category_id")
     private Category category;
-    // Events
-    @ManyToMany()
-    @JoinTable(
-            name = "fighter_event",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id"))
-    private Set<Event> events = new HashSet<>();
-    // ProfilePhoto
-    @OneToOne(mappedBy = "user")
-    private Photo profile_photo;
+    // Fights
+    @OneToMany(mappedBy = "blue_corner_fighter")
+    private Set<Fight> blueCornerFights = new HashSet<>();
+    @OneToMany(mappedBy = "red_corner_fighter")
+    private Set<Fight> redCornerFights = new HashSet<>();
+    // FightInscriptionRequests
+    @OneToMany(mappedBy = "fighter")
+    private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
     // Photos
     @OneToMany(mappedBy = "user")
     private Set<Photo> photos = new HashSet<>();
@@ -100,6 +105,7 @@ public class Fighter extends User{
     // ClubMembershipRequests
     @OneToMany(mappedBy = "fighter")
     private Set<ClubMembershipRequest> clubMembershipRequests = new HashSet<>();
-
-    // toDo -- Implementar la relacion con inscripcion_pelea
+    // ClubReviews
+    @OneToMany(mappedBy = "fighter")
+    private Set<ClubReview> clubReviews = new HashSet<>();
 }

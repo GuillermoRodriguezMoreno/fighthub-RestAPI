@@ -28,10 +28,8 @@ public class FighterFollowRequest {
         @EqualsAndHashCode.Include
         private Long id;
         // Status
-        @Pattern(regexp = "APPROVED|PENDING", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED' or 'PENDING'")
+        @Pattern(regexp = "APPROVED|PENDING|REJECTED", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED' or 'PENDING'")
         private String status;
-        // Response
-        private boolean response;
         // ResponseDate
         @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
         private LocalDateTime responseDate;

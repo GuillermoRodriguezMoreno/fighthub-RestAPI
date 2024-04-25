@@ -3,6 +3,7 @@ package iesvdm.org.fighthubrestapi.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import iesvdm.org.fighthubrestapi.model.Address;
+import iesvdm.org.fighthubrestapi.model.Location;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
@@ -58,23 +59,20 @@ public class Event {
 
     // *** RELATIONSHIPS ***
 
-    // Organizer
-    @ManyToOne()
-    @JoinColumn(name = "club_id")
-    private Club organizer;
-    // Fighters
-    @ManyToMany(mappedBy = "events")
-    @JsonIgnore
-    @ToString.Exclude
-    private Set<Fighter> fighters = new HashSet<>();
-    // Fights
-    @OneToMany(mappedBy = "event")
-    private Set<Fight> fights = new HashSet<>();
     // Photo
     @OneToOne
     @JoinColumn(name = "photo_id")
     private Photo photo;
+    // Organizer
+    @ManyToOne()
+    @JoinColumn(name = "club_id")
+    private Club organizer;
+    // Fights
+    @OneToMany(mappedBy = "event")
+    private Set<Fight> fights = new HashSet<>();
     // Reviews
     @OneToMany(mappedBy = "event")
     private Set<EventReview> reviews = new HashSet<>();
+    // InscriptionsRequests
+    // toDo --> Add InscriptionsRequests
 }

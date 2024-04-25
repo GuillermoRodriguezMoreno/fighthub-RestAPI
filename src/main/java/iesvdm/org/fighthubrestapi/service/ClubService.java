@@ -38,11 +38,9 @@ public class ClubService {
         clubToUpdate.setName(club.getName());
         clubToUpdate.setAddress(club.getAddress());
         clubToUpdate.setDescription(club.getDescription());
-        clubToUpdate.setOwner(club.getOwner());
         // Relationships
         // Todo - Implement this
         clubToUpdate.setEvents(club.getEvents());
-        clubToUpdate.setProfilePhoto(club.getProfilePhoto());
         clubToUpdate.setPhotos(club.getPhotos());
         return clubRepository.save(clubToUpdate);
     }

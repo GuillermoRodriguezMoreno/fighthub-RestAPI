@@ -29,10 +29,8 @@ public class ClubMembershipRequest {
     @EqualsAndHashCode.Include
     private long id;
     // Status
-    @Pattern(regexp = "APPROVED|PENDING", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED' or 'PENDING'")
+    @Pattern(regexp = "APPROVED|PENDING|REJECTED", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED' or 'PENDING'")
     private String status;
-    // Response
-    private boolean response;
     // RequestDate
     @NotNull(message = "The date cannot be null")
     @PastOrPresent(message = "The date must be in the past or present")

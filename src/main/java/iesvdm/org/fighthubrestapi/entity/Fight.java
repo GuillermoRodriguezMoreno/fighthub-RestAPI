@@ -60,10 +60,6 @@ public class Fight {
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
-    // Winner
-    @ManyToOne
-    @JoinColumn(name = "winner_id")
-    private Fighter winner;
     // Category
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -72,6 +68,10 @@ public class Fight {
     @ManyToOne
     @JoinColumn(name = "style_id")
     private Style style;
+    // Winner
+    @OneToOne
+    @JoinColumn(name = "winner_id")
+    private Fighter winner;
     // FightInscriptionRequests
     @OneToMany(mappedBy = "fight")
     private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();

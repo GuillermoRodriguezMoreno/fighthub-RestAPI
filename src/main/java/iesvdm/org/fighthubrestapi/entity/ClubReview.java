@@ -42,8 +42,8 @@ public class ClubReview {
 
     // User
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "fighter_id", nullable = false)
+    private Fighter fighter;
     // Club
     @ManyToOne
     @JoinColumn(name = "club_id", nullable = false)

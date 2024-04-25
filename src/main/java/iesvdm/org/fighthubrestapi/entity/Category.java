@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -36,5 +37,8 @@ public class Category {
 
     // Fighters
     @OneToMany(mappedBy = "category")
-    private Set<Fighter> fighters;
+    private Set<Fighter> fighters = new HashSet<>();
+    // Fights
+    @OneToMany(mappedBy = "category")
+    private Set<Fight> fights = new HashSet<>();
 }

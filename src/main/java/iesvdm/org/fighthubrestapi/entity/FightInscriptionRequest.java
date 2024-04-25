@@ -17,6 +17,9 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class FightInscriptionRequest {
 
+    // toDo: Verify relationships with Club, Fighter, Event and Fight and keys
+
+
     // *** PROPS ***
     // *************
 
@@ -25,7 +28,7 @@ public class FightInscriptionRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     // Status
-    @Pattern(regexp = "APPROVED|PENDING", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED' or 'PENDING'")
+    @Pattern(regexp = "APPROVED|PENDING|REJECTED", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED', 'REJECTED' or 'PENDING'")
     private String status;
     // Message
     @NotBlank(message = "The message cannot be blank")
@@ -43,7 +46,6 @@ public class FightInscriptionRequest {
     private LocalDateTime requestDate;
 
     // *** RELATIONSHIPS ***
-
     // Club
     @ManyToOne
     @JoinColumn(name = "club_id", nullable = false)

@@ -45,11 +45,8 @@ public class User {
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
     // Role
-    @Pattern(regexp = "ADMIN|USER", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Role must be ADMIN or USER")
+    @Pattern(regexp = "ADMIN|FIGHTER|CLUB", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Role must be ADMIN, FIGHTER or CLUB")
     private String role;
-    // EntityType
-    @Pattern(regexp = "FIGHTER|CLUB", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Entity type must be 'FIGHTER' or 'CLUB'")
-    private String entity_type;
     // RegisterDate
     @NotNull(message = "The upload date cannot be null")
     @PastOrPresent(message = "The upload date must be in the past or present")
@@ -67,6 +64,9 @@ public class User {
     @JsonIgnore
     @ToString.Exclude
     private Set<Photo> photos = new HashSet<>();
+    // EventReviews
+    @OneToMany(mappedBy = "user")
+    private Set<EventReview> eventReviews = new HashSet<>();
 
     // *** METHODS ***
     // ***************

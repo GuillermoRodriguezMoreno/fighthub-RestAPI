@@ -35,7 +35,6 @@ public class ClubMembershipRequestService {
         // Props
         ClubMembershipRequest clubMembershipRequestToUpdate = findById(id);
         clubMembershipRequestToUpdate.setStatus(clubMembershipRequest.getStatus());
-        clubMembershipRequestToUpdate.setResponse(clubMembershipRequest.isResponse());
         // Relationships
         // toDo -- Implement this
         return clubMembershipRequestRepository.save(clubMembershipRequestToUpdate);

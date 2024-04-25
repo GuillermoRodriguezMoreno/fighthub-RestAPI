@@ -26,11 +26,11 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private long id;
-    // Entity_type
+    // EntityType
     @Pattern(regexp = "FIGHTER|CLUB|EVENT", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Entity type must be 'FIGHTER', 'CLUB' or 'EVENT'")
-    private String entity_type;
+    private String EntityType;
     // Url
-    @NotBlank
+    @NotBlank(message = "The url cannot be blank")
     private String url;
     @NotNull(message = "The upload date cannot be null")
     @PastOrPresent(message = "The upload date must be in the past or present")

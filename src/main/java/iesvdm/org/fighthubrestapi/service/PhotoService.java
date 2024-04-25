@@ -33,7 +33,7 @@ public class PhotoService {
     // Update photo
     public Photo update(Long id, Photo photo) {
         Photo photoToUpdate = findById(id);
-        photoToUpdate.setEntity_type(photoToUpdate.getUser().getClass().getSimpleName());
+        photoToUpdate.setEntityType(photoToUpdate.getUser().getClass().getSimpleName());
         photoToUpdate.setUrl(photo.getUrl());
         photoToUpdate.setUser(photo.getUser());
         return photoRepository.save(photoToUpdate);

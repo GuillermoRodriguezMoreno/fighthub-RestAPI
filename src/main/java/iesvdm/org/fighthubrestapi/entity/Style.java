@@ -34,8 +34,9 @@ public class Style {
     // *** RELATIONSHIPS ***
 
     // Fighters
-    @OneToMany(mappedBy = "style")
-    @JsonIgnore
-    @ToString.Exclude
+    @ManyToMany(mappedBy = "styles")
     private Set<Fighter> fighters = new HashSet<>();
+    // Fights
+    @OneToMany(mappedBy = "style")
+    private Set<Fight> fights = new HashSet<>();
 }

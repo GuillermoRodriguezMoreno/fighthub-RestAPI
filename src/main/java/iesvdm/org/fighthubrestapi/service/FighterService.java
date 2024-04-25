@@ -49,7 +49,6 @@ public class FighterService {
         // Todo - Implement this
         fighterToUpdate.setClub(fighter.getClub());
         fighterToUpdate.setCategory(fighter.getCategory());
-        fighterToUpdate.setEvents(fighter.getEvents());
         fighterToUpdate.setProfile_photo(fighter.getProfile_photo());
         fighterToUpdate.setPhotos(fighter.getPhotos());
         return fighterRepository.save(fighterToUpdate);

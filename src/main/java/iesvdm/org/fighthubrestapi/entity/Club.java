@@ -2,6 +2,7 @@ package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import iesvdm.org.fighthubrestapi.model.Address;
+import iesvdm.org.fighthubrestapi.model.Location;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+@DiscriminatorValue("CLUB")
 public class Club extends User{
 
     // *** PROPS ***
@@ -35,10 +37,10 @@ public class Club extends User{
 
     //  *** RELATIONSHIPS ***
 
-    // Owner
+    // President
     @OneToOne()
-    @JoinColumn(name = "owner_id")
-    private User owner;
+    @JoinColumn(name = "president_id")
+    private Fighter president;
     // Fighters
     @OneToMany(mappedBy = "club")
     private Set<Fighter> fighters = new HashSet<>();
@@ -47,18 +49,13 @@ public class Club extends User{
     @JsonIgnore
     @ToString.Exclude
     private Set<Event> events = new HashSet<>();
-    // ProfilePhoto
-    @OneToOne(mappedBy = "user")
-    private Photo profilePhoto;
-    // Photos
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    @ToString.Exclude
-    private Set<Photo> photos = new HashSet<>();
     // Reviews
     @OneToMany(mappedBy = "club")
     private Set<ClubReview> reviews = new HashSet<>();
-    // Clubs
+    // ClubMembershipRequests
+    @OneToMany(mappedBy = "club")
+    private Set<ClubMembershipRequest> clubMembershipRequests = new HashSet<>();
+    // FightInscriptionRequests
     @OneToMany(mappedBy = "club")
     private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
 }

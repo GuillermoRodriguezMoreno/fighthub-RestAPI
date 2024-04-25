@@ -35,7 +35,6 @@ public class FighterFollowRequestService {
         // Props
         FighterFollowRequest fighterFollowRequestToUpdate = findById(id);
         fighterFollowRequestToUpdate.setStatus(fighterFollowRequest.getStatus());
-        fighterFollowRequestToUpdate.setResponse(fighterFollowRequest.isResponse());
         // Relationships
         // Todo - Implement this
         return fighterFollowRequestRepository.save(fighterFollowRequestToUpdate);
