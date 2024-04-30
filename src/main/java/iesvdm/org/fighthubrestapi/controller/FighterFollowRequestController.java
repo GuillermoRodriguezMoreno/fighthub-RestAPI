@@ -2,6 +2,7 @@ package iesvdm.org.fighthubrestapi.controller;
 
 import iesvdm.org.fighthubrestapi.entity.FighterFollowRequest;
 import iesvdm.org.fighthubrestapi.service.FighterFollowRequestService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,13 +37,13 @@ public class FighterFollowRequestController {
     }
     // Save fighterFollowRequest
     @PostMapping(value = {"", "/"})
-    public FighterFollowRequest save(@RequestBody FighterFollowRequest fighterFollowRequest) {
+    public FighterFollowRequest save(@Valid @RequestBody FighterFollowRequest fighterFollowRequest) {
         log.info("FighterFollowRequestController: save - id: " + fighterFollowRequest.getId());
         return fighterFollowRequestService.save(fighterFollowRequest);
     }
     // Update fighterFollowRequest
     @PutMapping(value = {"/{id}"})
-    public FighterFollowRequest update(@PathVariable Long id, @RequestBody FighterFollowRequest fighterFollowRequest) {
+    public FighterFollowRequest update(@PathVariable Long id, @Valid @RequestBody FighterFollowRequest fighterFollowRequest) {
         log.info("FighterFollowRequestController: update - id: " + id);
         return fighterFollowRequestService.update(id, fighterFollowRequest);
     }

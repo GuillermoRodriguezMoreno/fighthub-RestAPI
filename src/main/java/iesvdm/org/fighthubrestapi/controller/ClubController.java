@@ -2,6 +2,7 @@ package iesvdm.org.fighthubrestapi.controller;
 
 import iesvdm.org.fighthubrestapi.entity.Club;
 import iesvdm.org.fighthubrestapi.service.ClubService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,13 +37,13 @@ public class ClubController {
     }
     // Save club
     @PostMapping(value = {"", "/"})
-    public Club save(@RequestBody Club club) {
+    public Club save(@Valid @RequestBody Club club) {
         log.info("ClubController: save - id: " + club.getId());
         return clubService.save(club);
     }
     // Update club
     @PutMapping(value = {"/{id}"})
-    public Club update(@PathVariable Long id, @RequestBody Club club) {
+    public Club update(@PathVariable Long id, @Valid @RequestBody Club club) {
         log.info("ClubController: update - id: " + id);
         return clubService.update(id, club);
     }

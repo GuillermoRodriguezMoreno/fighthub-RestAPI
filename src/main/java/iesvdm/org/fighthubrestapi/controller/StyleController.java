@@ -2,7 +2,9 @@ package iesvdm.org.fighthubrestapi.controller;
 
 import iesvdm.org.fighthubrestapi.entity.Style;
 import iesvdm.org.fighthubrestapi.service.StyleService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ public class StyleController {
 
     // *** INJECTS ***
     // ***************
+    @Autowired
     private StyleService styleService;
 
     // *** METHODS ***
@@ -34,13 +37,13 @@ public class StyleController {
     }
     // Save style
     @PostMapping(value = {"", "/"})
-    public Style save(@RequestBody Style style) {
+    public Style save(@Valid @RequestBody Style style) {
         log.info("StyleController: save - id: " + style.getId());
         return styleService.save(style);
     }
     // Update style
     @PutMapping(value = {"/{id}"})
-    public Style update(@PathVariable Long id, @RequestBody Style style) {
+    public Style update(@PathVariable Long id, @Valid @RequestBody Style style) {
         log.info("StyleController: update - id: " + id);
         return styleService.update(id, style);
     }

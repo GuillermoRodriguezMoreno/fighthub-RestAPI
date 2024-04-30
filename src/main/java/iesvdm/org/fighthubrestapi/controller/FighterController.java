@@ -2,7 +2,9 @@ package iesvdm.org.fighthubrestapi.controller;
 
 import iesvdm.org.fighthubrestapi.entity.Fighter;
 import iesvdm.org.fighthubrestapi.service.FighterService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ public class FighterController {
 
     // *** INJECTS ***
     // ***************
+    @Autowired
     private FighterService fighterService;
 
     // *** METHODS ***
@@ -34,13 +37,13 @@ public class FighterController {
     }
     // Save fighter
     @PostMapping(value = {"", "/"})
-    public Fighter save(@RequestBody Fighter fighter) {
+    public Fighter save(@Valid @RequestBody Fighter fighter) {
         log.info("FighterController: save - id: " + fighter.getId());
         return fighterService.save(fighter);
     }
     // Update fighter
     @PutMapping(value = {"/{id}"})
-    public Fighter update(@PathVariable Long id, @RequestBody Fighter fighter) {
+    public Fighter update(@PathVariable Long id, @Valid @RequestBody Fighter fighter) {
         log.info("FighterController: update - id: " + id);
         return fighterService.update(id, fighter);
     }

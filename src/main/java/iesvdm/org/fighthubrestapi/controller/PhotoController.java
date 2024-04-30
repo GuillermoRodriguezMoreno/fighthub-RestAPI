@@ -2,6 +2,7 @@ package iesvdm.org.fighthubrestapi.controller;
 
 import iesvdm.org.fighthubrestapi.entity.Photo;
 import iesvdm.org.fighthubrestapi.service.PhotoService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,13 +37,13 @@ public class PhotoController {
     }
     // Save photo
     @PostMapping(value = {"", "/"})
-    public Photo save(@RequestBody Photo photo) {
+    public Photo save(@Valid @RequestBody Photo photo) {
         log.info("PhotoController: save - id: " + photo.getId());
         return photoService.save(photo);
     }
     // Update photo
     @PutMapping(value = {"/{id}"})
-    public Photo update(@PathVariable Long id, @RequestBody Photo photo) {
+    public Photo update(@PathVariable Long id, @Valid @RequestBody Photo photo) {
         log.info("PhotoController: update - id: " + id);
         return photoService.update(id, photo);
     }

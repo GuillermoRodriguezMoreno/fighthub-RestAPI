@@ -2,6 +2,7 @@ package iesvdm.org.fighthubrestapi.controller;
 
 import iesvdm.org.fighthubrestapi.entity.EventReview;
 import iesvdm.org.fighthubrestapi.service.EventReviewService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,19 +31,19 @@ public class EventReviewController {
     }
     // Find eventReview by id
     @GetMapping(value = {"/{id}"})
-    public EventReview findById(Long id) {
+    public EventReview findById(@PathVariable Long id) {
         log.info("EventReviewController: findById - id: " + id);
         return eventReviewService.findById(id);
     }
     // Save eventReview
     @PostMapping(value = {"", "/"})
-    public EventReview save(EventReview eventReview) {
+    public EventReview save(@Valid @RequestBody EventReview eventReview) {
         log.info("EventReviewController: save - id: " + eventReview.getId());
         return eventReviewService.save(eventReview);
     }
     // Update eventReview
     @PutMapping(value = {"/{id}"})
-    public EventReview update(Long id, EventReview eventReview) {
+    public EventReview update(@PathVariable Long id, @Valid @RequestBody EventReview eventReview) {
         log.info("EventReviewController: update - id: " + id);
         return eventReviewService.update(id, eventReview);
     }
@@ -50,7 +51,7 @@ public class EventReviewController {
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = {"/{id}"})
-    public void delete(Long id) {
+    public void delete(@PathVariable Long id) {
         log.info("EventReviewController: delete - id: " + id);
         eventReviewService.delete(id);
     }

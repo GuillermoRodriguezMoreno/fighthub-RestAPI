@@ -66,6 +66,8 @@ public class User {
     private Set<Photo> photos = new HashSet<>();
     // EventReviews
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<EventReview> eventReviews = new HashSet<>();
 
     // *** METHODS ***

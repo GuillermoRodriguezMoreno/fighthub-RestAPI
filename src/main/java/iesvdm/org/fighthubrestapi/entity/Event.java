@@ -69,9 +69,13 @@ public class Event {
     private Club organizer;
     // Fights
     @OneToMany(mappedBy = "event")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<Fight> fights = new HashSet<>();
     // Reviews
     @OneToMany(mappedBy = "event")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<EventReview> reviews = new HashSet<>();
     // InscriptionsRequests
     // toDo --> Add InscriptionsRequests

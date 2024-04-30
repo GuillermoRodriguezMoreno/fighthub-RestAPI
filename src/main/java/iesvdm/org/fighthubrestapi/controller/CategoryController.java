@@ -2,6 +2,7 @@ package iesvdm.org.fighthubrestapi.controller;
 
 import iesvdm.org.fighthubrestapi.entity.Category;
 import iesvdm.org.fighthubrestapi.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,13 +37,13 @@ public class CategoryController {
     }
     // Save category
     @PostMapping(value = {"", "/"})
-    public Category save(@RequestBody Category category) {
+    public Category save(@Valid @RequestBody Category category) {
         log.info("CategoryController: save - id: " + category.getId());
         return categoryService.save(category);
     }
     // Update category
     @PutMapping(value = {"/{id}"})
-    public Category update(@PathVariable Long id, @RequestBody Category category) {
+    public Category update(@PathVariable Long id, @Valid @RequestBody Category category) {
         log.info("CategoryController: update - id: " + id);
         return categoryService.update(id, category);
     }

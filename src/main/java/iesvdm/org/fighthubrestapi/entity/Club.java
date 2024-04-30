@@ -43,6 +43,8 @@ public class Club extends User{
     private Fighter president;
     // Fighters
     @OneToMany(mappedBy = "club")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<Fighter> fighters = new HashSet<>();
     // Events
     @OneToMany(mappedBy = "organizer")
@@ -51,11 +53,17 @@ public class Club extends User{
     private Set<Event> events = new HashSet<>();
     // Reviews
     @OneToMany(mappedBy = "club")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<ClubReview> reviews = new HashSet<>();
     // ClubMembershipRequests
     @OneToMany(mappedBy = "club")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<ClubMembershipRequest> clubMembershipRequests = new HashSet<>();
     // FightInscriptionRequests
     @OneToMany(mappedBy = "club")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
 }

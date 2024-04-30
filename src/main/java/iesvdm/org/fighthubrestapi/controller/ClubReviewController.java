@@ -2,6 +2,7 @@ package iesvdm.org.fighthubrestapi.controller;
 
 import iesvdm.org.fighthubrestapi.entity.ClubReview;
 import iesvdm.org.fighthubrestapi.service.ClubReviewService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,19 +31,19 @@ public class ClubReviewController {
     }
     // Find clubReview by id
     @GetMapping(value = {"/{id}"})
-    public ClubReview findById(Long id) {
+    public ClubReview findById(@PathVariable Long id) {
         log.info("ClubReviewController: findById - id: " + id);
         return clubReviewService.findById(id);
     }
     // Save clubReview
     @PostMapping(value = {"", "/"})
-    public ClubReview save(ClubReview clubReview) {
+    public ClubReview save(@Valid @RequestBody ClubReview clubReview) {
         log.info("ClubReviewController: save - id: " + clubReview.getId());
         return clubReviewService.save(clubReview);
     }
     // Update clubReview
     @PutMapping(value = {"/{id}"})
-    public ClubReview update(Long id, ClubReview clubReview) {
+    public ClubReview update(@PathVariable Long id, @Valid @RequestBody ClubReview clubReview) {
         log.info("ClubReviewController: update - id: " + id);
         return clubReviewService.update(id, clubReview);
     }
@@ -50,7 +51,7 @@ public class ClubReviewController {
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = {"/{id}"})
-    public void delete(Long id) {
+    public void delete(@PathVariable Long id) {
         log.info("ClubReviewController: delete - id: " + id);
         clubReviewService.delete(id);
     }

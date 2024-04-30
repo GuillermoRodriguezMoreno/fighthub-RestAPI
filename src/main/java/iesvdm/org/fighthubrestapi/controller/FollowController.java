@@ -28,7 +28,8 @@ public class FollowController {
         log.info("FollowController: findAll");
         return followService.findAll();
     }
-    /*
+    /* DEBERIA PASAR LA CLAVE COMPUESTA COMO PARAMETRO
+
     // Find follow by id
     @GetMapping(value = {"/{id}"})
     public Follow findById(@PathVariable Long id) {

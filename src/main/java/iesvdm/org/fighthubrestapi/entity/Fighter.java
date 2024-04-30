@@ -59,6 +59,15 @@ public class Fighter extends User{
 
     // *** RELATIONSHIPS ***
 
+    // Club
+    @ManyToOne()
+    @JoinColumn(name = "club_id")
+
+    private Club club;
+    // Category
+    @ManyToOne()
+    @JoinColumn(name = "category_id")
+    private Category category;
     // Style
     @ManyToMany()
     @JoinTable(
@@ -67,24 +76,24 @@ public class Fighter extends User{
             inverseJoinColumns = @JoinColumn(name = "style_id")
     )
     private Set<Style> styles = new HashSet<>();
-    // Club
-    @ManyToOne()
-    @JoinColumn(name = "club_id")
-    private Club club;
-    // Category
-    @ManyToOne()
-    @JoinColumn(name = "category_id")
-    private Category category;
     // Fights
     @OneToMany(mappedBy = "blue_corner_fighter")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<Fight> blueCornerFights = new HashSet<>();
     @OneToMany(mappedBy = "red_corner_fighter")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<Fight> redCornerFights = new HashSet<>();
     // FightInscriptionRequests
     @OneToMany(mappedBy = "fighter")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
     // Photos
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<Photo> photos = new HashSet<>();
     // Following
     @OneToMany(mappedBy = "followerFighter")
@@ -98,14 +107,22 @@ public class Fighter extends User{
     private Set<Follow> followers = new HashSet<>();
     // SentFighterFollowRequest
     @OneToMany(mappedBy = "sender")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<FighterFollowRequest> sentFighterFollowRequests = new HashSet<>();
     // ReceivedFighterFollowRequest
     @OneToMany(mappedBy = "receiver")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<FighterFollowRequest> receivedFighterFollowRequests = new HashSet<>();
     // ClubMembershipRequests
     @OneToMany(mappedBy = "fighter")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<ClubMembershipRequest> clubMembershipRequests = new HashSet<>();
     // ClubReviews
     @OneToMany(mappedBy = "fighter")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<ClubReview> clubReviews = new HashSet<>();
 }

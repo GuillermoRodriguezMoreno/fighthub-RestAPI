@@ -2,6 +2,7 @@ package iesvdm.org.fighthubrestapi.controller;
 
 import iesvdm.org.fighthubrestapi.entity.User;
 import iesvdm.org.fighthubrestapi.service.UserService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,13 +37,13 @@ public class UserController {
     }
     // Save user
     @PostMapping(value = {"", "/"})
-    public User save(@RequestBody User user) {
+    public User save(@Valid @RequestBody User user) {
         log.info("UserController: save - id: " + user.getId());
         return userService.save(user);
     }
     // Update user
     @PutMapping(value = {"/{id}"})
-    public User update(@PathVariable Long id, @RequestBody User user) {
+    public User update(@PathVariable Long id, @Valid @RequestBody User user) {
         log.info("UserController: update - id: " + id);
         return userService.update(id, user);
     }

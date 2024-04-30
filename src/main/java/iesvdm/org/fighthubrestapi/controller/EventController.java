@@ -2,6 +2,7 @@ package iesvdm.org.fighthubrestapi.controller;
 
 import iesvdm.org.fighthubrestapi.entity.Event;
 import iesvdm.org.fighthubrestapi.service.EventService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,13 +37,13 @@ public class EventController {
     }
     // Save event
     @PostMapping(value = {"", "/"})
-    public Event save(@RequestBody Event event) {
+    public Event save(@Valid @RequestBody Event event) {
         log.info("EventController: save - id: " + event.getId());
         return eventService.save(event);
     }
     // Update event
     @PutMapping(value = {"/{id}"})
-    public Event update(@PathVariable Long id, @RequestBody Event event) {
+    public Event update(@PathVariable Long id, @Valid @RequestBody Event event) {
         log.info("EventController: update - id: " + id);
         return eventService.update(id, event);
     }

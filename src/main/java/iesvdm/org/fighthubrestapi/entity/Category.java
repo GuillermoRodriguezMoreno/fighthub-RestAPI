@@ -1,13 +1,11 @@
 package iesvdm.org.fighthubrestapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,8 +35,12 @@ public class Category {
 
     // Fighters
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<Fighter> fighters = new HashSet<>();
     // Fights
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<Fight> fights = new HashSet<>();
 }
