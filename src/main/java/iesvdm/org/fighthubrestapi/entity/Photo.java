@@ -35,7 +35,7 @@ public class Photo {
     @NotNull(message = "The upload date cannot be null")
     @PastOrPresent(message = "The upload date must be in the past or present")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime upload_date;
+    private LocalDateTime uploadDate;
 
     // *** RELATIONSHIPS ***
 
@@ -52,6 +52,6 @@ public class Photo {
     // Método para establecer la fecha de subida automáticamente antes de persistir
     @PrePersist
     protected void onCreate() {
-        this.upload_date = LocalDateTime.now();
+        this.uploadDate = LocalDateTime.now();
     }
 }

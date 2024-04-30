@@ -30,12 +30,12 @@ public class User {
     // UserName
     @Size(min = 3, max = 20, message = "User name must be between 3 and 20 characters")
     @Column(unique = true)
-    private String user_name;
+    private String userName;
     // BirthDate
     @NotNull(message = "The birth date cannot be null")
     @Past(message = "The birth date must be in the past")
     @JsonFormat(pattern = "dd-MM-yyyy",  shape = JsonFormat.Shape.STRING)
-    private LocalDateTime birth_date;
+    private LocalDateTime birthDate;
     // Email
     @NotBlank
     @Email
@@ -51,14 +51,14 @@ public class User {
     @NotNull(message = "The upload date cannot be null")
     @PastOrPresent(message = "The upload date must be in the past or present")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime register_date;
+    private LocalDateTime registerDate;
 
     // *** RELATIONSHIPS ***
 
     // ProfilePhoto
     @OneToOne()
     @JoinColumn(name = "profile_photo_id", referencedColumnName = "id")
-    private Photo profile_photo;
+    private Photo profilePhoto;
     // Photos
     @OneToMany(mappedBy = "user")
     @JsonIgnore
@@ -76,6 +76,6 @@ public class User {
     // Método para establecer la fecha de registro automáticamente antes de persistir
     @PrePersist
     protected void onCreate() {
-        this.register_date = LocalDateTime.now();
+        this.registerDate = LocalDateTime.now();
     }
 }

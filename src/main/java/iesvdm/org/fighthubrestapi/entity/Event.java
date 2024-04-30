@@ -45,17 +45,17 @@ public class Event {
     @NotNull(message = "The start date cannot be null")
     @Future(message = "The start date must be in the future")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime start_date;
+    private LocalDateTime startDate;
     // OpenDate
     @NotNull(message = "The open date cannot be null")
     @Future(message = "The open date must be in the future")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime open_date;
+    private LocalDateTime openDate;
     // EndDate
     @NotNull(message = "The end date cannot be null")
     @Future(message = "The end date must be in the future")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime end_date;
+    private LocalDateTime endDate;
 
     // *** RELATIONSHIPS ***
 

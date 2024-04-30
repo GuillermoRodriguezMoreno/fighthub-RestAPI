@@ -55,7 +55,7 @@ public class Fighter extends User{
     // Fights
     private int numberOfFights;
     // WinsInARow
-    private int wins_in_a_row;
+    private int winsInARow;
 
     // *** RELATIONSHIPS ***
 

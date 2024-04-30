@@ -34,26 +34,26 @@ public class Fight {
     private LocalDateTime startTime;
     // FightOrder
     @Min(value = 1, message = "The fight order must be at least 1")
-    private int fight_order;
+    private int fightOrder;
     // IsKo
-    private boolean is_ko;
+    private boolean isKo;
     // Round
     private Round round;
     // Weight
     private double weight;
     // IsTittleFight
-    private boolean is_title_fight;
+    private boolean isTitleFight;
 
     // *** RELATIONSHIPS ***
 
     // BlueCornerFighter
     @ManyToOne
     @JoinColumn(name = "blue_corner_fighter_id")
-    private Fighter blue_corner_fighter;
+    private Fighter blueCornerFighter;
     // RedCornerFighter
     @ManyToOne
     @JoinColumn(name = "red_corner_fighter_id")
-    private Fighter red_corner_fighter;
+    private Fighter redCornerFighter;
     // Event
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
