@@ -37,9 +37,9 @@ public class EventService {
         eventToUpdate.setName(event.getName());
         eventToUpdate.setAddress(event.getAddress());
         eventToUpdate.setDescription(event.getDescription());
-        eventToUpdate.setStart_date(event.getStart_date());
-        eventToUpdate.setOpen_date(event.getOpen_date());
-        eventToUpdate.setEnd_date(event.getEnd_date());
+        eventToUpdate.setStartDate(event.getStartDate());
+        eventToUpdate.setOpenDate(event.getOpenDate());
+        eventToUpdate.setEndDate(event.getEndDate());
         // Relationships
         // Todo - Implement this
         eventToUpdate.setOrganizer(event.getOrganizer());

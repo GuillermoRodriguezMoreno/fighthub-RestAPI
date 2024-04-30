@@ -55,6 +55,7 @@ public class Fighter extends User{
     // Fights
     private int numberOfFights;
     // WinsInARow
+    @Column(name = "wins_in_a_row")
     private int winsInARow;
 
     // *** RELATIONSHIPS ***
@@ -77,11 +78,11 @@ public class Fighter extends User{
     )
     private Set<Style> styles = new HashSet<>();
     // Fights
-    @OneToMany(mappedBy = "blue_corner_fighter")
+    @OneToMany(mappedBy = "blueCornerFighter")
     @JsonIgnore
     @ToString.Exclude
     private Set<Fight> blueCornerFights = new HashSet<>();
-    @OneToMany(mappedBy = "red_corner_fighter")
+    @OneToMany(mappedBy = "redCornerFighter")
     @JsonIgnore
     @ToString.Exclude
     private Set<Fight> redCornerFights = new HashSet<>();

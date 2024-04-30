@@ -34,12 +34,12 @@ public class UserService {
     public User update(Long id, User user) {
         // Props
         User userToUpdate = findById(id);
-        userToUpdate.setUser_name(user.getUser_name());
-        userToUpdate.setBirth_date(user.getBirth_date());
+        userToUpdate.setUserName(user.getUserName());
+        userToUpdate.setBirthDate(user.getBirthDate());
         userToUpdate.setEmail(user.getEmail());
         userToUpdate.setPassword(user.getPassword());
         userToUpdate.setRole(user.getRole());
-        userToUpdate.setProfile_photo(user.getProfile_photo());
+        userToUpdate.setProfilePhoto(user.getProfilePhoto());
         // Relationships
         // Todo - Fix this
         userToUpdate.setPhotos(user.getPhotos());

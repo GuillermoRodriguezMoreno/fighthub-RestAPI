@@ -35,11 +35,11 @@ public class FightService {
         // Props
         Fight fightToUpdate = findById(id);
         fightToUpdate.setStartTime(fight.getStartTime());
-        fightToUpdate.setFight_order(fight.getFight_order());
+        fightToUpdate.setFightOrder(fight.getFightOrder());
         fightToUpdate.setRound(fight.getRound());
-        fightToUpdate.set_ko(fight.is_ko());
+        fightToUpdate.setKo(fight.isKo());
         fightToUpdate.setWeight(fight.getWeight());
-        fightToUpdate.set_title_fight(fight.is_title_fight());
+        fightToUpdate.setTitleFight(fight.isTitleFight());
         // Relationships
         // Todo - Implement this
         return fightRepository.save(fightToUpdate);

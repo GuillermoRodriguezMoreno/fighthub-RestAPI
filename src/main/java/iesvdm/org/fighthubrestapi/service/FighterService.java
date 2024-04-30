@@ -40,7 +40,7 @@ public class FighterService {
         fighterToUpdate.setGender(fighter.getGender());
         fighterToUpdate.setBiography(fighter.getBiography());
         fighterToUpdate.setLocation(fighter.getLocation());
-        fighterToUpdate.setBirth_date(fighter.getBirth_date());
+        fighterToUpdate.setBirthDate(fighter.getBirthDate());
         fighterToUpdate.setWins(fighter.getWins());
         fighterToUpdate.setLosses(fighter.getLosses());
         fighterToUpdate.setDraws(fighter.getDraws());
@@ -49,7 +49,7 @@ public class FighterService {
         // Todo - Implement this
         fighterToUpdate.setClub(fighter.getClub());
         fighterToUpdate.setCategory(fighter.getCategory());
-        fighterToUpdate.setProfile_photo(fighter.getProfile_photo());
+        fighterToUpdate.setProfilePhoto(fighter.getProfilePhoto());
         fighterToUpdate.setPhotos(fighter.getPhotos());
         return fighterRepository.save(fighterToUpdate);
     }
