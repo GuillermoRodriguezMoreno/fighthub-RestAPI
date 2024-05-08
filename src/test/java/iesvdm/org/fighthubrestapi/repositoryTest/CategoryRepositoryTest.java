@@ -1,4 +1,4 @@
-package iesvdm.org.fighthubrestapi;
+package iesvdm.org.fighthubrestapi.repositoryTest;
 
 import iesvdm.org.fighthubrestapi.entity.Category;
 import iesvdm.org.fighthubrestapi.repository.CategoryRepository;
@@ -24,7 +24,7 @@ public class CategoryRepositoryTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    // *** VARIABLES ***
+    // *** PROPS ***
     // *****************
     private Category professional;
     private Category amateur;

@@ -36,7 +36,6 @@ public class WebSecurityConfig {
     public AuthTokenFilter authenticationTokenFilter() {
         return new AuthTokenFilter();
     }
-
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -46,17 +45,14 @@ public class WebSecurityConfig {
 
         return authProvider;
     }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 

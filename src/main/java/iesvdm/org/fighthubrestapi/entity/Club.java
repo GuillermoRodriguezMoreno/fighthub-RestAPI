@@ -22,7 +22,6 @@ public class Club extends User{
 
     // *** PROPS ***
     // *************
-
     // Name
     @NotBlank(message = "The name cannot be empty")
     @Size(min = 2, max = 50, message = "The name must be between 2 and 50 characters long")
@@ -36,7 +35,7 @@ public class Club extends User{
     private String description;
 
     //  *** RELATIONSHIPS ***
-
+    // **********************
     // President
     @OneToOne()
     @JoinColumn(name = "president_id")

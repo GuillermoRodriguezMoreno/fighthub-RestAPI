@@ -34,12 +34,12 @@ public class Category {
     // *** RELATIONSHIPS ***
 
     // Fighters
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private Set<Fighter> fighters = new HashSet<>();
     // Fights
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private Set<Fight> fights = new HashSet<>();

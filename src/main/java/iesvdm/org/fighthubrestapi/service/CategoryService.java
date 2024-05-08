@@ -3,6 +3,9 @@ package iesvdm.org.fighthubrestapi.service;
 import iesvdm.org.fighthubrestapi.entity.Category;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.CategoryRepository;
+import iesvdm.org.fighthubrestapi.repository.FightRepository;
+import iesvdm.org.fighthubrestapi.repository.FighterRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,10 @@ public class CategoryService {
     // ***************
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private FighterRepository fighterRepository;
+    @Autowired
+    private FightRepository fightRepository;
 
     // *** METHODS ***
     // ***************
@@ -32,13 +39,25 @@ public class CategoryService {
     }
     // Update category
     public Category update(Long id, Category category) {
+        // Find category
         Category categoryToUpdate = findById(id);
+        // Update props
         categoryToUpdate.setName(category.getName());
+        // Save
         return categoryRepository.save(categoryToUpdate);
     }
     // Delete category
-    // Todo - Implement this
+    @Transactional
     public void delete(Long id) {
+        // Find category by id
+        Category categoryToDelete = findById(id);
+        // Get all fighters and fights from category to delete and set category to null
+        categoryToDelete.getFighters().forEach(fighter -> fighter.setCategory(null));
+        categoryToDelete.getFights().forEach(fight -> fight.setCategory(null));
+        // Save all fighters and fights
+        fighterRepository.saveAll(categoryToDelete.getFighters());
+        fightRepository.saveAll(categoryToDelete.getFights());
+        // Delete category
         categoryRepository.deleteById(id);
     }
 }

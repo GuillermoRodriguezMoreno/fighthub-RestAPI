@@ -17,3 +17,8 @@ toDo -- Seguridad
 toDo -- Hashear password
 toDo -- Mail Sender
 toDo -- Tests
+
+
+_______________________Services completados_______________________________
+
+- CategoryService y CategoryRepositoryTest
