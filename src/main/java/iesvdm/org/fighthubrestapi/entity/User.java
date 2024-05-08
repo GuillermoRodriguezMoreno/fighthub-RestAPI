@@ -39,14 +39,12 @@ public class User {
     // Email
     @NotBlank
     @Email
+    @Column(unique = true)
     private String email;
     // Password
     @NotBlank
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
-    // Role
-    @Pattern(regexp = "ADMIN|FIGHTER|CLUB", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Role must be ADMIN, FIGHTER or CLUB")
-    private String role;
     // RegisterDate
     @NotNull(message = "The upload date cannot be null")
     @PastOrPresent(message = "The upload date must be in the past or present")
@@ -59,6 +57,13 @@ public class User {
     @OneToOne()
     @JoinColumn(name = "profile_photo_id", referencedColumnName = "id")
     private Photo profilePhoto;
+    // Role
+    @ManyToMany()
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
     // Photos
     @OneToMany(mappedBy = "user")
     @JsonIgnore
@@ -69,6 +74,14 @@ public class User {
     @JsonIgnore
     @ToString.Exclude
     private Set<EventReview> eventReviews = new HashSet<>();
+
+    // *** CONSTRUCTORS ***
+    // ********************
+    public User(String username, String email, String password) {
+        this.userName = username;
+        this.email = email;
+        this.password = password;
+    }
 
     // *** METHODS ***
     // ***************

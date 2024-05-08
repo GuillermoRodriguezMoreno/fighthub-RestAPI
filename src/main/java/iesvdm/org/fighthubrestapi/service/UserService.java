@@ -38,7 +38,6 @@ public class UserService {
         userToUpdate.setBirthDate(user.getBirthDate());
         userToUpdate.setEmail(user.getEmail());
         userToUpdate.setPassword(user.getPassword());
-        userToUpdate.setRole(user.getRole());
         userToUpdate.setProfilePhoto(user.getProfilePhoto());
         // Relationships
         // Todo - Fix this
