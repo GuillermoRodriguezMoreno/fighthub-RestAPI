@@ -48,6 +48,7 @@ public class StyleRepositoryTest {
         Style style2 = new Style(0, "Style2", new HashSet<>(), new HashSet<>());
         this.styleRepository.save(style1);
         this.styleRepository.save(style2);
+        Assertions.assertEquals(4, this.styleRepository.count());
     }
     // Find style
     @Test

@@ -48,6 +48,7 @@ public class CategoryRepositoryTest {
         Category cat2 = new Category(0, "Cat2", new HashSet<>(), new HashSet<>());
         this.categoryRepository.save(cat1);
         this.categoryRepository.save(cat2);
+        Assertions.assertEquals(4, this.categoryRepository.count());
     }
     // Find category
     @Test
