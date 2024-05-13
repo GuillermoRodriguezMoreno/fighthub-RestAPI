@@ -35,7 +35,7 @@ public class FightInscriptionRequest {
     @Size(min = 10, max = 255, message = "The message must be between 10 and 255 characters long")
     private String message;
     // Response
-    private boolean response;
+    private String response;
     // ResponseDate
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime responseDate;

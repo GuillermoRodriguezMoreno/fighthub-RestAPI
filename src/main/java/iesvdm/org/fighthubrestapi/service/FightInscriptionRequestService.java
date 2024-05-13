@@ -36,7 +36,7 @@ public class FightInscriptionRequestService {
         FightInscriptionRequest fightInscriptionRequestToUpdate = findById(id);
         fightInscriptionRequestToUpdate.setStatus(fightInscriptionRequest.getStatus());
         fightInscriptionRequestToUpdate.setMessage(fightInscriptionRequest.getMessage());
-        fightInscriptionRequestToUpdate.setResponse(fightInscriptionRequest.isResponse());
+        fightInscriptionRequestToUpdate.setResponse(fightInscriptionRequest.getResponse());
         // Relationships
         // Todo - Implement this
         return fightInscriptionRequestRepository.save(fightInscriptionRequestToUpdate);

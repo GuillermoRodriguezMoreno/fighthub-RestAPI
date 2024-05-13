@@ -25,7 +25,7 @@ public class CategoryRepositoryTest {
     private CategoryRepository categoryRepository;
 
     // *** PROPS ***
-    // *****************
+    // *************
     private Category professional;
     private Category amateur;
 
