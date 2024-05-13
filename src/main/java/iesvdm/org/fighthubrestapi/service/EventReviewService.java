@@ -2,7 +2,10 @@ package iesvdm.org.fighthubrestapi.service;
 
 import iesvdm.org.fighthubrestapi.entity.EventReview;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
+import iesvdm.org.fighthubrestapi.repository.EventRepository;
 import iesvdm.org.fighthubrestapi.repository.EventReviewRepository;
+import iesvdm.org.fighthubrestapi.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,10 @@ public class EventReviewService {
     // ***************
     @Autowired
     private EventReviewRepository eventReviewRepository;
+    @Autowired
+    private EventRepository eventRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     // *** METHODS ***
     // ***************
@@ -36,13 +43,19 @@ public class EventReviewService {
         EventReview eventReviewToUpdate = findById(id);
         eventReviewToUpdate.setContent(eventReview.getContent());
         eventReviewToUpdate.setRating(eventReview.getRating());
-        // Relationships
-        // Todo - Implement this
         return eventReviewRepository.save(eventReviewToUpdate);
     }
     // Delete event review
-    // Todo - Implement this
+    @Transactional
     public void delete(Long id) {
+        // FindById
+        EventReview eventReviewToDelete = this.eventReviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, EventReview.class));
+        // Dissaociate
+        eventReviewToDelete.getUser().getEventReviews().remove(eventReviewToDelete);
+        eventReviewToDelete.getEvent().getReviews().remove(eventReviewToDelete);
+        this.eventRepository.save(eventReviewToDelete.getEvent());
+        this.userRepository.save(eventReviewToDelete.getUser());
+        // Delete
         eventReviewRepository.deleteById(id);
     }
 }

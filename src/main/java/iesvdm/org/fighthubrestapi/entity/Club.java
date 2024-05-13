@@ -51,17 +51,17 @@ public class Club extends User{
     @ToString.Exclude
     private Set<Event> events = new HashSet<>();
     // Reviews
-    @OneToMany(mappedBy = "club")
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private Set<ClubReview> reviews = new HashSet<>();
     // ClubMembershipRequests
-    @OneToMany(mappedBy = "club")
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private Set<ClubMembershipRequest> clubMembershipRequests = new HashSet<>();
     // FightInscriptionRequests
-    @OneToMany(mappedBy = "club")
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();

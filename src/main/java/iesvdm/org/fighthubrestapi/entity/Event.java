@@ -77,6 +77,4 @@ public class Event {
     @JsonIgnore
     @ToString.Exclude
     private Set<EventReview> reviews = new HashSet<>();
-    // InscriptionsRequests
-    // toDo --> Add InscriptionsRequests
 }

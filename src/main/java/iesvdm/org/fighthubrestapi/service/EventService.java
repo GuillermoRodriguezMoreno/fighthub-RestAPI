@@ -2,7 +2,10 @@ package iesvdm.org.fighthubrestapi.service;
 
 import iesvdm.org.fighthubrestapi.entity.Event;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
+import iesvdm.org.fighthubrestapi.repository.ClubRepository;
 import iesvdm.org.fighthubrestapi.repository.EventRepository;
+import iesvdm.org.fighthubrestapi.repository.EventReviewRepository;
+import iesvdm.org.fighthubrestapi.repository.FightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,13 @@ public class EventService {
     // ***************
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private ClubRepository clubRepository;
+    @Autowired
+    private FightRepository fightRepository;
+    @Autowired
+    private EventReviewRepository eventReviewRepository;
+
 
     // *** METHODS ***
     // ***************
@@ -41,14 +51,46 @@ public class EventService {
         eventToUpdate.setOpenDate(event.getOpenDate());
         eventToUpdate.setEndDate(event.getEndDate());
         // Relationships
-        // Todo - Implement this
-        eventToUpdate.setOrganizer(event.getOrganizer());
         eventToUpdate.setPhoto(event.getPhoto());
+        // Disassociate with the old club
+        eventToUpdate.getOrganizer().getEvents().remove(eventToUpdate);
+        this.clubRepository.save(eventToUpdate.getOrganizer());
+        // Associate with the new club
+        eventToUpdate.setOrganizer(event.getOrganizer());
+        eventToUpdate.getOrganizer().getEvents().add(eventToUpdate);
+        this.clubRepository.save(eventToUpdate.getOrganizer());
+        // Disassociate with fights
+        eventToUpdate.getFights().forEach(fight -> {
+            fight.setEvent(null);
+            this.fightRepository.save(fight);
+        });
+        // Associate with fights
+        eventToUpdate.setFights(event.getFights());
+        eventToUpdate.getFights().forEach(fight -> {
+            fight.setEvent(eventToUpdate);
+            this.fightRepository.save(fight);
+        });
+        // Save
         return eventRepository.save(eventToUpdate);
     }
     // Delete event
-    // Todo - Implement this
     public void delete(Long id) {
+        // FindById
+        Event eventToDelete = this.eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Event.class));
+        // Disassociate with the club
+        eventToDelete.getOrganizer().getEvents().remove(eventToDelete);
+        this.clubRepository.save(eventToDelete.getOrganizer());
+        // Disassociate with fights
+        eventToDelete.getFights().forEach(fight -> {
+            fight.setEvent(null);
+            this.fightRepository.save(fight);
+        });
+        // Disassociate with reviews
+        eventToDelete.getReviews().forEach(review -> {
+            review.setEvent(null);
+            this.eventReviewRepository.save(review);
+        });
+        // Delete
         eventRepository.deleteById(id);
     }
 }

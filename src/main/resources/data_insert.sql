@@ -3,13 +3,27 @@ USE fighthub_sql;
 -- CATEGORY
 INSERT INTO category (name) VALUES
                                 ('Professional'),
-                                ('Amateur');
+                                ('Amateur'),
+                                ('Semi-Professional'),
+                                ('Junior');
 
 -- STYLE
 INSERT INTO style (name) VALUES
                              ('Boxing'),
                              ('Muay Thai'),
-                             ('Brazilian Jiu-Jitsu');
+                             ('Brazilian Jiu-Jitsu'),
+                             ('Kickboxing'),
+                             ('Karate'),
+                             ('Judo'),
+                             ('Wrestling'),
+                             ('Taekwondo'),
+                             ('Kung Fu'),
+                             ('Capoeira'),
+                             ('Krav Maga'),
+                             ('Aikido'),
+                             ('Hapkido'),
+                             ('Sambo'),
+                             ('MMA');
 
 -- USER
 INSERT INTO user (birth_date, email, password, register_date, user_name, profile_photo_id) VALUES

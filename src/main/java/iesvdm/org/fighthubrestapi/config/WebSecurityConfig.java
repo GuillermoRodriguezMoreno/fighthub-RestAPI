@@ -64,7 +64,7 @@ public class WebSecurityConfig {
                 //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
                 .authorizeHttpRequests().requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/v1/prueba/solo-admin").hasAnyAuthority("ROL_ADMIN")
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
 
         http.authenticationProvider(authenticationProvider());
 

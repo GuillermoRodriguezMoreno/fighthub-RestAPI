@@ -1,10 +1,13 @@
 package iesvdm.org.fighthubrestapi.service;
 
 import iesvdm.org.fighthubrestapi.entity.Club;
+import iesvdm.org.fighthubrestapi.entity.Event;
 import iesvdm.org.fighthubrestapi.entity.Fighter;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.ClubRepository;
+import iesvdm.org.fighthubrestapi.repository.EventRepository;
 import iesvdm.org.fighthubrestapi.repository.FighterRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,8 @@ public class ClubService {
     private ClubRepository clubRepository;
     @Autowired
     private FighterRepository fighterRepository;
+    @Autowired
+    private EventRepository eventRepository;
 
     // *** METHODS ***
     // ***************
@@ -36,6 +41,7 @@ public class ClubService {
         return clubRepository.save(club);
     }
     // Update club
+    @Transactional
     public Club update(Long id, Club club) {
         // Find club
         Club clubToUpdate = clubRepository.findById(id)
@@ -70,13 +76,48 @@ public class ClubService {
         // Set the updated set of fighters to the club
         clubToUpdate.setFighters(updatedFighters);
         // Update events
-        // Todo - Implement this
-
+        Set<Event> updatedEvents = club.getEvents();
+        Set<Event> existingEvents = clubToUpdate.getEvents();
+        // Disassociate events that are no longer associated with the club
+        existingEvents.stream()
+                .filter(event -> !updatedEvents.contains(event))
+                .forEach(event -> {
+                    event.setOrganizer(null);
+                    eventRepository.save(event);
+                });
+        // Associate new events with the club
+        updatedEvents.stream()
+                .filter(event -> !existingEvents.contains(event))
+                .forEach(event -> {
+                    event.setOrganizer(clubToUpdate);
+                    eventRepository.save(event);
+                });
+        // Set the updated set of events to the club
+        clubToUpdate.setEvents(updatedEvents);
+        // Save
         return clubRepository.save(clubToUpdate);
     }
     // Delete club
-    // Todo - Implement this
+    @Transactional
     public void delete(Long id) {
+        Club clubToDelete = clubRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id, Club.class));
+        // Dissaociate president from club
+        if (clubToDelete.getPresident() != null) {
+            clubToDelete.getPresident().setClub(null);
+            fighterRepository.save(clubToDelete.getPresident());
+        }
+        // Dissociate fighters from club
+        clubToDelete.getFighters().forEach(fighter -> {
+            fighter.setClub(null);
+            fighterRepository.save(fighter);
+        });
+        // Dissociate events from club
+        clubToDelete.getEvents().forEach(event -> {
+            event.setOrganizer(null);
+            eventRepository.save(event);
+        });
+        // Delete club
         clubRepository.deleteById(id);
     }
 }

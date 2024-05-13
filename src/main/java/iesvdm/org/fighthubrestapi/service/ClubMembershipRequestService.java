@@ -3,6 +3,7 @@ package iesvdm.org.fighthubrestapi.service;
 import iesvdm.org.fighthubrestapi.entity.ClubMembershipRequest;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.ClubMembershipRequestRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,10 @@ public class ClubMembershipRequestService {
     // ***************
     @Autowired
     private ClubMembershipRequestRepository clubMembershipRequestRepository;
+    @Autowired
+    private ClubService clubService;
+    @Autowired
+    private FighterService fighterService;
 
     // *** METHODS ***
     // ***************
@@ -28,6 +33,7 @@ public class ClubMembershipRequestService {
     }
     // Save club membership request
     public ClubMembershipRequest save(ClubMembershipRequest clubMembershipRequest) {
+        // Save club membership request
         return clubMembershipRequestRepository.save(clubMembershipRequest);
     }
     // Update club membership request
@@ -35,13 +41,19 @@ public class ClubMembershipRequestService {
         // Props
         ClubMembershipRequest clubMembershipRequestToUpdate = findById(id);
         clubMembershipRequestToUpdate.setStatus(clubMembershipRequest.getStatus());
-        // Relationships
-        // toDo -- Implement this
         return clubMembershipRequestRepository.save(clubMembershipRequestToUpdate);
     }
     // Delete club membership request
-    // toDo -- Implement this
+    @Transactional
     public void delete(Long id) {
+        // Find club membership request by id
+        ClubMembershipRequest clubMembershipRequestToDelete = this.clubMembershipRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, ClubMembershipRequest.class));
+        // Dissociate club membership request from club and fighter
+        clubMembershipRequestToDelete.getClub().getClubMembershipRequests().remove(clubMembershipRequestToDelete);
+        clubMembershipRequestToDelete.getFighter().getClubMembershipRequests().remove(clubMembershipRequestToDelete);
+        this.clubService.save(clubMembershipRequestToDelete.getClub());
+        this.fighterService.save(clubMembershipRequestToDelete.getFighter());
+        // Delete club membership request
         clubMembershipRequestRepository.deleteById(id);
     }
 }

@@ -63,6 +63,8 @@ public class User {
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JsonIgnore
+    @ToString.Exclude
     private Set<Role> roles = new HashSet<>();
     // Photos
     @OneToMany(mappedBy = "user")

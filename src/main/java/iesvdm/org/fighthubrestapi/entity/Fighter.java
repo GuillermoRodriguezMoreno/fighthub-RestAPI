@@ -66,7 +66,6 @@ public class Fighter extends User{
     // Club
     @ManyToOne()
     @JoinColumn(name = "club_id")
-
     private Club club;
     // Category
     @ManyToOne()

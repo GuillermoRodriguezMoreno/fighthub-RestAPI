@@ -29,7 +29,7 @@ public class ClubMembershipRequest {
     @EqualsAndHashCode.Include
     private long id;
     // Status
-    @Pattern(regexp = "APPROVED|PENDING|REJECTED", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED' or 'PENDING'")
+    @Pattern(regexp = "APPROVED|PENDING|REJECTED", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED', 'REJECTED' or 'PENDING'")
     private String status;
     // RequestDate
     @NotNull(message = "The date cannot be null")
@@ -41,7 +41,6 @@ public class ClubMembershipRequest {
     private LocalDateTime responseDate;
 
     // *** RELATIONSHIPS ***
-
     // Club
     @ManyToOne
     @JoinColumn(name = "club_id", nullable = false)
