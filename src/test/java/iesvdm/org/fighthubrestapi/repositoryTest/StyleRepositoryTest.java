@@ -1,8 +1,6 @@
 package iesvdm.org.fighthubrestapi.repositoryTest;
 
-import iesvdm.org.fighthubrestapi.entity.Category;
 import iesvdm.org.fighthubrestapi.entity.Style;
-import iesvdm.org.fighthubrestapi.repository.CategoryRepository;
 import iesvdm.org.fighthubrestapi.repository.StyleRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
