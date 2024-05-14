@@ -41,13 +41,12 @@ public class ClubReviewService{
     // Update club review
     public ClubReview update(Long id, ClubReview clubReview) {
         // Props
-        ClubReview clubReviewToUpdate = findById(id);
+        ClubReview clubReviewToUpdate = this.clubReviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, ClubReview.class));
         clubReviewToUpdate.setContent(clubReview.getContent());
         clubReviewToUpdate.setRating(clubReview.getRating());
         return clubReviewRepository.save(clubReviewToUpdate);
     }
     // Delete club review
-    @Transactional
     public void delete(Long id) {
         // Find club review by id
         ClubReview clubReviewToDelete = findById(id);

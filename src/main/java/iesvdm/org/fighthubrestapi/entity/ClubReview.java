@@ -18,7 +18,6 @@ public class ClubReview {
 
     // *** PROPS ***
     // *************
-
     // Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +38,7 @@ public class ClubReview {
     private LocalDateTime reviewDate;
 
     // *** RELATIONSHIPS ***
-
+    // *********************
     // User
     @ManyToOne
     @JoinColumn(name = "fighter_id", nullable = false)

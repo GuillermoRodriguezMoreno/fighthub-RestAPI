@@ -17,11 +17,8 @@ import java.util.Set;
 @DiscriminatorValue("FIGHTER")
 public class Fighter extends User{
 
-    // toDo: Implementar relacion doble con Fight
-
     // *** PROPS ***
     // *************
-
     // Name
     @NotBlank(message = "The name cannot be empty")
     @Size(min = 2, max = 50, message = "The name must be between 2 and 50 characters long")
@@ -62,7 +59,7 @@ public class Fighter extends User{
     private int winsInARow;
 
     // *** RELATIONSHIPS ***
-
+    // *********************
     // Club
     @ManyToOne()
     @JoinColumn(name = "club_id")
@@ -80,51 +77,51 @@ public class Fighter extends User{
     )
     private Set<Style> styles = new HashSet<>();
     // Fights
-    @OneToMany(mappedBy = "blueCornerFighter")
+    @OneToMany(mappedBy = "blueCornerFighter", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
     private Set<Fight> blueCornerFights = new HashSet<>();
-    @OneToMany(mappedBy = "redCornerFighter")
+    @OneToMany(mappedBy = "redCornerFighter", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
     private Set<Fight> redCornerFights = new HashSet<>();
     // FightInscriptionRequests
-    @OneToMany(mappedBy = "fighter")
+    @OneToMany(mappedBy = "fighter", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
     // Photos
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private Set<Photo> photos = new HashSet<>();
     // Following
-    @OneToMany(mappedBy = "followerFighter")
+    @OneToMany(mappedBy = "followerFighter", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private Set<Follow> following = new HashSet<>();
     // Followers
-    @OneToMany(mappedBy = "followedFighter")
+    @OneToMany(mappedBy = "followedFighter", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private Set<Follow> followers = new HashSet<>();
     // SentFighterFollowRequest
-    @OneToMany(mappedBy = "sender")
+    @OneToMany(mappedBy = "sender", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private Set<FighterFollowRequest> sentFighterFollowRequests = new HashSet<>();
     // ReceivedFighterFollowRequest
-    @OneToMany(mappedBy = "receiver")
+    @OneToMany(mappedBy = "receiver", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private Set<FighterFollowRequest> receivedFighterFollowRequests = new HashSet<>();
     // ClubMembershipRequests
-    @OneToMany(mappedBy = "fighter")
+    @OneToMany(mappedBy = "fighter", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private Set<ClubMembershipRequest> clubMembershipRequests = new HashSet<>();
     // ClubReviews
-    @OneToMany(mappedBy = "fighter")
+    @OneToMany(mappedBy = "fighter", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
     private Set<ClubReview> clubReviews = new HashSet<>();

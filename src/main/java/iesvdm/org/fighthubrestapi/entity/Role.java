@@ -33,6 +33,6 @@ public class Role {
     // *********************
 
     // Users
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.MERGE)
     private Set<User> users = new HashSet<>();
 }

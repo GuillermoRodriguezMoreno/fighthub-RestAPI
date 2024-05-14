@@ -46,7 +46,6 @@ public class EventReviewService {
         return eventReviewRepository.save(eventReviewToUpdate);
     }
     // Delete event review
-    @Transactional
     public void delete(Long id) {
         // FindById
         EventReview eventReviewToDelete = this.eventReviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, EventReview.class));

@@ -21,14 +21,13 @@ public class FighterFollowRequest {
 
         // *** PROPS ***
         // *************
-
         // Id
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @EqualsAndHashCode.Include
         private Long id;
         // Status
-        @Pattern(regexp = "APPROVED|PENDING|REJECTED", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED' or 'PENDING'")
+        @Pattern(regexp = "APPROVED|PENDING|REJECTED", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED', 'REJECTED' or 'PENDING'")
         private String status;
         // ResponseDate
         @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
@@ -40,7 +39,7 @@ public class FighterFollowRequest {
         private LocalDateTime requestDate;
 
         // *** RELATIONSHIPS ***
-
+        // *********************
         // Sender
         @ManyToOne
         @JoinColumn(name = "sender_fighter_id", nullable = false)

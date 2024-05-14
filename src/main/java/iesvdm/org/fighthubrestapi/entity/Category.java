@@ -19,7 +19,6 @@ public class Category {
 
     // *** PROPS ***
     // *************
-
     // Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +31,14 @@ public class Category {
     private String name;
 
     // *** RELATIONSHIPS ***
-
+    // *********************
     // Fighters
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
     private Set<Fighter> fighters = new HashSet<>();
     // Fights
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
     private Set<Fight> fights = new HashSet<>();

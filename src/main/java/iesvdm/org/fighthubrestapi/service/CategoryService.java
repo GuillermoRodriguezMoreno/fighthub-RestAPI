@@ -40,7 +40,7 @@ public class CategoryService {
     // Update category
     public Category update(Long id, Category category) {
         // Find category
-        Category categoryToUpdate = findById(id);
+        Category categoryToUpdate = this.categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Category.class));
         // Update props
         categoryToUpdate.setName(category.getName());
         // Save
@@ -50,7 +50,7 @@ public class CategoryService {
     @Transactional
     public void delete(Long id) {
         // Find category by id
-        Category categoryToDelete = findById(id);
+        Category categoryToDelete = this.categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Category.class));
         // Get all fighters and fights from category to delete and set category to null
         categoryToDelete.getFighters().forEach(fighter -> fighter.setCategory(null));
         categoryToDelete.getFights().forEach(fight -> fight.setCategory(null));

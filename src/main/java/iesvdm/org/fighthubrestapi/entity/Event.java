@@ -58,7 +58,7 @@ public class Event {
     private LocalDateTime endDate;
 
     // *** RELATIONSHIPS ***
-
+    // *********************
     // Photo
     @OneToOne
     @JoinColumn(name = "photo_id")
@@ -68,12 +68,12 @@ public class Event {
     @JoinColumn(name = "club_id")
     private Club organizer;
     // Fights
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
     private Set<Fight> fights = new HashSet<>();
     // Reviews
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
     private Set<EventReview> reviews = new HashSet<>();

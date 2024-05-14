@@ -6,6 +6,7 @@ import iesvdm.org.fighthubrestapi.repository.ClubRepository;
 import iesvdm.org.fighthubrestapi.repository.EventRepository;
 import iesvdm.org.fighthubrestapi.repository.EventReviewRepository;
 import iesvdm.org.fighthubrestapi.repository.FightRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,21 +60,11 @@ public class EventService {
         eventToUpdate.setOrganizer(event.getOrganizer());
         eventToUpdate.getOrganizer().getEvents().add(eventToUpdate);
         this.clubRepository.save(eventToUpdate.getOrganizer());
-        // Disassociate with fights
-        eventToUpdate.getFights().forEach(fight -> {
-            fight.setEvent(null);
-            this.fightRepository.save(fight);
-        });
-        // Associate with fights
-        eventToUpdate.setFights(event.getFights());
-        eventToUpdate.getFights().forEach(fight -> {
-            fight.setEvent(eventToUpdate);
-            this.fightRepository.save(fight);
-        });
         // Save
         return eventRepository.save(eventToUpdate);
     }
     // Delete event
+    @Transactional
     public void delete(Long id) {
         // FindById
         Event eventToDelete = this.eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Event.class));
@@ -81,15 +72,11 @@ public class EventService {
         eventToDelete.getOrganizer().getEvents().remove(eventToDelete);
         this.clubRepository.save(eventToDelete.getOrganizer());
         // Disassociate with fights
-        eventToDelete.getFights().forEach(fight -> {
-            fight.setEvent(null);
-            this.fightRepository.save(fight);
-        });
+        eventToDelete.getFights().forEach(fight -> fight.setEvent(null));
+        this.fightRepository.saveAll(eventToDelete.getFights());
         // Disassociate with reviews
-        eventToDelete.getReviews().forEach(review -> {
-            review.setEvent(null);
-            this.eventReviewRepository.save(review);
-        });
+        eventToDelete.getReviews().forEach(review -> review.setEvent(null));
+        this.eventReviewRepository.saveAll(eventToDelete.getReviews());
         // Delete
         eventRepository.deleteById(id);
     }

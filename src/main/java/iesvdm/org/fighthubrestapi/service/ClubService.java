@@ -52,48 +52,14 @@ public class ClubService {
         clubToUpdate.setDescription(club.getDescription());
         // Update president and set club to president
         if (club.getPresident() != null) {
+            // Dissociate president from club
+            clubToUpdate.getPresident().setClub(null);
+            this.fighterRepository.save(clubToUpdate.getPresident());
+            // Associate president to club
             clubToUpdate.setPresident(club.getPresident());
             clubToUpdate.getPresident().setClub(clubToUpdate);
-            fighterRepository.save(clubToUpdate.getPresident());
+            this.fighterRepository.save(clubToUpdate.getPresident());
         }
-        // Update fighters
-        Set<Fighter> updatedFighters = club.getFighters();
-        Set<Fighter> existingFighters = clubToUpdate.getFighters();
-        // Disassociate fighters that are no longer associated with the club
-        existingFighters.stream()
-                .filter(fighter -> !updatedFighters.contains(fighter))
-                .forEach(fighter -> {
-                    fighter.setClub(null);
-                    fighterRepository.save(fighter);
-                });
-        // Associate new fighters with the club
-        updatedFighters.stream()
-                .filter(fighter -> !existingFighters.contains(fighter))
-                .forEach(fighter -> {
-                    fighter.setClub(clubToUpdate);
-                    fighterRepository.save(fighter);
-                });
-        // Set the updated set of fighters to the club
-        clubToUpdate.setFighters(updatedFighters);
-        // Update events
-        Set<Event> updatedEvents = club.getEvents();
-        Set<Event> existingEvents = clubToUpdate.getEvents();
-        // Disassociate events that are no longer associated with the club
-        existingEvents.stream()
-                .filter(event -> !updatedEvents.contains(event))
-                .forEach(event -> {
-                    event.setOrganizer(null);
-                    eventRepository.save(event);
-                });
-        // Associate new events with the club
-        updatedEvents.stream()
-                .filter(event -> !existingEvents.contains(event))
-                .forEach(event -> {
-                    event.setOrganizer(clubToUpdate);
-                    eventRepository.save(event);
-                });
-        // Set the updated set of events to the club
-        clubToUpdate.setEvents(updatedEvents);
         // Save
         return clubRepository.save(clubToUpdate);
     }
@@ -108,15 +74,11 @@ public class ClubService {
             fighterRepository.save(clubToDelete.getPresident());
         }
         // Dissociate fighters from club
-        clubToDelete.getFighters().forEach(fighter -> {
-            fighter.setClub(null);
-            fighterRepository.save(fighter);
-        });
+        clubToDelete.getFighters().forEach(fighter -> fighter.setClub(null));
+        this.fighterRepository.saveAll(clubToDelete.getFighters());
         // Dissociate events from club
-        clubToDelete.getEvents().forEach(event -> {
-            event.setOrganizer(null);
-            eventRepository.save(event);
-        });
+        clubToDelete.getEvents().forEach(event -> event.setOrganizer(null));
+        this.eventRepository.saveAll(clubToDelete.getEvents());
         // Delete club
         clubRepository.deleteById(id);
     }

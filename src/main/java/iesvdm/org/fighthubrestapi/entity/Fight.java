@@ -71,7 +71,7 @@ public class Fight {
     @JoinColumn(name = "winner_id")
     private Fighter winner;
     // FightInscriptionRequests
-    @OneToMany(mappedBy = "fight")
+    @OneToMany(mappedBy = "fight", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();

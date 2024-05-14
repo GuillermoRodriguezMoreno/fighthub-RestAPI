@@ -34,12 +34,12 @@ public class Style {
     // *** RELATIONSHIPS ***
 
     // Fighters
-    @ManyToMany(mappedBy = "styles")
+    @ManyToMany(mappedBy = "styles", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
     private Set<Fighter> fighters = new HashSet<>();
     // Fights
-    @OneToMany(mappedBy = "style")
+    @OneToMany(mappedBy = "style", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
     private Set<Fight> fights = new HashSet<>();

@@ -3,6 +3,7 @@ package iesvdm.org.fighthubrestapi.service;
 import iesvdm.org.fighthubrestapi.entity.Photo;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.PhotoRepository;
+import iesvdm.org.fighthubrestapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,8 @@ public class PhotoService {
     // ***************
     @Autowired
     private PhotoRepository photoRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     // *** METHODS ***
     // ***************
@@ -32,15 +35,27 @@ public class PhotoService {
     }
     // Update photo
     public Photo update(Long id, Photo photo) {
-        Photo photoToUpdate = findById(id);
+        Photo photoToUpdate = this.photoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Photo.class));
         photoToUpdate.setEntityType(photoToUpdate.getUser().getClass().getSimpleName());
         photoToUpdate.setUrl(photo.getUrl());
+        // Disassociate the user from the photo
+        photoToUpdate.getUser().getPhotos().remove(photoToUpdate);
+        this.userRepository.save(photoToUpdate.getUser());
+        // Associate the new user to the photo
         photoToUpdate.setUser(photo.getUser());
+        photoToUpdate.getUser().getPhotos().add(photoToUpdate);
+        this.userRepository.save(photoToUpdate.getUser());
+        // Save the photo
         return photoRepository.save(photoToUpdate);
     }
     // Delete photo
-    // Todo - Implement this
     public void delete(Long id) {
-        photoRepository.deleteById(id);
+        // Find the photo
+        Photo photoToDelete = this.photoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Photo.class));
+        // Disassociate the user from the photo
+        photoToDelete.getUser().getPhotos().remove(photoToDelete);
+        this.userRepository.save(photoToDelete.getUser());
+        // Delete the photo
+        this.photoRepository.deleteById(id);
     }
 }

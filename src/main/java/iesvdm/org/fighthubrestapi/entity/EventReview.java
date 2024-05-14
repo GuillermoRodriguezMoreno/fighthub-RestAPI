@@ -39,7 +39,6 @@ public class EventReview {
     private LocalDateTime reviewDate;
 
     // *** RELATIONSHIPS ***
-
     // User
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

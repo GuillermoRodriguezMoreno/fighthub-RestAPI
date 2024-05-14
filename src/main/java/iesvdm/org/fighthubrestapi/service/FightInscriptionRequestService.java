@@ -15,6 +15,12 @@ public class FightInscriptionRequestService {
     // ***************
     @Autowired
     private FightInscriptionRequestRepository fightInscriptionRequestRepository;
+    @Autowired
+    private ClubService clubService;
+    @Autowired
+    private FighterService fighterService;
+    @Autowired
+    private FightService fightService;
 
     // *** METHODS ***
     // ***************
@@ -33,17 +39,21 @@ public class FightInscriptionRequestService {
     // Update fight inscription request
     public FightInscriptionRequest update(Long id, FightInscriptionRequest fightInscriptionRequest) {
         // Props
-        FightInscriptionRequest fightInscriptionRequestToUpdate = findById(id);
+        FightInscriptionRequest fightInscriptionRequestToUpdate = this.fightInscriptionRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, FightInscriptionRequest.class));
         fightInscriptionRequestToUpdate.setStatus(fightInscriptionRequest.getStatus());
-        fightInscriptionRequestToUpdate.setMessage(fightInscriptionRequest.getMessage());
-        fightInscriptionRequestToUpdate.setResponse(fightInscriptionRequest.getResponse());
-        // Relationships
-        // Todo - Implement this
         return fightInscriptionRequestRepository.save(fightInscriptionRequestToUpdate);
     }
     // Delete fight inscription request
-    // Todo - Implement this
     public void delete(Long id) {
+        FightInscriptionRequest fightInscriptionRequestToDelete = this.fightInscriptionRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, FightInscriptionRequest.class));
+        // Dissociate fight inscription request from club, fighter and fight
+        fightInscriptionRequestToDelete.getClub().getFightInscriptionRequests().remove(fightInscriptionRequestToDelete);
+        fightInscriptionRequestToDelete.getFighter().getFightInscriptionRequests().remove(fightInscriptionRequestToDelete);
+        fightInscriptionRequestToDelete.getFight().getFightInscriptionRequests().remove(fightInscriptionRequestToDelete);
+        this.clubService.save(fightInscriptionRequestToDelete.getClub());
+        this.fighterService.save(fightInscriptionRequestToDelete.getFighter());
+        this.fightService.save(fightInscriptionRequestToDelete.getFight());
+        // Delete fight inscription request
         fightInscriptionRequestRepository.deleteById(id);
     }
 }

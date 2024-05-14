@@ -41,12 +41,12 @@ public class Club extends User{
     @JoinColumn(name = "president_id")
     private Fighter president;
     // Fighters
-    @OneToMany(mappedBy = "club")
+    @OneToMany(mappedBy = "club", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
     private Set<Fighter> fighters = new HashSet<>();
     // Events
-    @OneToMany(mappedBy = "organizer")
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
     private Set<Event> events = new HashSet<>();

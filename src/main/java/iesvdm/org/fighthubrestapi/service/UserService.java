@@ -2,6 +2,7 @@ package iesvdm.org.fighthubrestapi.service;
 
 import iesvdm.org.fighthubrestapi.entity.User;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
+import iesvdm.org.fighthubrestapi.repository.RoleRepository;
 import iesvdm.org.fighthubrestapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ public class UserService {
     // ***************
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     // *** METHODS ***
     // ***************
@@ -40,13 +43,30 @@ public class UserService {
         userToUpdate.setPassword(user.getPassword());
         userToUpdate.setProfilePhoto(user.getProfilePhoto());
         // Relationships
-        // Todo - Fix this
-        userToUpdate.setPhotos(user.getPhotos());
+        // Disassociate the old role
+        userToUpdate.getRoles().forEach(role -> {
+            role.getUsers().remove(userToUpdate);
+            roleRepository.save(role);
+        });
+        // Associate the new role
+        userToUpdate.setRoles(user.getRoles());
+        userToUpdate.getRoles().forEach(role -> {
+            role.getUsers().add(userToUpdate);
+            roleRepository.save(role);
+        });
+        // Save
         return userRepository.save(userToUpdate);
     }
     // Delete user
-    // Todo - Implement this
     public void delete(Long id) {
+        // Find user
+        User userToDelete = this.userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, User.class));
+        // Disassociate the role
+        userToDelete.getRoles().forEach(role -> {
+            role.getUsers().remove(userToDelete);
+            roleRepository.save(role);
+        });
+        // Delete user
         userRepository.deleteById(id);
     }
 }

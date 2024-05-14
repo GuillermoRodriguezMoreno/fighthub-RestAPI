@@ -15,6 +15,8 @@ public class FighterFollowRequestService {
     // ***************
     @Autowired
     private FighterFollowRequestRepository fighterFollowRequestRepository;
+    @Autowired
+    private FighterService fighterService;
 
     // *** METHODS ***
     // ***************
@@ -33,15 +35,20 @@ public class FighterFollowRequestService {
     // Update fighter follow request
     public FighterFollowRequest update(Long id, FighterFollowRequest fighterFollowRequest) {
         // Props
-        FighterFollowRequest fighterFollowRequestToUpdate = findById(id);
+        FighterFollowRequest fighterFollowRequestToUpdate = this.fighterFollowRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, FighterFollowRequest.class));
         fighterFollowRequestToUpdate.setStatus(fighterFollowRequest.getStatus());
-        // Relationships
-        // Todo - Implement this
         return fighterFollowRequestRepository.save(fighterFollowRequestToUpdate);
     }
     // Delete fighter follow request
-    // Todo - Implement this
     public void delete(Long id) {
+        // FindById
+        FighterFollowRequest fighterFollowRequestToDelete = this.fighterFollowRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, FighterFollowRequest.class));
+        // Disassociate
+        fighterFollowRequestToDelete.getReceiver().getReceivedFighterFollowRequests().remove(fighterFollowRequestToDelete);
+        fighterFollowRequestToDelete.getSender().getSentFighterFollowRequests().remove(fighterFollowRequestToDelete);
+        this.fighterService.save(fighterFollowRequestToDelete.getReceiver());
+        this.fighterService.save(fighterFollowRequestToDelete.getSender());
+        // Delete
         fighterFollowRequestRepository.deleteById(id);
     }
 }

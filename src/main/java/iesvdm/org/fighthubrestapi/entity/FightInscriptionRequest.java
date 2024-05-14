@@ -17,12 +17,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class FightInscriptionRequest {
 
-    // toDo: Verify relationships with Club, Fighter, Event and Fight and keys
-
-
     // *** PROPS ***
     // *************
-
     // Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

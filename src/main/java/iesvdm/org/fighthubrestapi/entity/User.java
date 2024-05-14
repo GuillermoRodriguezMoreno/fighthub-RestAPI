@@ -67,12 +67,12 @@ public class User {
     @ToString.Exclude
     private Set<Role> roles = new HashSet<>();
     // Photos
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     @ToString.Exclude
     private Set<Photo> photos = new HashSet<>();
     // EventReviews
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
     private Set<EventReview> eventReviews = new HashSet<>();

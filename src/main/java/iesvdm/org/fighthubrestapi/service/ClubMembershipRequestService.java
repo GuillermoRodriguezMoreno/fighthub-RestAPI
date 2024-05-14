@@ -44,7 +44,6 @@ public class ClubMembershipRequestService {
         return clubMembershipRequestRepository.save(clubMembershipRequestToUpdate);
     }
     // Delete club membership request
-    @Transactional
     public void delete(Long id) {
         // Find club membership request by id
         ClubMembershipRequest clubMembershipRequestToDelete = this.clubMembershipRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, ClubMembershipRequest.class));
