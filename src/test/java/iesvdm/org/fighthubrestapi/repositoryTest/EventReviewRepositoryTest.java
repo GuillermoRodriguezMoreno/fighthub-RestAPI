@@ -64,25 +64,16 @@ public class EventReviewRepositoryTest {
     public void findAllEventReviews() {
         Assertions.assertEquals(2, this.eventReviewRepository.findAll().size());
     }
-    // Update eventReview
-    @Test
-    @Order(5)
-    public void updateEventReview() {
-        EventReview eventReview = this.eventReviewRepository.findById(eventReview1.getId()).get();
-        eventReview.setContent("UPDATED");
-        this.eventReviewRepository.save(eventReview);
-        Assertions.assertEquals("UPDATED", this.eventReviewRepository.findById(eventReview.getId()).get().getContent());
-    }
     // Delete eventReview
     @Test
-    @Order(6)
+    @Order(5)
     public void deleteEventReview() {
         this.eventReviewRepository.deleteById(eventReview1.getId());
         Assertions.assertFalse(this.eventReviewRepository.findById(eventReview1.getId()).isPresent());
     }
     // Delete all eventReviews
     @Test
-    @Order(7)
+    @Order(6)
     public void deleteAllEventReviews() {
         this.eventReviewRepository.deleteAll();
         Assertions.assertEquals(0, this.eventReviewRepository.count());

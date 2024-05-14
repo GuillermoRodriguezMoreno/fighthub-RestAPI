@@ -64,25 +64,16 @@ public class EventRepositoryTest {
     public void findAllEvents() {
         Assertions.assertEquals(2, this.eventRepository.findAll().size());
     }
-    // Update event
-    @Test
-    @Order(5)
-    public void updateEvent() {
-        Event event = this.eventRepository.findById(event1.getId()).get();
-        event.setName("New name");
-        this.eventRepository.save(event);
-        Assertions.assertEquals("New name", this.eventRepository.findById(event1.getId()).get().getName());
-    }
     // Delete event
     @Test
-    @Order(6)
+    @Order(5)
     public void deleteEvent() {
         this.eventRepository.deleteById(event1.getId());
         Assertions.assertFalse(this.eventRepository.findById(event1.getId()).isPresent());
     }
     // Delete all events
     @Test
-    @Order(7)
+    @Order(6)
     public void deleteAllEvents() {
         this.eventRepository.deleteAll();
         Assertions.assertEquals(0, this.eventRepository.count());

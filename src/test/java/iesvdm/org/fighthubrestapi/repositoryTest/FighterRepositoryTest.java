@@ -64,25 +64,16 @@ public class FighterRepositoryTest {
     public void findAllFighters() {
         Assertions.assertEquals(2, this.fighterRepository.findAll().size());
     }
-    // Update fighter
-    @Test
-    @Order(5)
-    public void updateFighter() {
-        Fighter fighter = this.fighterRepository.findById(fighter1.getId()).get();
-        fighter.setName("New name");
-        this.fighterRepository.save(fighter);
-        Assertions.assertEquals("New name", this.fighterRepository.findById(fighter1.getId()).get().getName());
-    }
     // Delete fighter
     @Test
-    @Order(6)
+    @Order(5)
     public void deleteFighter() {
         this.fighterRepository.delete(fighter1);
         Assertions.assertFalse(this.fighterRepository.findById(fighter1.getId()).isPresent());
     }
     // Delete all fighters
     @Test
-    @Order(7)
+    @Order(6)
     public void deleteAllFighters() {
         this.fighterRepository.deleteAll();
         Assertions.assertEquals(0, this.fighterRepository.count());

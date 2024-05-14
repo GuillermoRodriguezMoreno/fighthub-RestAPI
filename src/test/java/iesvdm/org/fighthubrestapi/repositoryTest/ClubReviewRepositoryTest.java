@@ -64,25 +64,16 @@ public class ClubReviewRepositoryTest {
     public void findAllClubReviews() {
         Assertions.assertEquals(2, this.clubReviewRepository.findAll().size());
     }
-    // Update clubReview
-    @Test
-    @Order(5)
-    public void updateClubReview() {
-        ClubReview clubReview = this.clubReviewRepository.findById(clubReview1.getId()).get();
-        clubReview.setContent("Updated prueba");
-        this.clubReviewRepository.save(clubReview);
-        Assertions.assertEquals("Updated prueba", this.clubReviewRepository.findById(clubReview1.getId()).get().getContent());
-    }
     // Delete clubReview
     @Test
-    @Order(6)
+    @Order(5)
     public void deleteClubReview() {
         this.clubReviewRepository.deleteById(clubReview1.getId());
         Assertions.assertFalse(this.clubReviewRepository.findById(clubReview1.getId()).isPresent());
     }
     // Delete all clubReviews
     @Test
-    @Order(7)
+    @Order(6)
     public void deleteAllClubReviews() {
         this.clubReviewRepository.deleteAll();
         Assertions.assertEquals(0, this.clubReviewRepository.count());

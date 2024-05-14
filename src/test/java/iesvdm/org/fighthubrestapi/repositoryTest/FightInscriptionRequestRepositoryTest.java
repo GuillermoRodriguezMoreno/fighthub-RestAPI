@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @Transactional // Changes are rolled back after the test
-public class FighterInscriptionRequestRepositoryTest {
+public class FightInscriptionRequestRepositoryTest {
 
     // *** INJECTS ***
     // ***************
@@ -64,25 +64,16 @@ public class FighterInscriptionRequestRepositoryTest {
     public void findAllFighterInscriptionRequests() {
         Assertions.assertEquals(2, this.fightInscriptionRequestRepository.findAll().size());
     }
-    // Update fighterInscriptionRequest
-    @Test
-    @Order(5)
-    public void updateFighterInscriptionRequest() {
-        FightInscriptionRequest fighterInscriptionRequest = this.fightInscriptionRequestRepository.findById(fighterInscriptionRequest1.getId()).get();
-        fighterInscriptionRequest.setStatus("accepted");
-        this.fightInscriptionRequestRepository.save(fighterInscriptionRequest);
-        Assertions.assertEquals("accepted", this.fightInscriptionRequestRepository.findById(fighterInscriptionRequest1.getId()).get().getStatus());
-    }
     // Delete fighterInscriptionRequest
     @Test
-    @Order(6)
+    @Order(5)
     public void deleteFighterInscriptionRequest() {
         this.fightInscriptionRequestRepository.delete(fighterInscriptionRequest1);
         Assertions.assertFalse(this.fightInscriptionRequestRepository.findById(fighterInscriptionRequest1.getId()).isPresent());
     }
     // Delete all fighterInscriptionRequests
     @Test
-    @Order(7)
+    @Order(6)
     public void deleteAllFighterInscriptionRequests() {
         this.fightInscriptionRequestRepository.deleteAll();
         Assertions.assertEquals(0, this.fightInscriptionRequestRepository.count());

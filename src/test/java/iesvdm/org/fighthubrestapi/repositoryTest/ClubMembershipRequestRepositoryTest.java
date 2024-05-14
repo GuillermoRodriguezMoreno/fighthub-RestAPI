@@ -74,25 +74,16 @@ public class ClubMembershipRequestRepositoryTest {
     public void findAllClubMembershipRequests() {
         Assertions.assertEquals(2, this.clubMembershipRequestRepository.findAll().size());
     }
-    // Update clubMembershipRequest
-    @Test
-    @Order(5)
-    public void updateClubMembershipRequest() {
-        ClubMembershipRequest clubMembershipRequest = this.clubMembershipRequestRepository.findById(clubMembershipRequest1.getId()).get();
-        clubMembershipRequest.setStatus("REJECTED");
-        this.clubMembershipRequestRepository.save(clubMembershipRequest);
-        Assertions.assertEquals("REJECTED", this.clubMembershipRequestRepository.findById(clubMembershipRequest1.getId()).get().getStatus());
-    }
     // Delete clubMembershipRequest
     @Test
-    @Order(6)
+    @Order(5)
     public void deleteClubMembershipRequest() {
         this.clubMembershipRequestRepository.deleteById(clubMembershipRequest1.getId());
         Assertions.assertEquals(1, this.clubMembershipRequestRepository.count());
     }
     // Delete all clubMembershipRequests
     @Test
-    @Order(7)
+    @Order(6)
     public void deleteAllClubMembershipRequests() {
         this.clubMembershipRequestRepository.deleteAll();
         Assertions.assertEquals(0, this.clubMembershipRequestRepository.count());

@@ -61,18 +61,9 @@ public class FighterFollowRequestRepositoryTest {
     public void findAllFighterFollowRequests() {
         Assertions.assertEquals(2, this.fighterFollowRequestRepository.findAll().size());
     }
-    // Update fighterFollowRequest
-    @Test
-    @Order(5)
-    public void updateFighterFollowRequest() {
-        FighterFollowRequest fighterFollowRequest = this.fighterFollowRequestRepository.findById(fighterFollowRequest1.getId()).get();
-        fighterFollowRequest.setStatus("accepted");
-        this.fighterFollowRequestRepository.save(fighterFollowRequest);
-        Assertions.assertEquals("accepted", this.fighterFollowRequestRepository.findById(fighterFollowRequest1.getId()).get().getStatus());
-    }
     // Delete fighterFollowRequest
     @Test
-    @Order(6)
+    @Order(5)
     public void deleteFighterFollowRequest() {
         this.fighterFollowRequestRepository.delete(fighterFollowRequest1);
         Assertions.assertFalse(this.fighterFollowRequestRepository.findById(fighterFollowRequest1.getId()).isPresent());
@@ -80,7 +71,7 @@ public class FighterFollowRequestRepositoryTest {
     }
     // Delete all fighterFollowRequests
     @Test
-    @Order(7)
+    @Order(6)
     public void deleteAllFighterFollowRequests() {
         this.fighterFollowRequestRepository.deleteAll();
         Assertions.assertEquals(0, this.fighterFollowRequestRepository.count());

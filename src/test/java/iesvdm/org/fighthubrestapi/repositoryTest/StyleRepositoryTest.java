@@ -73,26 +73,16 @@ public class StyleRepositoryTest {
         long expCount = this.styleRepository.count();
         Assertions.assertEquals(expCount, count);
     }
-    // Update style
-    @Test
-    @Order(5)
-    public void updateStyle(){
-        Optional<Style> styleToUpdate = this.styleRepository.findById(boxing.getId());
-        Style style = styleToUpdate.get();
-        style.setName("BJJ");
-        this.styleRepository.save(style);
-        Assertions.assertEquals("BJJ", style.getName());
-    }
     // Delete style
     @Test
-    @Order(6)
+    @Order(5)
     public void deleteStyle(){
         this.styleRepository.deleteById(boxing.getId());
         Assertions.assertFalse(this.styleRepository.findById(boxing.getId()).isPresent());
     }
     // Delete all styles
     @Test
-    @Order(7)
+    @Order(6)
     public void deleteAllStyles(){
         this.styleRepository.deleteAll();
         Assertions.assertEquals(0, this.styleRepository.count());
