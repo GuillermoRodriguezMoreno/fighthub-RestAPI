@@ -1,11 +1,9 @@
 package iesvdm.org.fighthubrestapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import iesvdm.org.fighthubrestapi.model.E_Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,5 +32,7 @@ public class Role {
 
     // Users
     @ManyToMany(mappedBy = "roles", cascade = CascadeType.MERGE)
+    @JsonIgnore
+    @ToString.Exclude
     private Set<User> users = new HashSet<>();
 }

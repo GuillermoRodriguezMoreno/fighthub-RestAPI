@@ -1,6 +1,8 @@
 package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import iesvdm.org.fighthubrestapi.serializer.FightInscriptionRequestSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonSerialize(using = FightInscriptionRequestSerializer.class)
 public class FightInscriptionRequest {
 
     // *** PROPS ***
@@ -33,12 +36,11 @@ public class FightInscriptionRequest {
     // Response
     private String response;
     // ResponseDate
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
+    @NotNull(message = "The response date cannot be null")
     private LocalDateTime responseDate;
     // RequestDate
     @NotNull(message = "The request date cannot be null")
     @PastOrPresent(message = "The request date must be in the past or present")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime requestDate;
 
     // *** RELATIONSHIPS ***

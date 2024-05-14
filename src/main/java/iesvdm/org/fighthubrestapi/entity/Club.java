@@ -28,6 +28,8 @@ public class Club extends User{
     // Address
     @NotNull(message = "The address cannot be null")
     private Address address;
+    // Phone
+    private String phone;
     // Description
     @NotBlank(message = "The description cannot be blank")
     @Size(min = 10, max = 255, message = "The description must be between 10 and 255 characters long")

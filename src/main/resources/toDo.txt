@@ -1,7 +1,7 @@
 toDo -- Reflexionar sobre composite keys en:
     - Solicitudes
     - Reviews
-
+toDo -- He añadido phone a club tener en cuenta en los services
 toDo -- Decidir como hacer los JSON
 toDO -- Problemas con la herencia en USER, REPLANTEAR!!!
 toDo -- Solucionar el NoEntityFoundException con clave compuesta

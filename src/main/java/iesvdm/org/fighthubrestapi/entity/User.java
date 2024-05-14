@@ -2,6 +2,8 @@ package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import iesvdm.org.fighthubrestapi.serializer.UserSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -17,6 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonSerialize(using = UserSerializer.class)
 public class User {
 
     // *** PROPS ***
@@ -33,7 +36,6 @@ public class User {
     // BirthDate
     @NotNull(message = "The birth date cannot be null")
     @Past(message = "The birth date must be in the past")
-    @JsonFormat(pattern = "dd-MM-yyyy",  shape = JsonFormat.Shape.STRING)
     private LocalDateTime birthDate;
     // Email
     @NotBlank
@@ -47,7 +49,6 @@ public class User {
     // RegisterDate
     @NotNull(message = "The upload date cannot be null")
     @PastOrPresent(message = "The upload date must be in the past or present")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime registerDate;
 
     // *** RELATIONSHIPS ***
@@ -62,17 +63,15 @@ public class User {
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @JsonIgnore
     @ToString.Exclude
+    @Column(columnDefinition = "default 'FIGHTER'")
     private Set<Role> roles = new HashSet<>();
     // Photos
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<Photo> photos = new HashSet<>();
     // EventReviews
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    @JsonIgnore
     @ToString.Exclude
     private Set<EventReview> eventReviews = new HashSet<>();
 
@@ -82,14 +81,5 @@ public class User {
         this.userName = username;
         this.email = email;
         this.password = password;
-    }
-
-    // *** METHODS ***
-    // ***************
-
-    // Método para establecer la fecha de registro automáticamente antes de persistir
-    @PrePersist
-    protected void onCreate() {
-        this.registerDate = LocalDateTime.now();
     }
 }
