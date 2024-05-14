@@ -20,14 +20,13 @@ public class Photo {
 
     // *** PROPS ***
     // *************
-
     // Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private long id;
     // EntityType
-    @Pattern(regexp = "FIGHTER|CLUB|EVENT", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Entity type must be 'FIGHTER', 'CLUB' or 'EVENT'")
+    @Pattern(regexp = "FIGHTER|CLUB|EVENT|USER", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Entity type must be 'FIGHTER', 'CLUB', 'USER' or 'EVENT'")
     private String EntityType;
     // Url
     @NotBlank(message = "The url cannot be blank")
@@ -38,7 +37,7 @@ public class Photo {
     private LocalDateTime uploadDate;
 
     // *** RELATIONSHIPS ***
-
+    // *********************
     // User
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -48,7 +47,6 @@ public class Photo {
 
     // *** METHODS ***
     // ***************
-
     // Método para establecer la fecha de subida automáticamente antes de persistir
     @PrePersist
     protected void onCreate() {

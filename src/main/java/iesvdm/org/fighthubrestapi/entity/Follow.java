@@ -21,7 +21,6 @@ public class Follow {
 
     // *** PROPS ***
     // *************
-
     // FollowerFighter
     @Id
     @EqualsAndHashCode.Include

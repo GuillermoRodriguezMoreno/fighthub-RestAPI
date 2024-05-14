@@ -36,7 +36,7 @@ public class FollowService {
     }
     // Update follow
     public Follow update(Long id, Follow follow) {
-        Follow followToUpdate = findById(id);
+        Follow followToUpdate = this.followRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Follow.class));
         followToUpdate.setFollowerFighter(follow.getFollowerFighter());
         followToUpdate.setFollowedFighter(follow.getFollowedFighter());
         return followRepository.save(followToUpdate);

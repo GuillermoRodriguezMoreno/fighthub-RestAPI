@@ -2,6 +2,8 @@ package iesvdm.org.fighthubrestapi.service;
 
 import iesvdm.org.fighthubrestapi.entity.Style;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
+import iesvdm.org.fighthubrestapi.repository.FightRepository;
+import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import iesvdm.org.fighthubrestapi.repository.StyleRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,9 @@ public class StyleService {
     @Autowired
     private StyleRepository styleRepository;
     @Autowired
-    private FighterService fighterService;
+    private FighterRepository fighterRepository;
     @Autowired
-    private FightService fightService;
+    private FightRepository fightRepository;
 
     // *** METHODS ***
     // ***************
@@ -47,14 +49,10 @@ public class StyleService {
         // Find style by id
         Style styleToDelete = styleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Style.class));
         // Dissociate style from fighters and fights
-        styleToDelete.getFighters().forEach(fighter -> {
-            fighter.getStyles().remove(styleToDelete);
-            fighterService.save(fighter);
-        });
-        styleToDelete.getFights().forEach(fight -> {
-            fight.setStyle(null);
-            fightService.save(fight);
-        });
+        styleToDelete.getFighters().forEach(fighter -> fighter.getStyles().remove(styleToDelete));
+        fighterRepository.saveAll(styleToDelete.getFighters());
+        styleToDelete.getFights().forEach(fight -> fight.setStyle(null));
+        fightRepository.saveAll(styleToDelete.getFights());
         // Delete style
         styleRepository.deleteById(id);
     }

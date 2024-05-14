@@ -5,6 +5,8 @@ import iesvdm.org.fighthubrestapi.entity.Role;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.model.E_Role;
 import iesvdm.org.fighthubrestapi.repository.RoleRepository;
+import iesvdm.org.fighthubrestapi.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ public class RoleService {
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     // *** METHODS ***
     // ***************
@@ -41,14 +43,13 @@ public class RoleService {
         return roleRepository.save(roleToUpdate);
     }
     // Delete role
+    @Transactional
     public void delete(Long id) {
         // Find role by id
         Role role = this.roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Role.class));
         // Disassociate role from users
-        role.getUsers().forEach(user -> {
-            user.getRoles().remove(role);
-            userService.save(user);
-        });
+        role.getUsers().forEach(user -> user.getRoles().remove(role));
+        this.userRepository.saveAll(role.getUsers());
         roleRepository.deleteById(id);
     }
 }

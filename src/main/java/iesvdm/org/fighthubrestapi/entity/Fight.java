@@ -23,7 +23,6 @@ public class Fight {
 
     // *** PROPS ***
     // *************
-
     // Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +44,7 @@ public class Fight {
     private boolean isTitleFight;
 
     // *** RELATIONSHIPS ***
-
+    // *********************
     // BlueCornerFighter
     @ManyToOne
     @JoinColumn(name = "blue_corner_fighter_id")

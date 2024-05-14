@@ -2,7 +2,6 @@ toDo -- Reflexionar sobre composite keys en:
     - Solicitudes
     - Reviews
 
-toDo -- Cascades
 toDo -- Decidir como hacer los JSON
 toDO -- Problemas con la herencia en USER, REPLANTEAR!!!
 
@@ -21,7 +20,7 @@ toDo -- Tests
 
 ________________________ IMPORTANTE __________________________
 toDo -- He modificado los filtros de seguridad en config para que pueda testear la API
-
+toDo -- Hacer un borrado logico de usuarios en vez de borrado completo
 
 _______________________ PROBLEMAS SERVICES _______________________________
 
