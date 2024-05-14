@@ -6,7 +6,6 @@ toDo -- Decidir como hacer los JSON
 toDO -- Problemas con la herencia en USER, REPLANTEAR!!!
 
 ------- Con esto habria terminado las entidades :) ---------
-
 toDo -- Terminar Services
 toDo -- Terminar Controllers
 toDo -- Terminar Controller Advice
@@ -16,12 +15,12 @@ toDo -- JSON serializadores
 toDo -- Seguridad
 toDo -- Hashear password
 toDo -- Mail Sender
-toDo -- Tests
+toDo -- Tests Repository Mirar los constructores
+toDo -- Tests Services con Insomnia
 
 ________________________ IMPORTANTE __________________________
 toDo -- He modificado los filtros de seguridad en config para que pueda testear la API
 toDo -- Hacer un borrado logico de usuarios en vez de borrado completo
 
 _______________________ PROBLEMAS SERVICES _______________________________
-
 toDo -- Solucionar crear un clubMembershipRequest
