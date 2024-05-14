@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 public class CategoryService {
 
     // *** INJECTS ***
@@ -47,16 +48,19 @@ public class CategoryService {
         return categoryRepository.save(categoryToUpdate);
     }
     // Delete category
-    @Transactional
     public void delete(Long id) {
         // Find category by id
         Category categoryToDelete = this.categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Category.class));
         // Get all fighters and fights from category to delete and set category to null
-        categoryToDelete.getFighters().forEach(fighter -> fighter.setCategory(null));
-        categoryToDelete.getFights().forEach(fight -> fight.setCategory(null));
-        // Save all fighters and fights
-        fighterRepository.saveAll(categoryToDelete.getFighters());
-        fightRepository.saveAll(categoryToDelete.getFights());
+        categoryToDelete.getFighters().forEach(fighter -> {
+            fighter.setCategory(null);
+            fighterRepository.save(fighter);
+        });
+        categoryToDelete.getFights().forEach(fight -> {
+            fight.setCategory(null);
+            fightRepository.save(fight);
+        });
+
         // Delete category
         categoryRepository.deleteById(id);
     }

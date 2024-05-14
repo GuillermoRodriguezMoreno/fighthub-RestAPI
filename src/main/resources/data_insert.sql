@@ -124,7 +124,7 @@ INSERT INTO fight (fight_order, is_ko, is_title_fight, minutes, total, start_tim
 VALUES
     (1, false, false, 3, 3, NOW(), 78, 2, 1, 1, 3, 1, null);
 
--- FIGHT_INSCRIPTION_REQUET
+-- FIGHT_INSCRIPTION_REQUEST
 INSERT INTO fight_inscription_request (message, request_date, response, response_date, status, club_id, fight_id, fighter_id)
 VALUES
     ('I would like to fight', NOW(), 'OK', NOW(), 'APPROVED', 4, 1, 2),

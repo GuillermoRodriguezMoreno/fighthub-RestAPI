@@ -17,7 +17,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@DiscriminatorValue("CLUB")
 public class Club extends User{
 
     // *** PROPS ***

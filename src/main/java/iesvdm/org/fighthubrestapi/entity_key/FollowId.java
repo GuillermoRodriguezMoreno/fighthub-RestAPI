@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 @Data
@@ -18,13 +19,24 @@ import java.io.Serializable;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class FollowId implements Serializable {
 
-    @ManyToOne
-    @JoinColumn(name = "follower_fighter_id")
-    @EqualsAndHashCode.Include
-    private Fighter followerFighter;
+    // *** PROPS ***
+    // *************
 
-    @ManyToOne
-    @JoinColumn(name = "followed_fighter_id")
-    @EqualsAndHashCode.Include
-    private Fighter followedFighter;
+    private Long followerFighterId;
+    private Long followedFighterId;
+
+    // *** METHODS ***
+    // ***************
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FollowId followId = (FollowId) o;
+        return Objects.equals(followerFighterId, followId.followerFighterId) &&
+                Objects.equals(followedFighterId, followId.followedFighterId);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(followerFighterId, followedFighterId);
+    }
 }

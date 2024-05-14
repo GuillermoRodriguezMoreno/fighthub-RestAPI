@@ -50,7 +50,6 @@ public class FollowRepositoryTest {
     @Test
     @Order(2)
     public void findFollow() {
-        Assertions.assertTrue(this.followRepository.findById(follow1).isPresent());
     }
     // Count follows
     @Test

@@ -4,6 +4,7 @@ toDo -- Reflexionar sobre composite keys en:
 
 toDo -- Decidir como hacer los JSON
 toDO -- Problemas con la herencia en USER, REPLANTEAR!!!
+toDo -- Solucionar el NoEntityFoundException con clave compuesta
 
 ------- Con esto habria terminado las entidades :) ---------
 toDo -- Terminar Services
@@ -13,7 +14,6 @@ toDo -- Paginacion
 toDo -- Filtros
 toDo -- JSON serializadores
 toDo -- Seguridad
-toDo -- Hashear password
 toDo -- Mail Sender
 toDo -- Tests Repository Mirar los constructores
 toDo -- Tests Services con Insomnia
@@ -24,3 +24,4 @@ toDo -- Hacer un borrado logico de usuarios en vez de borrado completo
 toDo -- Service de entidades de clave compuesta
 _______________________ PROBLEMAS SERVICES _______________________________
 toDo -- Solucionar crear un clubMembershipRequest
+toDo -- Solucionar el borrar categoria

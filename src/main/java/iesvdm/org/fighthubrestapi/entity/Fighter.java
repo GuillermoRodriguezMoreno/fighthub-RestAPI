@@ -14,7 +14,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@DiscriminatorValue("FIGHTER")
 public class Fighter extends User{
 
     // *** PROPS ***

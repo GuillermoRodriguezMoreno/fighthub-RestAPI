@@ -21,7 +21,6 @@ public class User {
 
     // *** PROPS ***
     // *************
-
     // ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +51,7 @@ public class User {
     private LocalDateTime registerDate;
 
     // *** RELATIONSHIPS ***
-
+    // *********************
     // ProfilePhoto
     @OneToOne()
     @JoinColumn(name = "profile_photo_id", referencedColumnName = "id")

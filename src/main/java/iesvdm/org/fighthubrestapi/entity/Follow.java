@@ -16,19 +16,21 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(FollowId.class)
 public class Follow {
 
     // *** PROPS ***
     // *************
-    // FollowerFighter
-    @Id
-    @EqualsAndHashCode.Include
-    private long followerFighter;
-    // FollowedFighter
-    @Id
-    @EqualsAndHashCode.Include
-    private long followedFighter;
+    // FollowId
+    @EmbeddedId
+    private FollowId followId;
+    @ManyToOne
+    @MapsId("followerFighterId")
+    @JoinColumn(name = "follower_fighter_id")
+    private Fighter followerFighter;
+    @ManyToOne
+    @MapsId("followedFighterId")
+    @JoinColumn(name = "followed_fighter_id")
+    private Fighter followedFighter;
     // FollowDate
     @NotNull(message = "The follow date cannot be null")
     @PastOrPresent(message = "The follow date must be in the past or present")
