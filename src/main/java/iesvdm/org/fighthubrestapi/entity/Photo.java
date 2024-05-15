@@ -29,7 +29,7 @@ public class Photo {
     @EqualsAndHashCode.Include
     private long id;
     // EntityType
-    @Pattern(regexp = "FIGHTER|CLUB|EVENT|USER", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Entity type must be 'FIGHTER', 'CLUB', 'USER' or 'EVENT'")
+    @Pattern(regexp = "FIGHTER|CLUB|EVENT", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Entity type must be 'FIGHTER', 'CLUB', 'USER' or 'EVENT'")
     private String EntityType;
     // Url
     @NotBlank(message = "The url cannot be blank")
@@ -42,12 +42,18 @@ public class Photo {
 
     // *** RELATIONSHIPS ***
     // *********************
-    // User
+    // fighter
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "fighter_id")
     @JsonIgnore
     @ToString.Exclude
-    private User user;
+    private Fighter fighter;
+    // club
+    @ManyToOne
+    @JoinColumn(name = "club_id")
+    @JsonIgnore
+    @ToString.Exclude
+    private Club club;
 
     // *** METHODS ***
     // ***************

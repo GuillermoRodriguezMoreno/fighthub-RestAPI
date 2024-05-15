@@ -46,7 +46,7 @@ public class EventService {
         event.setOrganizer(organizer);
         eventRepository.save(event);
         // Add to organizer
-        organizer.getEvents().add(event);
+        organizer.getEventsParticipated().add(event);
         this.clubRepository.save(organizer);
         return event;
     }
@@ -63,11 +63,11 @@ public class EventService {
         // Relationships
         eventToUpdate.setPhoto(event.getPhoto());
         // Disassociate with the old club
-        eventToUpdate.getOrganizer().getEvents().remove(eventToUpdate);
+        eventToUpdate.getOrganizer().getEventsParticipated().remove(eventToUpdate);
         this.clubRepository.save(eventToUpdate.getOrganizer());
         // Associate with the new club
         eventToUpdate.setOrganizer(event.getOrganizer());
-        eventToUpdate.getOrganizer().getEvents().add(eventToUpdate);
+        eventToUpdate.getOrganizer().getEventsParticipated().add(eventToUpdate);
         this.clubRepository.save(eventToUpdate.getOrganizer());
         // Save
         return eventRepository.save(eventToUpdate);
@@ -78,7 +78,7 @@ public class EventService {
         // FindById
         Event eventToDelete = this.eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Event.class));
         // Disassociate with the club
-        eventToDelete.getOrganizer().getEvents().remove(eventToDelete);
+        eventToDelete.getOrganizer().getEventsParticipated().remove(eventToDelete);
         this.clubRepository.save(eventToDelete.getOrganizer());
         // Disassociate with fights
         eventToDelete.getFights().forEach(fight -> fight.setEvent(null));

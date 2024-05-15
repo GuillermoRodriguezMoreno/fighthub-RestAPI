@@ -1,16 +1,13 @@
 package iesvdm.org.fighthubrestapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import iesvdm.org.fighthubrestapi.model.Address;
-import iesvdm.org.fighthubrestapi.model.Location;
-import iesvdm.org.fighthubrestapi.serializer.UserSerializer;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,12 +15,16 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@JsonSerialize(using = UserSerializer.class)
-public class Club extends User{
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Club {
 
     // *** PROPS ***
     // *************
+    // ID
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
+    private long id;
     // Name
     @NotBlank(message = "The name cannot be empty")
     @Size(min = 2, max = 50, message = "The name must be between 2 and 50 characters long")
@@ -33,25 +34,52 @@ public class Club extends User{
     private Address address;
     // Phone
     private String phone;
+    // Email
+    @NotBlank
+    @Email
+    @Column(unique = true)
+    private String email;
+    // RegisterDate
+    @NotNull(message = "The register date cannot be null")
+    @PastOrPresent(message = "The register date must be in the past or present")
+    @Column(columnDefinition = "TIMESTAMP")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+    private LocalDateTime registerDate;
     // Description
     @NotBlank(message = "The description cannot be blank")
     @Size(min = 10, max = 255, message = "The description must be between 10 and 255 characters long")
     private String description;
+    // Deleted
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean deleted;
 
     //  *** RELATIONSHIPS ***
     // **********************
+    // ProfilePhoto
+    @OneToOne()
+    @JoinColumn(name = "profile_photo_id")
+    private Photo profilePhoto;
     // President
     @OneToOne()
     @JoinColumn(name = "president_id")
     private Fighter president;
+    // EventsParticipated
+    @ManyToMany(mappedBy = "clubsParticipating", cascade = CascadeType.MERGE)
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<Event> eventsParticipated = new HashSet<>();
     // Fighters
     @OneToMany(mappedBy = "club", cascade = CascadeType.MERGE)
     @ToString.Exclude
     private Set<Fighter> fighters = new HashSet<>();
-    // Events
+    // EventsOrganized
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.MERGE)
     @ToString.Exclude
-    private Set<Event> events = new HashSet<>();
+    private Set<Event> eventsOrganized = new HashSet<>();
+    // Photos
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Photo> photos = new HashSet<>();
     // Reviews
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
@@ -60,8 +88,8 @@ public class Club extends User{
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private Set<ClubMembershipRequest> clubMembershipRequests = new HashSet<>();
-    // FightInscriptionRequests
+    // FightInscriptionRequestsSent
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
-    private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
+    private Set<FightInscriptionRequest> fightInscriptionRequestsSent = new HashSet<>();
 }

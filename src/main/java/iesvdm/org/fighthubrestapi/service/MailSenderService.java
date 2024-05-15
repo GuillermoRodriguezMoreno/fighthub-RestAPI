@@ -1,6 +1,6 @@
 package iesvdm.org.fighthubrestapi.service;
 
-import iesvdm.org.fighthubrestapi.entity.User;
+import iesvdm.org.fighthubrestapi.entity.Fighter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class MailSenderService {
     }
     // Notify user by email
     @Async
-    public void notificarPorEmail(User user, String mensaje) {
+    public void notificarPorEmail(Fighter user, String mensaje) {
         //Correo en modo texto
         this.send(emailSender,
                 user.getEmail(),

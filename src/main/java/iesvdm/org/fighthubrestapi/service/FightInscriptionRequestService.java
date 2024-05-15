@@ -47,7 +47,7 @@ public class FightInscriptionRequestService {
     public void delete(Long id) {
         FightInscriptionRequest fightInscriptionRequestToDelete = this.fightInscriptionRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, FightInscriptionRequest.class));
         // Dissociate fight inscription request from club, fighter and fight
-        fightInscriptionRequestToDelete.getClub().getFightInscriptionRequests().remove(fightInscriptionRequestToDelete);
+        fightInscriptionRequestToDelete.getClub().getFightInscriptionRequestsSent().remove(fightInscriptionRequestToDelete);
         fightInscriptionRequestToDelete.getFighter().getFightInscriptionRequests().remove(fightInscriptionRequestToDelete);
         fightInscriptionRequestToDelete.getFight().getFightInscriptionRequests().remove(fightInscriptionRequestToDelete);
         this.clubService.save(fightInscriptionRequestToDelete.getClub());

@@ -2,8 +2,8 @@ package iesvdm.org.fighthubrestapi.service;
 
 import iesvdm.org.fighthubrestapi.entity.Photo;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
+import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import iesvdm.org.fighthubrestapi.repository.PhotoRepository;
-import iesvdm.org.fighthubrestapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class PhotoService {
     @Autowired
     private PhotoRepository photoRepository;
     @Autowired
-    private UserRepository userRepository;
+    private FighterRepository fighterRepository;
 
     // *** METHODS ***
     // ***************
@@ -36,15 +36,15 @@ public class PhotoService {
     // Update photo
     public Photo update(Long id, Photo photo) {
         Photo photoToUpdate = this.photoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Photo.class));
-        photoToUpdate.setEntityType(photoToUpdate.getUser().getClass().getSimpleName());
+        photoToUpdate.setEntityType(photoToUpdate.getFighter().getClass().getSimpleName());
         photoToUpdate.setUrl(photo.getUrl());
         // Disassociate the user from the photo
-        photoToUpdate.getUser().getPhotos().remove(photoToUpdate);
-        this.userRepository.save(photoToUpdate.getUser());
+        photoToUpdate.getFighter().getPhotos().remove(photoToUpdate);
+        this.fighterRepository.save(photoToUpdate.getFighter());
         // Associate the new user to the photo
-        photoToUpdate.setUser(photo.getUser());
-        photoToUpdate.getUser().getPhotos().add(photoToUpdate);
-        this.userRepository.save(photoToUpdate.getUser());
+        photoToUpdate.setFighter(photo.getFighter());
+        photoToUpdate.getFighter().getPhotos().add(photoToUpdate);
+        this.fighterRepository.save(photoToUpdate.getFighter());
         // Save the photo
         return photoRepository.save(photoToUpdate);
     }
@@ -53,8 +53,8 @@ public class PhotoService {
         // Find the photo
         Photo photoToDelete = this.photoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Photo.class));
         // Disassociate the user from the photo
-        photoToDelete.getUser().getPhotos().remove(photoToDelete);
-        this.userRepository.save(photoToDelete.getUser());
+        photoToDelete.getFighter().getPhotos().remove(photoToDelete);
+        this.fighterRepository.save(photoToDelete.getFighter());
         // Delete the photo
         this.photoRepository.deleteById(id);
     }

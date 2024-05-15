@@ -78,8 +78,8 @@ public class ClubService {
         clubToDelete.getFighters().forEach(fighter -> fighter.setClub(null));
         this.fighterRepository.saveAll(clubToDelete.getFighters());
         // Dissociate events from club
-        clubToDelete.getEvents().forEach(event -> event.setOrganizer(null));
-        this.eventRepository.saveAll(clubToDelete.getEvents());
+        clubToDelete.getEventsParticipated().forEach(event -> event.setOrganizer(null));
+        this.eventRepository.saveAll(clubToDelete.getEventsParticipated());
         // Delete club
         clubRepository.deleteById(id);
     }

@@ -44,8 +44,8 @@ public class EventReview {
     // *** RELATIONSHIPS ***
     // User
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "fighter_id", nullable = false)
+    private Fighter fighter;
     // Event
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)

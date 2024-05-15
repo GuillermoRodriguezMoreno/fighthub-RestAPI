@@ -7,7 +7,8 @@ toDo -- Terminar Services en FighterFollowRequest y FightInscriptionRequest,
 toDo -- Decidir como hacer los JSON
 toDo -- Fecha en JsonSerializer
 toDo -- Comprobar campos null en JsonSerializer
-toDO -- Problemas con la herencia en USER, REPLANTEAR!!!
+toDO -- Problemas con la herencia en USER, REPLANTEAR!!! He pensado mejor no hacer una herencia sino crear la entidad Club
+        y que la administre un Fighter con Role CLUB_ADMIN
 toDo -- Solucionar el NoEntityFoundException con clave compuesta
 
 ------- Con esto habria terminado las entidades :) ---------

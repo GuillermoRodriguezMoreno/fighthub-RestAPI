@@ -1,13 +1,13 @@
 package iesvdm.org.fighthubrestapi.controller;
 
+import iesvdm.org.fighthubrestapi.entity.Fighter;
 import iesvdm.org.fighthubrestapi.entity.Role;
-import iesvdm.org.fighthubrestapi.entity.User;
 import iesvdm.org.fighthubrestapi.model.E_Role;
 import iesvdm.org.fighthubrestapi.model.LoginRequest;
 import iesvdm.org.fighthubrestapi.model.MessageResponse;
 import iesvdm.org.fighthubrestapi.model.RegisterRequest;
+import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import iesvdm.org.fighthubrestapi.repository.RoleRepository;
-import iesvdm.org.fighthubrestapi.repository.UserRepository;
 import iesvdm.org.fighthubrestapi.service.UserDetailsImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
-    UserRepository userRepository;
+    FighterRepository fighterRepository;
     @Autowired
     RoleRepository roleRepository;
     @Autowired
@@ -72,16 +72,16 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
-        if (userRepository.existsByUserName(registerRequest.getUserName())) {
+        if (fighterRepository.existsByUserName(registerRequest.getUserName())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username ya en uso!"));
         }
 
-        if (userRepository.existsByEmail(registerRequest.getEmail())) {
+        if (fighterRepository.existsByEmail(registerRequest.getEmail())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email ya en uso!"));
         }
 
         // Create new user's account
-        User user = new User(registerRequest.getUserName(),
+        Fighter user = new Fighter(registerRequest.getUserName(),
                 registerRequest.getEmail(),
                 encoder.encode(registerRequest.getPassword()));
 
@@ -111,7 +111,7 @@ public class AuthController {
         }
 
         user.setRoles(roles);
-        userRepository.save(user);
+        fighterRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("Usuario registrado correctamente!"));
     }

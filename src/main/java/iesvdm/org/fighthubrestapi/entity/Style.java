@@ -19,7 +19,6 @@ public class Style {
 
     // *** PROPS ***
     // *************
-
     // Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +31,7 @@ public class Style {
     private String name;
 
     // *** RELATIONSHIPS ***
-
+    // *********************
     // Fighters
     @ManyToMany(mappedBy = "styles", cascade = CascadeType.MERGE)
     @JsonIgnore

@@ -30,14 +30,14 @@ public class EventReviewSerializer extends JsonSerializer<EventReview> {
             // User
             jsonGenerator.writeFieldName("user");
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeNumberField("id", eventReview.getUser().getId());
-            jsonGenerator.writeStringField("userName", eventReview.getUser().getUserName());
-            if (eventReview.getUser().getProfilePhoto() == null){
+            jsonGenerator.writeNumberField("id", eventReview.getFighter().getId());
+            jsonGenerator.writeStringField("userName", eventReview.getFighter().getUserName());
+            if (eventReview.getFighter().getProfilePhoto() == null){
                 jsonGenerator.writeNumberField("photoId", -1);
                 jsonGenerator.writeStringField("photoUrl", "-1");
             } else {
-                jsonGenerator.writeNumberField("photoId", eventReview.getUser().getProfilePhoto().getId());
-                jsonGenerator.writeStringField("photoUrl", eventReview.getUser().getProfilePhoto().getUrl());
+                jsonGenerator.writeNumberField("photoId", eventReview.getFighter().getProfilePhoto().getId());
+                jsonGenerator.writeStringField("photoUrl", eventReview.getFighter().getProfilePhoto().getUrl());
             }
             jsonGenerator.writeEndObject();
             // Event
@@ -69,7 +69,7 @@ public class EventReviewSerializer extends JsonSerializer<EventReview> {
             jsonGenerator.writeFieldName("organizer");
             jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField("id", eventReview.getEvent().getOrganizer().getId());
-            jsonGenerator.writeStringField("userName", eventReview.getEvent().getOrganizer().getUserName());
+            jsonGenerator.writeStringField("userName", eventReview.getEvent().getOrganizer().getPresident().getUserName());
             jsonGenerator.writeStringField("name", eventReview.getEvent().getOrganizer().getName());
             if (eventReview.getEvent().getOrganizer().getProfilePhoto() == null){
                 jsonGenerator.writeNumberField("photoId", -1);

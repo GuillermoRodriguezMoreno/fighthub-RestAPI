@@ -22,7 +22,6 @@ public class ClubMembershipRequest {
 
     // *** PROPS ***
     // *************
-
     // Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

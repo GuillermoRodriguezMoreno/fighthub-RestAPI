@@ -28,10 +28,9 @@ public class Role {
 
     // *** RELATIONSHIPS ***
     // *********************
-
-    // Users
+    // Fighters
     @ManyToMany(mappedBy = "roles", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
-    private Set<User> users = new HashSet<>();
+    private Set<Fighter> fighters = new HashSet<>();
 }

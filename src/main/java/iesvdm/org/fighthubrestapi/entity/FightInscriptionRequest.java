@@ -58,4 +58,8 @@ public class FightInscriptionRequest {
     @ManyToOne
     @JoinColumn(name = "fight_id", nullable = false)
     private Fight fight;
+    // Event
+    @ManyToOne
+    @JoinColumn(name = "event_id", nullable = false)
+    private Event event;
 }

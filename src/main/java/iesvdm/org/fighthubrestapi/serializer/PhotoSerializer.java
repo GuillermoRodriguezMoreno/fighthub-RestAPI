@@ -20,10 +20,10 @@ public class PhotoSerializer extends JsonSerializer<Photo> {
             jsonGenerator.writeStringField("EntityType", photo.getEntityType());
             jsonGenerator.writeStringField("url", photo.getUrl());
             jsonGenerator.writeStringField("uploadDate", photo.getUploadDate().toString());
-            if (photo.getUser() == null) {
+            if (photo.getFighter() == null) {
                 jsonGenerator.writeNumberField("user_id", -1);
             } else {
-                jsonGenerator.writeNumberField("user_id", photo.getUser().getId());
+                jsonGenerator.writeNumberField("user_id", photo.getFighter().getId());
             }
             jsonGenerator.writeEndObject();
         } catch (Exception e) {

@@ -1,7 +1,7 @@
 package iesvdm.org.fighthubrestapi.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import iesvdm.org.fighthubrestapi.entity.User;
+import iesvdm.org.fighthubrestapi.entity.Fighter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,7 +37,7 @@ public class UserDetailsImpl implements UserDetails {
 
     // *** METHODS ***
     // ***************
-    public static UserDetailsImpl build(User user) {
+    public static UserDetailsImpl build(Fighter user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(rol -> new SimpleGrantedAuthority(rol.getRole().name()))
                 .collect(Collectors.toList());

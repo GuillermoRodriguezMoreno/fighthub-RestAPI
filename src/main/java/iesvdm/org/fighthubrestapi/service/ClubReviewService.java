@@ -7,8 +7,6 @@ import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.ClubRepository;
 import iesvdm.org.fighthubrestapi.repository.ClubReviewRepository;
 import iesvdm.org.fighthubrestapi.repository.FighterRepository;
-import iesvdm.org.fighthubrestapi.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

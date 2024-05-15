@@ -70,6 +70,26 @@ public class Event {
     @ManyToOne()
     @JoinColumn(name = "club_id")
     private Club organizer;
+    // FightersParticipating
+    @ManyToMany()
+    @JoinTable(
+            name = "event_fighter",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "fighter_id")
+    )
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<Fighter> fightersParticipating = new HashSet<>();
+    // ClubParticipating
+    @ManyToMany()
+    @JoinTable(
+            name = "event_club",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "club_id")
+    )
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<Club> clubsParticipating = new HashSet<>();
     // Fights
     @OneToMany(mappedBy = "event", cascade = CascadeType.MERGE)
     @JsonIgnore
@@ -80,4 +100,9 @@ public class Event {
     @JsonIgnore
     @ToString.Exclude
     private Set<EventReview> reviews = new HashSet<>();
+    // fightInscriptionRequests
+    @OneToMany(mappedBy = "event", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
 }

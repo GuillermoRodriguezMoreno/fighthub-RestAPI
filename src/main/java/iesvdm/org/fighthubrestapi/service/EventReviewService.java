@@ -2,12 +2,11 @@ package iesvdm.org.fighthubrestapi.service;
 
 import iesvdm.org.fighthubrestapi.entity.Event;
 import iesvdm.org.fighthubrestapi.entity.EventReview;
-import iesvdm.org.fighthubrestapi.entity.User;
+import iesvdm.org.fighthubrestapi.entity.Fighter;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.EventRepository;
 import iesvdm.org.fighthubrestapi.repository.EventReviewRepository;
-import iesvdm.org.fighthubrestapi.repository.UserRepository;
-import jakarta.transaction.Transactional;
+import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ public class EventReviewService {
     @Autowired
     private EventRepository eventRepository;
     @Autowired
-    private UserRepository userRepository;
+    private FighterRepository fighterRepository;
 
     // *** METHODS ***
     // ***************
@@ -38,16 +37,16 @@ public class EventReviewService {
     // Save event review
     public EventReview save(EventReview eventReview) {
         // Find user and event
-        User user = this.userRepository.findById(eventReview.getUser().getId()).orElseThrow(() -> new EntityNotFoundException(eventReview.getUser().getId(), User.class));
+        Fighter fighter = this.fighterRepository.findById(eventReview.getFighter().getId()).orElseThrow(() -> new EntityNotFoundException(eventReview.getFighter().getId(), Fighter.class));
         Event event = this.eventRepository.findById(eventReview.getEvent().getId()).orElseThrow(() -> new EntityNotFoundException(eventReview.getEvent().getId(), Event.class));
         // Associate
-        eventReview.setUser(user);
+        eventReview.setFighter(fighter);
         eventReview.setEvent(event);
         eventReviewRepository.save(eventReview);
         // Add to user and event
-        user.getEventReviews().add(eventReview);
+        fighter.getEventReviews().add(eventReview);
         event.getReviews().add(eventReview);
-        this.userRepository.save(user);
+        this.fighterRepository.save(fighter);
         this.eventRepository.save(event);
         return eventReview;
     }
@@ -64,10 +63,10 @@ public class EventReviewService {
         // FindById
         EventReview eventReviewToDelete = this.eventReviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, EventReview.class));
         // Dissaociate
-        eventReviewToDelete.getUser().getEventReviews().remove(eventReviewToDelete);
+        eventReviewToDelete.getFighter().getEventReviews().remove(eventReviewToDelete);
         eventReviewToDelete.getEvent().getReviews().remove(eventReviewToDelete);
         this.eventRepository.save(eventReviewToDelete.getEvent());
-        this.userRepository.save(eventReviewToDelete.getUser());
+        this.fighterRepository.save(eventReviewToDelete.getFighter());
         // Delete
         eventReviewRepository.deleteById(id);
     }
