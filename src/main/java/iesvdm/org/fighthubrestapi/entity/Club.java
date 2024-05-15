@@ -1,8 +1,10 @@
 package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import iesvdm.org.fighthubrestapi.model.Address;
 import iesvdm.org.fighthubrestapi.model.Location;
+import iesvdm.org.fighthubrestapi.serializer.UserSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+@JsonSerialize(using = UserSerializer.class)
 public class Club extends User{
 
     // *** PROPS ***
@@ -43,27 +46,22 @@ public class Club extends User{
     private Fighter president;
     // Fighters
     @OneToMany(mappedBy = "club", cascade = CascadeType.MERGE)
-    @JsonIgnore
     @ToString.Exclude
     private Set<Fighter> fighters = new HashSet<>();
     // Events
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.MERGE)
-    @JsonIgnore
     @ToString.Exclude
     private Set<Event> events = new HashSet<>();
     // Reviews
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<ClubReview> reviews = new HashSet<>();
     // ClubMembershipRequests
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<ClubMembershipRequest> clubMembershipRequests = new HashSet<>();
     // FightInscriptionRequests
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
 }

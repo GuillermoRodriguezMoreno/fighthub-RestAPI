@@ -36,6 +36,7 @@ public class User {
     // BirthDate
     @NotNull(message = "The birth date cannot be null")
     @Past(message = "The birth date must be in the past")
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime birthDate;
     // Email
     @NotBlank
@@ -49,6 +50,7 @@ public class User {
     // RegisterDate
     @NotNull(message = "The upload date cannot be null")
     @PastOrPresent(message = "The upload date must be in the past or present")
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime registerDate;
 
     // *** RELATIONSHIPS ***
@@ -74,6 +76,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     @ToString.Exclude
     private Set<EventReview> eventReviews = new HashSet<>();
+    // Deleted
+    @Column(columnDefinition = "default false")
+    private boolean deleted;
 
     // *** CONSTRUCTORS ***
     // ********************

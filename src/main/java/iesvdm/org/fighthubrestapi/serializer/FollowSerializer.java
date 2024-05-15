@@ -16,8 +16,15 @@ public class FollowSerializer extends JsonSerializer<Follow> {
     public void serialize(Follow follow, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         try {
             jsonGenerator.writeStartObject();
+            // FollowId
+            jsonGenerator.writeFieldName("followId");
+            jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField("followerFighterId", follow.getFollowId().getFollowerFighterId());
             jsonGenerator.writeNumberField("followedFighterId", follow.getFollowId().getFollowedFighterId());
+            jsonGenerator.writeEndObject();
+            // Follower Fighter
+            jsonGenerator.writeFieldName("followerFighter");
+            jsonGenerator.writeStartObject();
             jsonGenerator.writeStringField("followerFighterUserName", follow.getFollowerFighter().getUserName());
             if (follow.getFollowerFighter().getProfilePhoto() == null) {
                 jsonGenerator.writeNumberField("followerFighterProfilePhotoId", -1);
@@ -26,6 +33,10 @@ public class FollowSerializer extends JsonSerializer<Follow> {
                 jsonGenerator.writeNumberField("followerFighterProfilePhotoId", follow.getFollowerFighter().getProfilePhoto().getId());
                 jsonGenerator.writeStringField("followerFighterProfilePhotoUrl", follow.getFollowerFighter().getProfilePhoto().getUrl());
             }
+            jsonGenerator.writeEndObject();
+            // Followed Fighter
+            jsonGenerator.writeFieldName("followedFighter");
+            jsonGenerator.writeStartObject();
             jsonGenerator.writeStringField("followedFighterUserName", follow.getFollowedFighter().getUserName());
             if (follow.getFollowedFighter().getProfilePhoto() == null) {
                 jsonGenerator.writeNumberField("followedFighterProfilePhotoId", -1);
@@ -34,6 +45,7 @@ public class FollowSerializer extends JsonSerializer<Follow> {
                 jsonGenerator.writeNumberField("followedFighterProfilePhotoId", follow.getFollowedFighter().getProfilePhoto().getId());
                 jsonGenerator.writeStringField("followedFighterProfilePhotoUrl", follow.getFollowedFighter().getProfilePhoto().getUrl());
             }
+            jsonGenerator.writeEndObject();
             jsonGenerator.writeStringField("followDate", follow.getFollowDate().toString());
             jsonGenerator.writeEndObject();
         } catch (Exception e) {

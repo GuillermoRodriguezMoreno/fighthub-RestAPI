@@ -1,6 +1,8 @@
 package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import iesvdm.org.fighthubrestapi.serializer.EventReviewSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -14,11 +16,11 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonSerialize(using = EventReviewSerializer.class)
 public class EventReview {
 
     // *** PROPS ***
     // *************
-
     // Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +38,7 @@ public class EventReview {
     @NotNull(message = "The date cannot be null")
     @PastOrPresent(message = "The date must be in the past or present")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime reviewDate;
 
     // *** RELATIONSHIPS ***

@@ -27,11 +27,11 @@ INSERT INTO style (name) VALUES
 
 -- USER
 INSERT INTO user (birth_date, email, password, register_date, user_name, profile_photo_id) VALUES
-                        ('1990-01-01', 'admin@example.com', '1234', NOW(), 'admin', null),
-                        ('1994-02-05', 'fighter1@example.com', '1234', NOW(), 'fighter1', null),
-                        ('1995-06-03', 'fighter2@example.com', '1234', NOW(), 'fighter2', null),
-                        ('1994-05-02', 'club1@example.com', '1234', NOW(), 'club1', null),
-                        ('1999-08-01', 'club2@example.com', '1234', NOW(), 'club2', null);
+                        ('1990-01-01', 'admin@example.com', '12345678', NOW(), 'admin', null),
+                        ('1994-02-05', 'fighter1@example.com', '12345678', NOW(), 'fighter1', null),
+                        ('1995-06-03', 'fighter2@example.com', '12345678', NOW(), 'fighter2', null),
+                        ('1994-05-02', 'club1@example.com', '12345678', NOW(), 'club1', null),
+                        ('1999-08-01', 'club2@example.com', '12345678', NOW(), 'club2', null);
 
 -- ROLE
 INSERT INTO role (role) values

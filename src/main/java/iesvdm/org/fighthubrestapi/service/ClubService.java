@@ -50,6 +50,7 @@ public class ClubService {
         clubToUpdate.setName(club.getName());
         clubToUpdate.setAddress(club.getAddress());
         clubToUpdate.setDescription(club.getDescription());
+        clubToUpdate.setPhone(club.getPhone());
         // Update president and set club to president
         if (club.getPresident() != null) {
             // Dissociate president from club

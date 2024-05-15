@@ -1,8 +1,10 @@
 toDo -- Reflexionar sobre composite keys en:
     - Solicitudes
     - Reviews
-toDo -- He añadido phone a club tener en cuenta en los services
+toDo -- Terminar Services añadiendo bidireccionalidad en create
 toDo -- Decidir como hacer los JSON
+toDo -- Fecha en JsonSerializer
+toDo -- Comprobar campos null en JsonSerializer
 toDO -- Problemas con la herencia en USER, REPLANTEAR!!!
 toDo -- Solucionar el NoEntityFoundException con clave compuesta
 
@@ -23,5 +25,5 @@ toDo -- He modificado los filtros de seguridad en config para que pueda testear 
 toDo -- Hacer un borrado logico de usuarios en vez de borrado completo
 toDo -- Service de entidades de clave compuesta
 _______________________ PROBLEMAS SERVICES _______________________________
+toDo -- COMPROBAR MUY BIEN LA VALIDACION DE LOS BEAN, CREA CONFLICTO CON LOS SERVICES
 toDo -- Solucionar crear un clubMembershipRequest
-toDo -- Solucionar el borrar categoria

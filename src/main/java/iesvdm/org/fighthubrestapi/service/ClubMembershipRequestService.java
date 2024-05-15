@@ -1,8 +1,12 @@
 package iesvdm.org.fighthubrestapi.service;
 
+import iesvdm.org.fighthubrestapi.entity.Club;
 import iesvdm.org.fighthubrestapi.entity.ClubMembershipRequest;
+import iesvdm.org.fighthubrestapi.entity.Fighter;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.ClubMembershipRequestRepository;
+import iesvdm.org.fighthubrestapi.repository.ClubRepository;
+import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +21,9 @@ public class ClubMembershipRequestService {
     @Autowired
     private ClubMembershipRequestRepository clubMembershipRequestRepository;
     @Autowired
-    private ClubService clubService;
+    private ClubRepository clubRepository;
     @Autowired
-    private FighterService fighterService;
+    private FighterRepository fighterRepository;
 
     // *** METHODS ***
     // ***************
@@ -33,8 +37,18 @@ public class ClubMembershipRequestService {
     }
     // Save club membership request
     public ClubMembershipRequest save(ClubMembershipRequest clubMembershipRequest) {
+        Club club = clubRepository.findById(clubMembershipRequest.getClub().getId()).orElseThrow(() -> new EntityNotFoundException(clubMembershipRequest.getClub().getId(), Club.class));
+        Fighter fighter = fighterRepository.findById(clubMembershipRequest.getFighter().getId()).orElseThrow(() -> new EntityNotFoundException(clubMembershipRequest.getFighter().getId(), Fighter.class));
+        clubMembershipRequest.setClub(club);
+        clubMembershipRequest.setFighter(fighter);
         // Save club membership request
-        return clubMembershipRequestRepository.save(clubMembershipRequest);
+        clubMembershipRequestRepository.save(clubMembershipRequest);
+        // Associate club membership request with club and fighter
+        club.getClubMembershipRequests().add(clubMembershipRequest);
+        fighter.getClubMembershipRequests().add(clubMembershipRequest);
+        this.clubRepository.save(clubMembershipRequest.getClub());
+        this.fighterRepository.save(clubMembershipRequest.getFighter());
+        return clubMembershipRequest;
     }
     // Update club membership request
     public ClubMembershipRequest update(Long id, ClubMembershipRequest clubMembershipRequest) {
@@ -50,8 +64,8 @@ public class ClubMembershipRequestService {
         // Dissociate club membership request from club and fighter
         clubMembershipRequestToDelete.getClub().getClubMembershipRequests().remove(clubMembershipRequestToDelete);
         clubMembershipRequestToDelete.getFighter().getClubMembershipRequests().remove(clubMembershipRequestToDelete);
-        this.clubService.save(clubMembershipRequestToDelete.getClub());
-        this.fighterService.save(clubMembershipRequestToDelete.getFighter());
+        this.clubRepository.save(clubMembershipRequestToDelete.getClub());
+        this.fighterRepository.save(clubMembershipRequestToDelete.getFighter());
         // Delete club membership request
         clubMembershipRequestRepository.deleteById(id);
     }

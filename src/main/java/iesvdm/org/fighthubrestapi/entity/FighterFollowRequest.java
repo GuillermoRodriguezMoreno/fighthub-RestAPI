@@ -31,11 +31,13 @@ public class FighterFollowRequest {
         private String status;
         // ResponseDate
         @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
+        @Column(columnDefinition = "TIMESTAMP")
         private LocalDateTime responseDate;
         // RequestDate
         @NotNull(message = "The request date cannot be null")
         @PastOrPresent(message = "The request date must be in the past or present")
         @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
+        @Column(columnDefinition = "TIMESTAMP")
         private LocalDateTime requestDate;
 
         // *** RELATIONSHIPS ***

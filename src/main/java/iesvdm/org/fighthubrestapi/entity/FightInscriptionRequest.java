@@ -37,10 +37,12 @@ public class FightInscriptionRequest {
     private String response;
     // ResponseDate
     @NotNull(message = "The response date cannot be null")
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime responseDate;
     // RequestDate
     @NotNull(message = "The request date cannot be null")
     @PastOrPresent(message = "The request date must be in the past or present")
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime requestDate;
 
     // *** RELATIONSHIPS ***

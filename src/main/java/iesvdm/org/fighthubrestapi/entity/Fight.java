@@ -30,6 +30,7 @@ public class Fight {
     private Long id;
     // StartTime
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime startTime;
     // FightOrder
     @Min(value = 1, message = "The fight order must be at least 1")

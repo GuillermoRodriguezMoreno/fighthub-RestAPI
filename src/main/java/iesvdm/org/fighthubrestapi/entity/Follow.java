@@ -38,5 +38,6 @@ public class Follow {
     @NotNull(message = "The follow date cannot be null")
     @PastOrPresent(message = "The follow date must be in the past or present")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime followDate;
 }

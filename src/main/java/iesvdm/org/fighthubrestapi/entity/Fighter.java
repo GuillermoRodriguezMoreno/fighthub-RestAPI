@@ -1,7 +1,8 @@
 package iesvdm.org.fighthubrestapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import iesvdm.org.fighthubrestapi.model.Location;
+import iesvdm.org.fighthubrestapi.serializer.UserSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -14,6 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+@JsonSerialize(using = UserSerializer.class)
 public class Fighter extends User{
 
     // *** PROPS ***
@@ -77,51 +79,41 @@ public class Fighter extends User{
     private Set<Style> styles = new HashSet<>();
     // Fights
     @OneToMany(mappedBy = "blueCornerFighter", cascade = CascadeType.MERGE)
-    @JsonIgnore
     @ToString.Exclude
     private Set<Fight> blueCornerFights = new HashSet<>();
     @OneToMany(mappedBy = "redCornerFighter", cascade = CascadeType.MERGE)
-    @JsonIgnore
     @ToString.Exclude
     private Set<Fight> redCornerFights = new HashSet<>();
     // FightInscriptionRequests
     @OneToMany(mappedBy = "fighter", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
     // Photos
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<Photo> photos = new HashSet<>();
     // Following
     @OneToMany(mappedBy = "followerFighter", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<Follow> following = new HashSet<>();
     // Followers
     @OneToMany(mappedBy = "followedFighter", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<Follow> followers = new HashSet<>();
     // SentFighterFollowRequest
     @OneToMany(mappedBy = "sender", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<FighterFollowRequest> sentFighterFollowRequests = new HashSet<>();
     // ReceivedFighterFollowRequest
     @OneToMany(mappedBy = "receiver", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<FighterFollowRequest> receivedFighterFollowRequests = new HashSet<>();
     // ClubMembershipRequests
     @OneToMany(mappedBy = "fighter", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<ClubMembershipRequest> clubMembershipRequests = new HashSet<>();
     // ClubReviews
     @OneToMany(mappedBy = "fighter", cascade = CascadeType.MERGE)
-    @JsonIgnore
     @ToString.Exclude
     private Set<ClubReview> clubReviews = new HashSet<>();
 }

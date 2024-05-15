@@ -5,6 +5,7 @@ import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.CategoryRepository;
 import iesvdm.org.fighthubrestapi.repository.FightRepository;
 import iesvdm.org.fighthubrestapi.repository.FighterRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,7 +61,6 @@ public class CategoryService {
             fight.setCategory(null);
             fightRepository.save(fight);
         });
-
         // Delete category
         categoryRepository.deleteById(id);
     }
