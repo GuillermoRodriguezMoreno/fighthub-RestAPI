@@ -2,6 +2,8 @@ toDo -- Reflexionar sobre composite keys en:
     - Solicitudes
     - Reviews
 toDo -- Terminar Services añadiendo bidireccionalidad en create
+toDo -- Terminar Services en FighterFollowRequest y FightInscriptionRequest,
+        añadiendo bidireccionalidad en create, pero primero añadir composite keys
 toDo -- Decidir como hacer los JSON
 toDo -- Fecha en JsonSerializer
 toDo -- Comprobar campos null en JsonSerializer

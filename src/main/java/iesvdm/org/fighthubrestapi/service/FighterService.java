@@ -1,6 +1,9 @@
 package iesvdm.org.fighthubrestapi.service;
 
+import iesvdm.org.fighthubrestapi.entity.Category;
+import iesvdm.org.fighthubrestapi.entity.Club;
 import iesvdm.org.fighthubrestapi.entity.Fighter;
+import iesvdm.org.fighthubrestapi.entity.Style;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.*;
 import jakarta.transaction.Transactional;
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class FighterService {
@@ -42,7 +46,15 @@ public class FighterService {
     }
     // Save fighter
     public Fighter save(Fighter fighter) {
-        return fighterRepository.save(fighter);
+        this.fighterRepository.save(fighter);
+        // Associate with style
+        Set<Style> styles = fighter.getStyles();
+        styles.forEach(style -> style.getFighters().add(fighter));
+        this.styleRepository.saveAll(styles);
+        // Associate with the category
+        fighter.getCategory().getFighters().add(fighter);
+        this.categoryRepository.save(fighter.getCategory());
+        return fighter;
     }
     // Update fighter
     @Transactional

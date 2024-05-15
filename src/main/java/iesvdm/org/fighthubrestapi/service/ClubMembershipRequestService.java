@@ -37,6 +37,7 @@ public class ClubMembershipRequestService {
     }
     // Save club membership request
     public ClubMembershipRequest save(ClubMembershipRequest clubMembershipRequest) {
+        // Find club and fighter
         Club club = clubRepository.findById(clubMembershipRequest.getClub().getId()).orElseThrow(() -> new EntityNotFoundException(clubMembershipRequest.getClub().getId(), Club.class));
         Fighter fighter = fighterRepository.findById(clubMembershipRequest.getFighter().getId()).orElseThrow(() -> new EntityNotFoundException(clubMembershipRequest.getFighter().getId(), Fighter.class));
         clubMembershipRequest.setClub(club);

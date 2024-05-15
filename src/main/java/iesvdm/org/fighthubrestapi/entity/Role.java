@@ -17,7 +17,6 @@ public class Role {
 
     // *** PROPS ***
     // *************
-
     // ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

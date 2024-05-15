@@ -1,6 +1,8 @@
 package iesvdm.org.fighthubrestapi.service;
 
+import iesvdm.org.fighthubrestapi.entity.Club;
 import iesvdm.org.fighthubrestapi.entity.ClubReview;
+import iesvdm.org.fighthubrestapi.entity.Fighter;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.ClubRepository;
 import iesvdm.org.fighthubrestapi.repository.ClubReviewRepository;
@@ -36,7 +38,20 @@ public class ClubReviewService{
     }
     // Save club review
     public ClubReview save(ClubReview clubReview) {
-        return clubReviewRepository.save(clubReview);
+        // Find club and fighter
+        Club club = clubRepository.findById(clubReview.getClub().getId()).orElseThrow(() -> new EntityNotFoundException(clubReview.getClub().getId(), Club.class));
+        Fighter fighter = fighterRepository.findById(clubReview.getFighter().getId()).orElseThrow(() -> new EntityNotFoundException(clubReview.getFighter().getId(), Fighter.class));
+        // Set club and fighter
+        clubReview.setClub(club);
+        clubReview.setFighter(fighter);
+        // Save club review
+        clubReviewRepository.save(clubReview);
+        // Add club review to club and fighter
+        club.getReviews().add(clubReview);
+        fighter.getClubReviews().add(clubReview);
+        clubRepository.save(club);
+        fighterRepository.save(fighter);
+        return clubReview;
     }
     // Update club review
     public ClubReview update(Long id, ClubReview clubReview) {

@@ -1,6 +1,8 @@
 package iesvdm.org.fighthubrestapi.service;
 
+import iesvdm.org.fighthubrestapi.entity.Event;
 import iesvdm.org.fighthubrestapi.entity.EventReview;
+import iesvdm.org.fighthubrestapi.entity.User;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.EventRepository;
 import iesvdm.org.fighthubrestapi.repository.EventReviewRepository;
@@ -35,7 +37,19 @@ public class EventReviewService {
     }
     // Save event review
     public EventReview save(EventReview eventReview) {
-        return eventReviewRepository.save(eventReview);
+        // Find user and event
+        User user = this.userRepository.findById(eventReview.getUser().getId()).orElseThrow(() -> new EntityNotFoundException(eventReview.getUser().getId(), User.class));
+        Event event = this.eventRepository.findById(eventReview.getEvent().getId()).orElseThrow(() -> new EntityNotFoundException(eventReview.getEvent().getId(), Event.class));
+        // Associate
+        eventReview.setUser(user);
+        eventReview.setEvent(event);
+        eventReviewRepository.save(eventReview);
+        // Add to user and event
+        user.getEventReviews().add(eventReview);
+        event.getReviews().add(eventReview);
+        this.userRepository.save(user);
+        this.eventRepository.save(event);
+        return eventReview;
     }
     // Update event review
     public EventReview update(Long id, EventReview eventReview) {

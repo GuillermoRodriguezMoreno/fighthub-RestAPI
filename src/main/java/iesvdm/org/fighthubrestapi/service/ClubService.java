@@ -38,7 +38,7 @@ public class ClubService {
     }
     // Save club
     public Club save(Club club) {
-        return clubRepository.save(club);
+        return this.clubRepository.save(club);
     }
     // Update club
     @Transactional

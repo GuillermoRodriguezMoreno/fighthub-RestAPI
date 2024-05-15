@@ -6,8 +6,15 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import iesvdm.org.fighthubrestapi.entity.EventReview;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 public class EventReviewSerializer extends JsonSerializer<EventReview> {
+
+    // ***********
+    // DATE FORMAT
+    // ***********
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
 
     // **********
     // SERIALIZER
@@ -19,7 +26,7 @@ public class EventReviewSerializer extends JsonSerializer<EventReview> {
             jsonGenerator.writeNumberField("id", eventReview.getId());
             jsonGenerator.writeStringField("content", eventReview.getContent());
             jsonGenerator.writeNumberField("rating", eventReview.getRating());
-            jsonGenerator.writeStringField("reviewDate", eventReview.getReviewDate().toString());
+            jsonGenerator.writeStringField("reviewDate", eventReview.getReviewDate().format(formatter));
             // User
             jsonGenerator.writeFieldName("user");
             jsonGenerator.writeStartObject();

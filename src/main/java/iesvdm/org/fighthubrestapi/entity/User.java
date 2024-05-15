@@ -37,6 +37,7 @@ public class User {
     @NotNull(message = "The birth date cannot be null")
     @Past(message = "The birth date must be in the past")
     @Column(columnDefinition = "TIMESTAMP")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime birthDate;
     // Email
     @NotBlank
@@ -48,10 +49,14 @@ public class User {
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
     // RegisterDate
-    @NotNull(message = "The upload date cannot be null")
+    @NotNull(message = "The register date cannot be null")
     @PastOrPresent(message = "The upload date must be in the past or present")
     @Column(columnDefinition = "TIMESTAMP")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime registerDate;
+    // Deleted
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean deleted;
 
     // *** RELATIONSHIPS ***
     // *********************
@@ -76,9 +81,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     @ToString.Exclude
     private Set<EventReview> eventReviews = new HashSet<>();
-    // Deleted
-    @Column(columnDefinition = "default false")
-    private boolean deleted;
 
     // *** CONSTRUCTORS ***
     // ********************

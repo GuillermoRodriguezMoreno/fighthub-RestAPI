@@ -1,5 +1,6 @@
 package iesvdm.org.fighthubrestapi.service;
 
+import iesvdm.org.fighthubrestapi.entity.Club;
 import iesvdm.org.fighthubrestapi.entity.Event;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.ClubRepository;
@@ -39,7 +40,15 @@ public class EventService {
     }
     // Save event
     public Event save(Event event) {
-        return eventRepository.save(event);
+        // Find organizer
+        Club organizer = this.clubRepository.findById(event.getOrganizer().getId()).orElseThrow(() -> new EntityNotFoundException(event.getOrganizer().getId(), Club.class));
+        // Associate
+        event.setOrganizer(organizer);
+        eventRepository.save(event);
+        // Add to organizer
+        organizer.getEvents().add(event);
+        this.clubRepository.save(organizer);
+        return event;
     }
     // Update event
     public Event update(Long id, Event event) {
