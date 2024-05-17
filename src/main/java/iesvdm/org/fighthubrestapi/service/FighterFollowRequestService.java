@@ -3,12 +3,14 @@ package iesvdm.org.fighthubrestapi.service;
 import iesvdm.org.fighthubrestapi.entity.FighterFollowRequest;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.FighterFollowRequestRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class FighterFollowRequestService {
 
     // *** INJECTS ***
@@ -30,6 +32,7 @@ public class FighterFollowRequestService {
     }
     // Save fighter follow request
     public FighterFollowRequest save(FighterFollowRequest fighterFollowRequest) {
+        // toDo -- Implementar que si ya existe una petición de seguimiento entre dos luchadores no se pueda crear otra
         return fighterFollowRequestRepository.save(fighterFollowRequest);
     }
     // Update fighter follow request
@@ -37,6 +40,7 @@ public class FighterFollowRequestService {
         // Props
         FighterFollowRequest fighterFollowRequestToUpdate = this.fighterFollowRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, FighterFollowRequest.class));
         fighterFollowRequestToUpdate.setStatus(fighterFollowRequest.getStatus());
+        fighterFollowRequestToUpdate.setResponseDate(fighterFollowRequest.getResponseDate());
         return fighterFollowRequestRepository.save(fighterFollowRequestToUpdate);
     }
     // Delete fighter follow request

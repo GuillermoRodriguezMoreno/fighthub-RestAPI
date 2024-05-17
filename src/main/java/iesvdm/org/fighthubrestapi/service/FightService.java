@@ -1,6 +1,9 @@
 package iesvdm.org.fighthubrestapi.service;
 
+import iesvdm.org.fighthubrestapi.entity.Category;
+import iesvdm.org.fighthubrestapi.entity.Event;
 import iesvdm.org.fighthubrestapi.entity.Fight;
+import iesvdm.org.fighthubrestapi.entity.Style;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +39,30 @@ public class FightService {
     }
     // Save fight
     public Fight save(Fight fight) {
-        return fightRepository.save(fight);
+        Event event = this.eventRepository.findById(fight.getEvent().getId()).orElseThrow(() -> new EntityNotFoundException(fight.getEvent().getId(), Event.class));
+        Category category = this.categoryRepository.findById(fight.getCategory().getId()).orElseThrow(() -> new EntityNotFoundException(fight.getCategory().getId(), Category.class));
+        Style style = this.styleRepository.findById(fight.getStyle().getId()).orElseThrow(() -> new EntityNotFoundException(fight.getStyle().getId(), Style.class));
+        // Associate in fight
+        fight.setEvent(event);
+        fight.setCategory(category);
+        fight.setStyle(style);
+        this.fightRepository.save(fight);
+        // Associate in event, category and style
+        event.getFights().add(fight);
+        category.getFights().add(fight);
+        style.getFights().add(fight);
+        this.eventRepository.save(event);
+        this.categoryRepository.save(category);
+        this.styleRepository.save(style);
+
+        return fight;
     }
     // Update fight
     public Fight update(Long id, Fight fight) {
+        // toDo -- Implementar que al actualizar una pelea con un ganador,
+        //         al ganador se le sume una victoria, y al perdedor una derrota.
         // Props
-        Fight fightToUpdate = findById(id);
+        Fight fightToUpdate = this.fightRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Fight.class));
         fightToUpdate.setStartTime(fight.getStartTime());
         fightToUpdate.setFightOrder(fight.getFightOrder());
         fightToUpdate.setKo(fight.isKo());
@@ -49,6 +70,7 @@ public class FightService {
         fightToUpdate.setWeight(fight.getWeight());
         fightToUpdate.setTitleFight(fight.isTitleFight());
         fightToUpdate.setWinner(fight.getWinner());
+
         // Relationships
         // Disassociate blueCornerFighter
         if (fightToUpdate.getBlueCornerFighter() != null) {

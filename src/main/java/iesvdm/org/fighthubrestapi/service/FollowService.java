@@ -33,13 +33,37 @@ public class FollowService {
     }
     // Save follow
     public Follow save(Follow follow) {
-        return followRepository.save(follow);
+        // Find fighters
+        Fighter followerFighter = this.fighterRepository.findById(follow.getFollowerFighter().getId()).orElseThrow(() -> new EntityNotFoundException(follow.getFollowerFighter().getId(), Fighter.class));
+        Fighter followedFighter = this.fighterRepository.findById(follow.getFollowedFighter().getId()).orElseThrow(() -> new EntityNotFoundException(follow.getFollowedFighter().getId(), Fighter.class));
+        // Associate with follow
+        follow.setFollowerFighter(followerFighter);
+        follow.setFollowedFighter(followedFighter);
+        // Associate with fighters
+        followerFighter.getFollowers().add(follow);
+        followedFighter.getFollowing().add(follow);
+        // Save fighters
+        this.fighterRepository.save(followerFighter);
+        this.fighterRepository.save(followedFighter);
+
+        return follow;
     }
     // Update follow
     public Follow update(FollowId id, Follow follow) {
         Follow followToUpdate = this.followRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(-1L, Follow.class));
+        // Dissaociate the old fighters from the follow
+        followToUpdate.getFollowedFighter().getFollowing().remove(followToUpdate);
+        followToUpdate.getFollowerFighter().getFollowers().remove(followToUpdate);
+        this.fighterRepository.save(followToUpdate.getFollowedFighter());
+        this.fighterRepository.save(followToUpdate.getFollowerFighter());
+        // Associate the new fighters to the follow
         followToUpdate.setFollowerFighter(follow.getFollowerFighter());
         followToUpdate.setFollowedFighter(follow.getFollowedFighter());
+        followToUpdate.getFollowerFighter().getFollowers().add(followToUpdate);
+        followToUpdate.getFollowedFighter().getFollowing().add(followToUpdate);
+        this.fighterRepository.save(followToUpdate.getFollowerFighter());
+        this.fighterRepository.save(followToUpdate.getFollowedFighter());
+        // Update the follow
         return followRepository.save(followToUpdate);
     }
     // Delete follow

@@ -1,6 +1,7 @@
 package iesvdm.org.fighthubrestapi.service;
 
 
+import iesvdm.org.fighthubrestapi.entity.Fighter;
 import iesvdm.org.fighthubrestapi.entity.Role;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.FighterRepository;
@@ -44,11 +45,6 @@ public class RoleService {
     // Delete role
     @Transactional
     public void delete(Long id) {
-        // Find role by id
-        Role role = this.roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Role.class));
-        // Disassociate role from users
-        role.getFighters().forEach(user -> user.getRoles().remove(role));
-        this.fighterRepository.saveAll(role.getFighters());
-        roleRepository.deleteById(id);
+
     }
 }

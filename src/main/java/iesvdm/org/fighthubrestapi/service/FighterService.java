@@ -14,8 +14,9 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@Transactional
 public class FighterService {
-
+    // toDo:
     // *** INJECTS ***
     // ***************
     @Autowired
@@ -57,7 +58,6 @@ public class FighterService {
         return fighter;
     }
     // Update fighter
-    @Transactional
     public Fighter update(Long id, Fighter fighter) {
         // Props
         Fighter fighterToUpdate = findById(id);
@@ -100,7 +100,6 @@ public class FighterService {
         return fighterRepository.save(fighterToUpdate);
     }
     // Delete fighter
-    @Transactional
     public void delete(Long id) {
         // Find fighter
         Fighter fighterToDelete = findById(id);

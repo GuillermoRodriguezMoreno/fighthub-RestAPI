@@ -2,6 +2,9 @@ toDo -- Controlar el envio de solicitudes segun el estado pending.
 toDo -- Terminar Services añadiendo bidireccionalidad en create
 toDo -- Terminar Services en FighterFollowRequest y FightInscriptionRequest,
         añadiendo bidireccionalidad en create, pero primero añadir composite keys
+toDo -- Añadir lista de victorias, derrotas y empates en Fighter
+toDo -- Añadir perdedor y empate en Fight
+toDo -- He añadido un Enum para satus, deberia implementarlo en las entidades etc
 toDo -- Al crear un evento permitir crear peleas
 toDo -- Decidir como hacer los JSON
 toDo -- Fecha en JsonSerializer
@@ -30,3 +33,5 @@ toDo -- Service de entidades de clave compuesta
 _______________________ PROBLEMAS SERVICES _______________________________
 toDo -- COMPROBAR MUY BIEN LA VALIDACION DE LOS BEAN, CREA CONFLICTO CON LOS SERVICES
 toDo -- No olvidar al crear eventos permitir crear peleas
+-------------------------- SERVICE QUE QUEDAN -----------------------------------
+toDo -- Role, Photo
