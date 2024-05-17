@@ -1,6 +1,7 @@
 package iesvdm.org.fighthubrestapi.controller;
 
 import iesvdm.org.fighthubrestapi.entity.EventReview;
+import iesvdm.org.fighthubrestapi.entity_key.EventReviewId;
 import iesvdm.org.fighthubrestapi.service.EventReviewService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ public class EventReviewController {
     }
     // Find eventReview by id
     @GetMapping(value = {"/{id}"})
-    public EventReview findById(@PathVariable Long id) {
+    public EventReview findById(@PathVariable EventReviewId id) {
         log.info("EventReviewController: findById - id: " + id);
         return eventReviewService.findById(id);
     }
@@ -43,7 +44,7 @@ public class EventReviewController {
     }
     // Update eventReview
     @PutMapping(value = {"/{id}"})
-    public EventReview update(@PathVariable Long id, @Valid @RequestBody EventReview eventReview) {
+    public EventReview update(@PathVariable EventReviewId id, @Valid @RequestBody EventReview eventReview) {
         log.info("EventReviewController: update - id: " + id);
         return eventReviewService.update(id, eventReview);
     }
@@ -51,7 +52,7 @@ public class EventReviewController {
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = {"/{id}"})
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable EventReviewId id) {
         log.info("EventReviewController: delete - id: " + id);
         eventReviewService.delete(id);
     }

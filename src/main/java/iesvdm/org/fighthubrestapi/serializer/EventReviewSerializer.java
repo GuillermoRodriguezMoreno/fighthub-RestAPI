@@ -23,7 +23,11 @@ public class EventReviewSerializer extends JsonSerializer<EventReview> {
     public void serialize(EventReview eventReview, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         try {
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeNumberField("id", eventReview.getId());
+            jsonGenerator.writeFieldName("eventReviewId");
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeNumberField("eventId", eventReview.getId().getEventId());
+            jsonGenerator.writeNumberField("fighterId", eventReview.getId().getFighterId());
+            jsonGenerator.writeEndObject();
             jsonGenerator.writeStringField("content", eventReview.getContent());
             jsonGenerator.writeNumberField("rating", eventReview.getRating());
             jsonGenerator.writeStringField("reviewDate", eventReview.getReviewDate().format(formatter));

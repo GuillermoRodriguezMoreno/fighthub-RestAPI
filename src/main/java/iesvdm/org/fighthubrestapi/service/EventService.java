@@ -2,11 +2,9 @@ package iesvdm.org.fighthubrestapi.service;
 
 import iesvdm.org.fighthubrestapi.entity.Club;
 import iesvdm.org.fighthubrestapi.entity.Event;
+import iesvdm.org.fighthubrestapi.entity.Photo;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
-import iesvdm.org.fighthubrestapi.repository.ClubRepository;
-import iesvdm.org.fighthubrestapi.repository.EventRepository;
-import iesvdm.org.fighthubrestapi.repository.EventReviewRepository;
-import iesvdm.org.fighthubrestapi.repository.FightRepository;
+import iesvdm.org.fighthubrestapi.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 public class EventService {
 
     // *** INJECTS ***
@@ -26,6 +25,8 @@ public class EventService {
     private FightRepository fightRepository;
     @Autowired
     private EventReviewRepository eventReviewRepository;
+    @Autowired
+    private FighterRepository fighterRepository;
 
 
     // *** METHODS ***
@@ -40,6 +41,7 @@ public class EventService {
     }
     // Save event
     public Event save(Event event) {
+        // toDo -- Añadir funcionalidad de poder crear peleas
         // Find organizer
         Club organizer = this.clubRepository.findById(event.getOrganizer().getId()).orElseThrow(() -> new EntityNotFoundException(event.getOrganizer().getId(), Club.class));
         // Associate
@@ -60,26 +62,44 @@ public class EventService {
         eventToUpdate.setStartDate(event.getStartDate());
         eventToUpdate.setOpenDate(event.getOpenDate());
         eventToUpdate.setEndDate(event.getEndDate());
-        // Relationships
         eventToUpdate.setPhoto(event.getPhoto());
-        // Disassociate with the old club
-        eventToUpdate.getOrganizer().getEventsParticipated().remove(eventToUpdate);
+        // Disassociate with the old organizer
+        eventToUpdate.getOrganizer().getEventsOrganized().remove(eventToUpdate);
         this.clubRepository.save(eventToUpdate.getOrganizer());
-        // Associate with the new club
+        // Associate with the new organizer
         eventToUpdate.setOrganizer(event.getOrganizer());
-        eventToUpdate.getOrganizer().getEventsParticipated().add(eventToUpdate);
+        eventToUpdate.getOrganizer().getEventsOrganized().add(eventToUpdate);
         this.clubRepository.save(eventToUpdate.getOrganizer());
+        // Disassociate with the old fighters
+        eventToUpdate.getFightersParticipating().forEach(fighter -> fighter.getEventsParticipated().remove(eventToUpdate));
+        this.fighterRepository.saveAll(eventToUpdate.getFightersParticipating());
+        // Associate with the new fighters
+        eventToUpdate.setFightersParticipating(event.getFightersParticipating());
+        eventToUpdate.getFightersParticipating().forEach(fighter -> fighter.getEventsParticipated().add(eventToUpdate));
+        this.fighterRepository.saveAll(eventToUpdate.getFightersParticipating());
+        // Disassociate with the old clubs participating
+        eventToUpdate.getClubsParticipating().forEach(club -> club.getEventsParticipated().remove(eventToUpdate));
+        this.clubRepository.saveAll(eventToUpdate.getClubsParticipating());
+        // Associate with the new clubs participating
+        eventToUpdate.setClubsParticipating(event.getClubsParticipating());
+        eventToUpdate.getClubsParticipating().forEach(club -> club.getEventsParticipated().add(eventToUpdate));
+        this.clubRepository.saveAll(eventToUpdate.getClubsParticipating());
         // Save
         return eventRepository.save(eventToUpdate);
     }
     // Delete event
-    @Transactional
     public void delete(Long id) {
         // FindById
         Event eventToDelete = this.eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Event.class));
         // Disassociate with the club
-        eventToDelete.getOrganizer().getEventsParticipated().remove(eventToDelete);
+        eventToDelete.getOrganizer().getEventsOrganized().remove(eventToDelete);
         this.clubRepository.save(eventToDelete.getOrganizer());
+        // Disassociate with fighters participating
+        eventToDelete.getFightersParticipating().forEach(fighter -> fighter.getEventsParticipated().remove(eventToDelete));
+        this.fighterRepository.saveAll(eventToDelete.getFightersParticipating());
+        // Disassociate with clubs participating
+        eventToDelete.getClubsParticipating().forEach(club -> club.getEventsParticipated().remove(eventToDelete));
+        this.clubRepository.saveAll(eventToDelete.getClubsParticipating());
         // Disassociate with fights
         eventToDelete.getFights().forEach(fight -> fight.setEvent(null));
         this.fightRepository.saveAll(eventToDelete.getFights());

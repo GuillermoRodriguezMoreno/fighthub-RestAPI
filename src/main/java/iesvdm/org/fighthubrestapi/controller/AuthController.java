@@ -89,7 +89,7 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByRole(E_Role.USER)
+            Role userRole = roleRepository.findByRole(E_Role.FIGHTER)
                     .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
             roles.add(userRole);
         } else {
@@ -103,7 +103,7 @@ public class AuthController {
                         break;
 
                     default:
-                        Role userRole = roleRepository.findByRole(E_Role.USER)
+                        Role userRole = roleRepository.findByRole(E_Role.FIGHTER)
                                 .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
                         roles.add(userRole);
                 }

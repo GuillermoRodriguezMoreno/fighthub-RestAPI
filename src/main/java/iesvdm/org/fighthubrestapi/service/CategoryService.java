@@ -53,14 +53,10 @@ public class CategoryService {
         // Find category by id
         Category categoryToDelete = this.categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Category.class));
         // Get all fighters and fights from category to delete and set category to null
-        categoryToDelete.getFighters().forEach(fighter -> {
-            fighter.setCategory(null);
-            fighterRepository.save(fighter);
-        });
-        categoryToDelete.getFights().forEach(fight -> {
-            fight.setCategory(null);
-            fightRepository.save(fight);
-        });
+        categoryToDelete.getFighters().forEach(fighter -> fighter.setCategory(null));
+        fighterRepository.saveAll(categoryToDelete.getFighters());
+        categoryToDelete.getFights().forEach(fight -> fight.setCategory(null));
+        fightRepository.saveAll(categoryToDelete.getFights());
         // Delete category
         categoryRepository.deleteById(id);
     }

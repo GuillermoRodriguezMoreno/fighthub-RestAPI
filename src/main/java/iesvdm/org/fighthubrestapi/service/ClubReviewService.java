@@ -3,16 +3,19 @@ package iesvdm.org.fighthubrestapi.service;
 import iesvdm.org.fighthubrestapi.entity.Club;
 import iesvdm.org.fighthubrestapi.entity.ClubReview;
 import iesvdm.org.fighthubrestapi.entity.Fighter;
+import iesvdm.org.fighthubrestapi.entity_key.ClubReviewId;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.ClubRepository;
 import iesvdm.org.fighthubrestapi.repository.ClubReviewRepository;
 import iesvdm.org.fighthubrestapi.repository.FighterRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class ClubReviewService{
 
     // *** INJECTS ***
@@ -31,44 +34,44 @@ public class ClubReviewService{
         return clubReviewRepository.findAll();
     }
     // Find club review by id
-    public ClubReview findById(Long id) {
-        return clubReviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, ClubReview.class));
+    public ClubReview findById(ClubReviewId id) {
+        return clubReviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(-1L, ClubReview.class));
     }
     // Save club review
     public ClubReview save(ClubReview clubReview) {
         // Find club and fighter
-        Club club = clubRepository.findById(clubReview.getClub().getId()).orElseThrow(() -> new EntityNotFoundException(clubReview.getClub().getId(), Club.class));
-        Fighter fighter = fighterRepository.findById(clubReview.getFighter().getId()).orElseThrow(() -> new EntityNotFoundException(clubReview.getFighter().getId(), Fighter.class));
+        Club club = this.clubRepository.findById(clubReview.getClub().getId()).orElseThrow(() -> new EntityNotFoundException(clubReview.getClub().getId(), Club.class));
+        Fighter fighter = this.fighterRepository.findById(clubReview.getFighter().getId()).orElseThrow(() -> new EntityNotFoundException(clubReview.getFighter().getId(), Fighter.class));
         // Set club and fighter
         clubReview.setClub(club);
         clubReview.setFighter(fighter);
         // Save club review
-        clubReviewRepository.save(clubReview);
+        this.clubReviewRepository.save(clubReview);
         // Add club review to club and fighter
         club.getReviews().add(clubReview);
         fighter.getClubReviews().add(clubReview);
-        clubRepository.save(club);
-        fighterRepository.save(fighter);
+        this.clubRepository.save(club);
+        this.fighterRepository.save(fighter);
         return clubReview;
     }
     // Update club review
-    public ClubReview update(Long id, ClubReview clubReview) {
+    public ClubReview update(ClubReviewId id, ClubReview clubReview) {
         // Props
-        ClubReview clubReviewToUpdate = this.clubReviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, ClubReview.class));
+        ClubReview clubReviewToUpdate = this.clubReviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(-1L, ClubReview.class));
         clubReviewToUpdate.setContent(clubReview.getContent());
         clubReviewToUpdate.setRating(clubReview.getRating());
-        return clubReviewRepository.save(clubReviewToUpdate);
+        return this.clubReviewRepository.save(clubReviewToUpdate);
     }
     // Delete club review
-    public void delete(Long id) {
+    public void delete(ClubReviewId id) {
         // Find club review by id
-        ClubReview clubReviewToDelete = findById(id);
+        ClubReview clubReviewToDelete = this.clubReviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(-1L, ClubReview.class));
         // Dissociate club review from fighter and club
         clubReviewToDelete.getFighter().getClubReviews().remove(clubReviewToDelete);
         clubReviewToDelete.getClub().getReviews().remove(clubReviewToDelete);
-        fighterRepository.save(clubReviewToDelete.getFighter());
-        clubRepository.save(clubReviewToDelete.getClub());
+        this.fighterRepository.save(clubReviewToDelete.getFighter());
+        this.clubRepository.save(clubReviewToDelete.getClub());
         // Delete club review
-        clubReviewRepository.deleteById(id);
+        this.clubReviewRepository.deleteById(id);
     }
 }

@@ -1,9 +1,8 @@
-toDo -- Reflexionar sobre composite keys en:
-    - Solicitudes
-    - Reviews
+toDo -- Controlar el envio de solicitudes segun el estado pending.
 toDo -- Terminar Services añadiendo bidireccionalidad en create
 toDo -- Terminar Services en FighterFollowRequest y FightInscriptionRequest,
         añadiendo bidireccionalidad en create, pero primero añadir composite keys
+toDo -- Al crear un evento permitir crear peleas
 toDo -- Decidir como hacer los JSON
 toDo -- Fecha en JsonSerializer
 toDo -- Comprobar campos null en JsonSerializer
@@ -25,8 +24,9 @@ toDo -- Tests Services con Insomnia
 
 ________________________ IMPORTANTE __________________________
 toDo -- He modificado los filtros de seguridad en config para que pueda testear la API
-toDo -- Hacer un borrado logico de usuarios en vez de borrado completo
+toDo -- Hacer un borrado logico en entidades principales en vez de borrado completo
+        (Añadir otro endpoint)
 toDo -- Service de entidades de clave compuesta
 _______________________ PROBLEMAS SERVICES _______________________________
 toDo -- COMPROBAR MUY BIEN LA VALIDACION DE LOS BEAN, CREA CONFLICTO CON LOS SERVICES
-toDo -- Solucionar crear un clubMembershipRequest
+toDo -- No olvidar al crear eventos permitir crear peleas

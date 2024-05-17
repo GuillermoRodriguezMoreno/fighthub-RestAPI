@@ -1,12 +1,9 @@
 package iesvdm.org.fighthubrestapi.entity_key;
 
-import iesvdm.org.fighthubrestapi.entity.Fighter;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.EmbeddedId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -16,13 +13,12 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FollowId implements Serializable {
+public class EventReviewId implements Serializable {
 
     // *** PROPS ***
     // *************
-
-    private Long followerFighterId;
-    private Long followedFighterId;
+    private Long fighterId;
+    private Long eventId;
 
     // *** METHODS ***
     // ***************
@@ -30,12 +26,12 @@ public class FollowId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FollowId followId = (FollowId) o;
-        return Objects.equals(followerFighterId, followId.followerFighterId) &&
-                Objects.equals(followedFighterId, followId.followedFighterId);
+        EventReviewId eventReviewId = (EventReviewId) o;
+        return fighterId.equals(eventReviewId.fighterId) &&
+                eventId.equals(eventReviewId.eventId);
     }
     @Override
     public int hashCode() {
-        return Objects.hash(followerFighterId, followedFighterId);
+        return Objects.hash(fighterId, eventId);
     }
 }

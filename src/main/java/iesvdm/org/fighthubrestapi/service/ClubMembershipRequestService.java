@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 public class ClubMembershipRequestService {
 
     // *** INJECTS ***
@@ -40,6 +41,7 @@ public class ClubMembershipRequestService {
         // Find club and fighter
         Club club = clubRepository.findById(clubMembershipRequest.getClub().getId()).orElseThrow(() -> new EntityNotFoundException(clubMembershipRequest.getClub().getId(), Club.class));
         Fighter fighter = fighterRepository.findById(clubMembershipRequest.getFighter().getId()).orElseThrow(() -> new EntityNotFoundException(clubMembershipRequest.getFighter().getId(), Fighter.class));
+        // Set club and fighter
         clubMembershipRequest.setClub(club);
         clubMembershipRequest.setFighter(fighter);
         // Save club membership request
@@ -56,6 +58,7 @@ public class ClubMembershipRequestService {
         // Props
         ClubMembershipRequest clubMembershipRequestToUpdate = findById(id);
         clubMembershipRequestToUpdate.setStatus(clubMembershipRequest.getStatus());
+        clubMembershipRequestToUpdate.setResponseDate(clubMembershipRequest.getResponseDate());
         return clubMembershipRequestRepository.save(clubMembershipRequestToUpdate);
     }
     // Delete club membership request

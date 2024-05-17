@@ -1,6 +1,7 @@
 package iesvdm.org.fighthubrestapi.controller;
 
 import iesvdm.org.fighthubrestapi.entity.Follow;
+import iesvdm.org.fighthubrestapi.entity_key.FollowId;
 import iesvdm.org.fighthubrestapi.service.FollowService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,23 +29,21 @@ public class FollowController {
         log.info("FollowController: findAll");
         return followService.findAll();
     }
-    /* DEBERIA PASAR LA CLAVE COMPUESTA COMO PARAMETRO
-
     // Find follow by id
     @GetMapping(value = {"/{id}"})
-    public Follow findById(@PathVariable Long id) {
+    public Follow findById(@PathVariable FollowId id) {
         log.info("FollowController: findById - id: " + id);
         return followService.findById(id);
     }
     // Save follow
     @PostMapping(value = {"", "/"})
     public Follow save(@RequestBody Follow follow) {
-        log.info("FollowController: save - id: " + follow.getId());
+        log.info("FollowController: save - id: " + follow.getFollowId());
         return followService.save(follow);
     }
     // Update follow
     @PutMapping(value = {"/{id}"})
-    public Follow update(@PathVariable Long id, @RequestBody Follow follow) {
+    public Follow update(@PathVariable FollowId id, @RequestBody Follow follow) {
         log.info("FollowController: update - id: " + id);
         return followService.update(id, follow);
     }
@@ -52,9 +51,8 @@ public class FollowController {
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = {"/{id}"})
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable FollowId id) {
         log.info("FollowController: delete - id: " + id);
         followService.delete(id);
     }
-     */
 }

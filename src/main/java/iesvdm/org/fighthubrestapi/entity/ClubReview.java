@@ -1,6 +1,7 @@
 package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import iesvdm.org.fighthubrestapi.entity_key.ClubReviewId;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -19,10 +20,8 @@ public class ClubReview {
     // *** PROPS ***
     // *************
     // Id
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    private Long id;
+    @EmbeddedId
+    private ClubReviewId id;
     // Content
     @NotBlank(message = "The content cannot be blank")
     @Size(min = 10, max = 500, message = "The Content must be between 10 and 500 characters long")
@@ -42,10 +41,12 @@ public class ClubReview {
     // *********************
     // User
     @ManyToOne
+    @MapsId("fighterId")
     @JoinColumn(name = "fighter_id", nullable = false)
     private Fighter fighter;
     // Club
     @ManyToOne
+    @MapsId("clubId")
     @JoinColumn(name = "club_id", nullable = false)
     private Club club;
 }

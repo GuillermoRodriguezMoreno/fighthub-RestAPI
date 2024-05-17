@@ -26,6 +26,15 @@ public class Follow {
     // FollowId
     @EmbeddedId
     private FollowId followId;
+    // FollowDate
+    @NotNull(message = "The follow date cannot be null")
+    @PastOrPresent(message = "The follow date must be in the past or present")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime followDate;
+
+    // *** RELATIONSHIPS ***
+    // *********************
     @ManyToOne
     @MapsId("followerFighterId")
     @JoinColumn(name = "follower_fighter_id")
@@ -34,10 +43,5 @@ public class Follow {
     @MapsId("followedFighterId")
     @JoinColumn(name = "followed_fighter_id")
     private Fighter followedFighter;
-    // FollowDate
-    @NotNull(message = "The follow date cannot be null")
-    @PastOrPresent(message = "The follow date must be in the past or present")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
-    @Column(columnDefinition = "TIMESTAMP")
-    private LocalDateTime followDate;
+
 }

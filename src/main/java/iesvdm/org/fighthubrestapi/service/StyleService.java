@@ -45,7 +45,6 @@ public class StyleService {
         return styleRepository.save(styleToUpdate);
     }
     // Delete style
-    @Transactional
     public void delete(Long id) {
         // Find style by id
         Style styleToDelete = styleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Style.class));
