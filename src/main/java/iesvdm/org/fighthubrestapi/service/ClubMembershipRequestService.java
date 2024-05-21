@@ -56,7 +56,7 @@ public class ClubMembershipRequestService {
     // Update club membership request
     public ClubMembershipRequest update(Long id, ClubMembershipRequest clubMembershipRequest) {
         // Props
-        ClubMembershipRequest clubMembershipRequestToUpdate = findById(id);
+        ClubMembershipRequest clubMembershipRequestToUpdate = this.clubMembershipRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, ClubMembershipRequest.class));
         clubMembershipRequestToUpdate.setStatus(clubMembershipRequest.getStatus());
         clubMembershipRequestToUpdate.setResponseDate(clubMembershipRequest.getResponseDate());
         return clubMembershipRequestRepository.save(clubMembershipRequestToUpdate);

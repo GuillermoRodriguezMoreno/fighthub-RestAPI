@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import iesvdm.org.fighthubrestapi.entity.*;
+import iesvdm.org.fighthubrestapi.util.DateUtil;
 
 import java.io.IOException;
 
@@ -21,7 +22,7 @@ public class FighterSerializer extends JsonSerializer<Fighter> {
             jsonGenerator.writeStringField("birthDate", fighter.getBirthDate().toString());
             jsonGenerator.writeStringField("email", fighter.getEmail());
             jsonGenerator.writeStringField("password", fighter.getPassword());
-            jsonGenerator.writeStringField("registerDate", fighter.getRegisterDate().toString());
+            jsonGenerator.writeStringField("registerDate", DateUtil.formatDateTime(fighter.getRegisterDate()));
             jsonGenerator.writeBooleanField("deleted", fighter.isDeleted());
             jsonGenerator.writeStringField("name", fighter.getName());
             jsonGenerator.writeStringField("active", fighter.isActive() ? "true" : "false");

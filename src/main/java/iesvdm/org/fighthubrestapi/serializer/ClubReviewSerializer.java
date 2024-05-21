@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import iesvdm.org.fighthubrestapi.entity.ClubReview;
+import iesvdm.org.fighthubrestapi.util.DateUtil;
 
 import java.io.IOException;
 
@@ -25,7 +26,7 @@ public class ClubReviewSerializer extends JsonSerializer<ClubReview> {
             jsonGenerator.writeEndObject();
             jsonGenerator.writeStringField("content", clubReview.getContent());
             jsonGenerator.writeNumberField("rating", clubReview.getRating());
-            jsonGenerator.writeStringField("reviewDate", clubReview.getReviewDate().toString());
+            jsonGenerator.writeStringField("reviewDate", DateUtil.formatDateTime(clubReview.getReviewDate()));
             // Fighter
             jsonGenerator.writeFieldName("fighter");
             jsonGenerator.writeStartObject();

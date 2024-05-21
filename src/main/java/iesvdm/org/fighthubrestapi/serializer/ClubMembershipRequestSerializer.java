@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import iesvdm.org.fighthubrestapi.entity.ClubMembershipRequest;
+import iesvdm.org.fighthubrestapi.util.DateUtil;
 
 import java.io.IOException;
 
@@ -19,8 +20,8 @@ public class ClubMembershipRequestSerializer extends JsonSerializer<ClubMembersh
             jsonGenerator.writeNumberField("id", clubMembershipRequest.getId());
             jsonGenerator.writeStringField("status", clubMembershipRequest.getStatus().name());
             if (clubMembershipRequest.getResponseDate() != null)
-                jsonGenerator.writeStringField("responseDate", clubMembershipRequest.getResponseDate().toString());
-            jsonGenerator.writeStringField("requestDate", clubMembershipRequest.getRequestDate().toString());
+                jsonGenerator.writeStringField("responseDate", DateUtil.formatDateTime(clubMembershipRequest.getResponseDate()));
+            jsonGenerator.writeStringField("requestDate", DateUtil.formatDateTime(clubMembershipRequest.getRequestDate()));
             // Club
             jsonGenerator.writeFieldName("club");
             jsonGenerator.writeStartObject();
@@ -72,7 +73,7 @@ public class ClubMembershipRequestSerializer extends JsonSerializer<ClubMembersh
                 jsonGenerator.writeStringField("url", clubMembershipRequest.getFighter().getProfilePhoto().getUrl());
                 jsonGenerator.writeEndObject();
             }
-            jsonGenerator.writeStringField("birthDate", clubMembershipRequest.getFighter().getBirthDate().toString());
+            jsonGenerator.writeStringField("birthDate", DateUtil.formatDate(clubMembershipRequest.getFighter().getBirthDate()));
             jsonGenerator.writeStringField("email", clubMembershipRequest.getFighter().getEmail());
             jsonGenerator.writeNumberField("weight", clubMembershipRequest.getFighter().getWeight());
             jsonGenerator.writeNumberField("height", clubMembershipRequest.getFighter().getHeight());

@@ -13,7 +13,8 @@ toDO -- Problemas con la herencia en USER, REPLANTEAR!!! He pensado mejor no hac
         y que la administre un Fighter con Role CLUB_ADMIN
 toDo -- Solucionar el NoEntityFoundException con clave compuesta
 toDo -- En role, al ser un enum, no puedo crear desde la api
-
+toDo -- En las entidades con clave compuesta, como pasar el id compuesto a la api por la URL
+toDo -- Fecha en deserialize IMPORTANTE!!
 ------- Con esto habria terminado las entidades :) ---------
 toDo -- Terminar Services
 toDo -- Terminar Controllers
@@ -25,7 +26,7 @@ toDo -- Seguridad
 toDo -- Mail Sender
 toDo -- Tests Repository Mirar los constructores
 toDo -- Tests Services con Insomnia
-
+toDo -- HAY QUE MIRAR MUY BIEN LOS NULL EN LOS SERVICES
 ________________________ IMPORTANTE __________________________
 toDo -- He modificado los filtros de seguridad en config para que pueda testear la API
 toDo -- Hacer un borrado logico en entidades principales en vez de borrado completo

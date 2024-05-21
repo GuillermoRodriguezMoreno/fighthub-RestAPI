@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import iesvdm.org.fighthubrestapi.entity.Fight;
+import iesvdm.org.fighthubrestapi.util.DateUtil;
 
 import java.io.IOException;
 
@@ -17,7 +18,7 @@ public class FightSerializer extends JsonSerializer<Fight> {
         try {
             jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField("id", fight.getId());
-            jsonGenerator.writeStringField("startTime", fight.getStartTime().toString());
+            jsonGenerator.writeStringField("startTime", DateUtil.formatDateTime(fight.getStartTime()));
             jsonGenerator.writeNumberField("fightOrder", fight.getFightOrder());
             jsonGenerator.writeBooleanField("isKo", fight.isKo());
             if (fight.getRound() != null) {

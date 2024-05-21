@@ -57,18 +57,26 @@ public class ClubService {
         clubToUpdate.setDescription(club.getDescription());
         clubToUpdate.setDeleted(club.isDeleted());
         // Disassociate profile photo from club
-        clubToUpdate.getProfilePhoto().setClub(null);
-        this.photoRepository.save(clubToUpdate.getProfilePhoto());
+        if (clubToUpdate.getProfilePhoto() != null) {
+            clubToUpdate.getProfilePhoto().setClub(null);
+            this.photoRepository.save(clubToUpdate.getProfilePhoto());
+        }
         // Associate profile photo to club
-        clubToUpdate.setProfilePhoto(club.getProfilePhoto());
-        clubToUpdate.getProfilePhoto().setClub(clubToUpdate);
-        this.photoRepository.save(clubToUpdate.getProfilePhoto());
+        if (club.getProfilePhoto() != null) {
+            clubToUpdate.setProfilePhoto(club.getProfilePhoto());
+            clubToUpdate.getProfilePhoto().setClub(clubToUpdate);
+            this.photoRepository.save(clubToUpdate.getProfilePhoto());
+        }
         // Disassociate president from club
-        clubToUpdate.getPresident().setClubAdministered(null);
-        this.fighterRepository.save(clubToUpdate.getPresident());
+        if (clubToUpdate.getPresident() != null) {
+            clubToUpdate.getPresident().setClubAdministered(null);
+            this.fighterRepository.save(clubToUpdate.getPresident());
+        }
         // Associate president to club
-        clubToUpdate.setPresident(club.getPresident());
-        clubToUpdate.getPresident().setClubAdministered(clubToUpdate);
+        if (club.getPresident() != null) {
+            clubToUpdate.setPresident(club.getPresident());
+            clubToUpdate.getPresident().setClubAdministered(clubToUpdate);
+        }
         // Save
         return clubRepository.save(clubToUpdate);
     }

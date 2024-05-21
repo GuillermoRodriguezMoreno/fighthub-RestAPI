@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import iesvdm.org.fighthubrestapi.entity.EventReview;
+import iesvdm.org.fighthubrestapi.util.DateUtil;
 
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 
 public class EventReviewSerializer extends JsonSerializer<EventReview> {
 
@@ -26,7 +26,7 @@ public class EventReviewSerializer extends JsonSerializer<EventReview> {
             jsonGenerator.writeEndObject();
             jsonGenerator.writeStringField("content", eventReview.getContent());
             jsonGenerator.writeNumberField("rating", eventReview.getRating());
-            jsonGenerator.writeStringField("reviewDate", eventReview.getReviewDate().toString());
+            jsonGenerator.writeStringField("reviewDate", DateUtil.formatDate(eventReview.getReviewDate()));
             // Fighter
             jsonGenerator.writeFieldName("fighter");
             jsonGenerator.writeStartObject();
@@ -52,7 +52,7 @@ public class EventReviewSerializer extends JsonSerializer<EventReview> {
             jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField("id", eventReview.getEvent().getId());
             jsonGenerator.writeStringField("name", eventReview.getEvent().getName());
-            jsonGenerator.writeStringField("date", eventReview.getEvent().getStartDate().toString());
+            jsonGenerator.writeStringField("date", DateUtil.formatDateTime(eventReview.getEvent().getStartDate()));
             if (eventReview.getEvent().getPhoto() != null) {
                 jsonGenerator.writeFieldName("eventPhoto");
                 jsonGenerator.writeStartObject();

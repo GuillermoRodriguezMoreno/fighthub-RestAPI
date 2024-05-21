@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import iesvdm.org.fighthubrestapi.entity.Club;
+import iesvdm.org.fighthubrestapi.util.DateUtil;
 
 import java.io.IOException;
 
@@ -30,9 +31,9 @@ public class ClubSerializer extends JsonSerializer<Club> {
                 jsonGenerator.writeStringField("phone", club.getPhone());
             }
             jsonGenerator.writeStringField("email", club.getEmail());
-            jsonGenerator.writeStringField("registerDate", club.getRegisterDate().toString());
+            jsonGenerator.writeStringField("registerDate", DateUtil.formatDateTime(club.getRegisterDate()));
             jsonGenerator.writeStringField("description", club.getDescription());
-            jsonGenerator.writeStringField("deleted", club.isDeleted() ? "true" : "false");
+            jsonGenerator.writeBooleanField("deleted", club.isDeleted());
             // Photo
             if (club.getProfilePhoto() != null) {
                 jsonGenerator.writeFieldName("photo");

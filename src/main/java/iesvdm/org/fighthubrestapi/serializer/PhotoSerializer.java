@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import iesvdm.org.fighthubrestapi.entity.Photo;
+import iesvdm.org.fighthubrestapi.util.DateUtil;
 
 import java.io.IOException;
 
@@ -19,7 +20,7 @@ public class PhotoSerializer extends JsonSerializer<Photo> {
             jsonGenerator.writeNumberField("id", photo.getId());
             jsonGenerator.writeStringField("EntityType", photo.getEntityType());
             jsonGenerator.writeStringField("url", photo.getUrl());
-            jsonGenerator.writeStringField("uploadDate", photo.getUploadDate().toString());
+            jsonGenerator.writeStringField("uploadDate", DateUtil.formatDateTime(photo.getUploadDate()));
             if (photo.getFighter() != null) {
                 jsonGenerator.writeFieldName("fighter");
                 jsonGenerator.writeStartObject();

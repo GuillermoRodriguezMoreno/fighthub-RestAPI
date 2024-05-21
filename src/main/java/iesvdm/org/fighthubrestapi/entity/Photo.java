@@ -11,7 +11,9 @@ import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
@@ -51,12 +53,4 @@ public class Photo {
     @JoinColumn(name = "club_id")
     @ToString.Exclude
     private Club club;
-
-    // *** METHODS ***
-    // ***************
-    // Método para establecer la fecha de subida automáticamente antes de persistir
-    @PrePersist
-    protected void onCreate() {
-        this.uploadDate = LocalDateTime.now();
-    }
 }

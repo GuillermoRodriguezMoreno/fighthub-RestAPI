@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import iesvdm.org.fighthubrestapi.entity.FightInscriptionRequest;
 import iesvdm.org.fighthubrestapi.entity.Follow;
+import iesvdm.org.fighthubrestapi.util.DateUtil;
 
 import java.io.IOException;
 
@@ -22,9 +23,9 @@ public class FightInscriptionRequestSerializer extends JsonSerializer<FightInscr
             jsonGenerator.writeStringField("message", fightInscriptionRequest.getMessage());
             if (fightInscriptionRequest.getResponse() != null) {
                 jsonGenerator.writeStringField("response", fightInscriptionRequest.getResponse());
-                jsonGenerator.writeStringField("responseDate", fightInscriptionRequest.getResponseDate().toString());
+                jsonGenerator.writeStringField("responseDate", DateUtil.formatDateTime(fightInscriptionRequest.getResponseDate()));
             }
-            jsonGenerator.writeStringField("requestDate", fightInscriptionRequest.getRequestDate().toString());
+            jsonGenerator.writeStringField("requestDate", DateUtil.formatDateTime(fightInscriptionRequest.getRequestDate()));
             // Club
             jsonGenerator.writeFieldName("club");
             jsonGenerator.writeStartObject();
@@ -81,7 +82,7 @@ public class FightInscriptionRequestSerializer extends JsonSerializer<FightInscr
             jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField("id", fightInscriptionRequest.getFight().getEvent().getId());
             jsonGenerator.writeStringField("name", fightInscriptionRequest.getFight().getEvent().getName());
-            jsonGenerator.writeStringField("date", fightInscriptionRequest.getFight().getEvent().getStartDate().toString());
+            jsonGenerator.writeStringField("date", DateUtil.formatDateTime(fightInscriptionRequest.getFight().getEvent().getStartDate()));
             jsonGenerator.writeFieldName("address");
             jsonGenerator.writeStartObject();
             jsonGenerator.writeStringField("street", fightInscriptionRequest.getFight().getEvent().getAddress().getStreet());

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import iesvdm.org.fighthubrestapi.entity.FighterFollowRequest;
+import iesvdm.org.fighthubrestapi.util.DateUtil;
 
 import java.io.IOException;
 
@@ -19,8 +20,8 @@ public class FighterFollowRequestSerializer extends JsonSerializer<FighterFollow
             jsonGenerator.writeNumberField("id", fighterFollowRequest.getId());
             jsonGenerator.writeStringField("status", fighterFollowRequest.getStatus().name());
             if (fighterFollowRequest.getResponseDate() != null)
-                jsonGenerator.writeStringField("responseDate", fighterFollowRequest.getResponseDate().toString());
-            jsonGenerator.writeStringField("requestDate", fighterFollowRequest.getRequestDate().toString());
+                jsonGenerator.writeStringField("responseDate", DateUtil.formatDateTime(fighterFollowRequest.getResponseDate()));
+            jsonGenerator.writeStringField("requestDate", DateUtil.formatDateTime(fighterFollowRequest.getRequestDate()));
             // Sender
             jsonGenerator.writeFieldName("sender");
             jsonGenerator.writeStartObject();

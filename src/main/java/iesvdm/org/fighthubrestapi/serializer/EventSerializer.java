@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import iesvdm.org.fighthubrestapi.entity.Event;
+import iesvdm.org.fighthubrestapi.util.DateUtil;
 
 import java.io.IOException;
 
@@ -27,9 +28,9 @@ public class EventSerializer extends JsonSerializer<Event> {
             jsonGenerator.writeStringField("country", event.getAddress().getCountry());
             jsonGenerator.writeEndObject();
             jsonGenerator.writeStringField("description", event.getDescription());
-            jsonGenerator.writeStringField("startDate", event.getStartDate().toString());
-            jsonGenerator.writeStringField("openDate", event.getOpenDate().toString());
-            jsonGenerator.writeStringField("endDate", event.getEndDate().toString());
+            jsonGenerator.writeStringField("startDate", DateUtil.formatDateTime(event.getStartDate()));
+            jsonGenerator.writeStringField("openDate", DateUtil.formatDateTime(event.getOpenDate()));
+            jsonGenerator.writeStringField("endDate", DateUtil.formatDateTime(event.getEndDate()));
             // Photo
             if(event.getPhoto() != null) {
                 jsonGenerator.writeFieldName("photo");
