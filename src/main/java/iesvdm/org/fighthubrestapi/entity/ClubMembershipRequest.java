@@ -1,7 +1,9 @@
 package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import iesvdm.org.fighthubrestapi.model.E_Status;
+import iesvdm.org.fighthubrestapi.serializer.ClubMembershipRequestSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonSerialize(using = ClubMembershipRequestSerializer.class)
 public class ClubMembershipRequest {
 
     // *** PROPS ***
@@ -34,11 +37,9 @@ public class ClubMembershipRequest {
     // RequestDate
     @NotNull(message = "The date cannot be null")
     @PastOrPresent(message = "The date must be in the past or present")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime requestDate;
     // ResponseDate
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime responseDate;
 

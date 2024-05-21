@@ -32,7 +32,6 @@ public class Fight {
     @EqualsAndHashCode.Include
     private Long id;
     // StartTime
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime startTime;
     // FightOrder
@@ -75,7 +74,6 @@ public class Fight {
     private Fighter winner;
     // FightInscriptionRequests
     @OneToMany(mappedBy = "fight", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
 }

@@ -36,7 +36,6 @@ public class Photo {
     private String url;
     @NotNull(message = "The upload date cannot be null")
     @PastOrPresent(message = "The upload date must be in the past or present")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime uploadDate;
 
@@ -45,13 +44,11 @@ public class Photo {
     // fighter
     @ManyToOne
     @JoinColumn(name = "fighter_id")
-    @JsonIgnore
     @ToString.Exclude
     private Fighter fighter;
     // club
     @ManyToOne
     @JoinColumn(name = "club_id")
-    @JsonIgnore
     @ToString.Exclude
     private Club club;
 

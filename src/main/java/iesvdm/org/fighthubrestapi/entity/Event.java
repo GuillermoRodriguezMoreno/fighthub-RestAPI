@@ -47,19 +47,16 @@ public class Event {
     // StartDate
     @NotNull(message = "The start date cannot be null")
     @Future(message = "The start date must be in the future")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime startDate;
     // OpenDate
     @NotNull(message = "The open date cannot be null")
     @Future(message = "The open date must be in the future")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime openDate;
     // EndDate
     @NotNull(message = "The end date cannot be null")
     @Future(message = "The end date must be in the future")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime endDate;
 
@@ -80,7 +77,6 @@ public class Event {
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "fighter_id")
     )
-    @JsonIgnore
     @ToString.Exclude
     private Set<Fighter> fightersParticipating = new HashSet<>();
     // ClubParticipating
@@ -90,22 +86,18 @@ public class Event {
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "club_id")
     )
-    @JsonIgnore
     @ToString.Exclude
     private Set<Club> clubsParticipating = new HashSet<>();
     // Fights
     @OneToMany(mappedBy = "event", cascade = CascadeType.MERGE)
-    @JsonIgnore
     @ToString.Exclude
     private Set<Fight> fights = new HashSet<>();
     // Reviews
     @OneToMany(mappedBy = "event", cascade = CascadeType.MERGE)
-    @JsonIgnore
     @ToString.Exclude
     private Set<EventReview> reviews = new HashSet<>();
     // fightInscriptionRequests
     @OneToMany(mappedBy = "event", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JsonIgnore
     @ToString.Exclude
     private Set<FightInscriptionRequest> fightInscriptionRequests = new HashSet<>();
 }

@@ -36,7 +36,6 @@ public class EventReview {
     // ReviewDate
     @NotNull(message = "The date cannot be null")
     @PastOrPresent(message = "The date must be in the past or present")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime reviewDate;
 

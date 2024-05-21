@@ -1,7 +1,9 @@
 package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import iesvdm.org.fighthubrestapi.model.E_Status;
+import iesvdm.org.fighthubrestapi.serializer.FighterFollowRequestSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -18,6 +20,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonSerialize(using = FighterFollowRequestSerializer.class)
 public class FighterFollowRequest {
 
         // *** PROPS ***
@@ -31,13 +34,11 @@ public class FighterFollowRequest {
         @Enumerated(EnumType.STRING)
         private E_Status status;
         // ResponseDate
-        @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
         @Column(columnDefinition = "TIMESTAMP")
         private LocalDateTime responseDate;
         // RequestDate
         @NotNull(message = "The request date cannot be null")
         @PastOrPresent(message = "The request date must be in the past or present")
-        @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
         @Column(columnDefinition = "TIMESTAMP")
         private LocalDateTime requestDate;
 

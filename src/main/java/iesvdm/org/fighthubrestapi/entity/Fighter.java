@@ -36,7 +36,6 @@ public class Fighter {
     @NotNull(message = "The birth date cannot be null")
     @Past(message = "The birth date must be in the past")
     @Column(columnDefinition = "TIMESTAMP")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime birthDate;
     // Email
     @NotBlank
@@ -51,7 +50,6 @@ public class Fighter {
     @NotNull(message = "The register date cannot be null")
     @PastOrPresent(message = "The upload date must be in the past or present")
     @Column(columnDefinition = "TIMESTAMP")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime registerDate;
     // Deleted
     @Column(columnDefinition = "BOOLEAN DEFAULT false")
@@ -114,7 +112,6 @@ public class Fighter {
     private Category category;
     // EventsParticipated
     @ManyToMany(mappedBy = "fightersParticipating", cascade = CascadeType.MERGE)
-    @JsonIgnore
     @ToString.Exclude
     private Set<Event> eventsParticipated = new HashSet<>();
     // Style

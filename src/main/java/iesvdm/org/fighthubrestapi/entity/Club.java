@@ -46,7 +46,6 @@ public class Club {
     @NotNull(message = "The register date cannot be null")
     @PastOrPresent(message = "The register date must be in the past or present")
     @Column(columnDefinition = "TIMESTAMP")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime registerDate;
     // Description
     @NotBlank(message = "The description cannot be blank")
@@ -68,7 +67,6 @@ public class Club {
     private Fighter president;
     // EventsParticipated
     @ManyToMany(mappedBy = "clubsParticipating", cascade = CascadeType.MERGE)
-    @JsonIgnore
     @ToString.Exclude
     private Set<Event> eventsParticipated = new HashSet<>();
     // Fighters
