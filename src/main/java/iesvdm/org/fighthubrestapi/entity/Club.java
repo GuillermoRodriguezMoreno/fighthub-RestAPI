@@ -2,7 +2,9 @@ package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import iesvdm.org.fighthubrestapi.model.Address;
+import iesvdm.org.fighthubrestapi.serializer.ClubSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -16,6 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonSerialize(using = ClubSerializer.class)
 public class Club {
 
     // *** PROPS ***

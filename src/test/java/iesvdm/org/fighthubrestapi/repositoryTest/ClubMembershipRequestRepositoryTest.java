@@ -3,6 +3,8 @@ package iesvdm.org.fighthubrestapi.repositoryTest;
 import iesvdm.org.fighthubrestapi.entity.Club;
 import iesvdm.org.fighthubrestapi.entity.ClubMembershipRequest;
 import iesvdm.org.fighthubrestapi.entity.Fighter;
+import iesvdm.org.fighthubrestapi.model.Address;
+import iesvdm.org.fighthubrestapi.model.E_Status;
 import iesvdm.org.fighthubrestapi.repository.ClubMembershipRequestRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 
 @SpringBootTest
 @Transactional // Changes are rolled back after the test
@@ -34,10 +37,15 @@ public class ClubMembershipRequestRepositoryTest {
     // *******************
     @BeforeEach
     public void setUp() {
+        // Create club
+        this.club = new Club(0L, "Club", new Address(
+                "street", "city", "state", "postalCode", "country"),
+                "Phone", "Email", LocalDateTime.now(), "description", false, null, null, null, null,
+                null, null, null, null, null);
         this.clubMembershipRequest1 = new ClubMembershipRequest(
-                0L, "APPROVED", LocalDateTime.now(), LocalDateTime.now(), null, null);
+                0L, E_Status.PENDING, LocalDateTime.now(), LocalDateTime.now(), club, fighter);
         this.clubMembershipRequest2 = new ClubMembershipRequest(
-                0L, "REJECTED", LocalDateTime.now(), LocalDateTime.now(), null, null);
+                0L, E_Status.REJECTED, LocalDateTime.now(), LocalDateTime.now(), club, fighter);
         this.clubMembershipRequestRepository.save(clubMembershipRequest1);
         this.clubMembershipRequestRepository.save(clubMembershipRequest2);
     }
@@ -49,9 +57,9 @@ public class ClubMembershipRequestRepositoryTest {
     @Order(1)
     public void saveClubMembershipRequest() {
         ClubMembershipRequest clubMembershipRequest3 = new ClubMembershipRequest(
-                0L, "PENDING", LocalDateTime.now(), LocalDateTime.now(), null, null);
+                0L, E_Status.PENDING, LocalDateTime.now(), LocalDateTime.now(), club, fighter);
         ClubMembershipRequest clubMembershipRequest4 = new ClubMembershipRequest(
-                0L, "PENDING", LocalDateTime.now(), LocalDateTime.now(), null, null);
+                0L, E_Status.PENDING, LocalDateTime.now(), LocalDateTime.now(), club, fighter);
         this.clubMembershipRequestRepository.save(clubMembershipRequest3);
         this.clubMembershipRequestRepository.save(clubMembershipRequest4);
         Assertions.assertEquals(4, this.clubMembershipRequestRepository.count());

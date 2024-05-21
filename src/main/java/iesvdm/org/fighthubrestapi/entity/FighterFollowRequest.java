@@ -1,6 +1,7 @@
 package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import iesvdm.org.fighthubrestapi.model.E_Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -27,8 +28,8 @@ public class FighterFollowRequest {
         @EqualsAndHashCode.Include
         private Long id;
         // Status
-        @Pattern(regexp = "APPROVED|PENDING|REJECTED", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED', 'REJECTED' or 'PENDING'")
-        private String status;
+        @Enumerated(EnumType.STRING)
+        private E_Status status;
         // ResponseDate
         @JsonFormat(pattern = "dd-MM-yyyy HH:mm", shape = JsonFormat.Shape.STRING)
         @Column(columnDefinition = "TIMESTAMP")

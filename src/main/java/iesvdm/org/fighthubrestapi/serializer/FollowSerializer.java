@@ -25,28 +25,44 @@ public class FollowSerializer extends JsonSerializer<Follow> {
             // Follower Fighter
             jsonGenerator.writeFieldName("followerFighter");
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("followerFighterUserName", follow.getFollowerFighter().getUserName());
-            if (follow.getFollowerFighter().getProfilePhoto() == null) {
-                jsonGenerator.writeNumberField("followerFighterProfilePhotoId", -1);
-                jsonGenerator.writeStringField("followerFighterProfilePhotoUrl", "-1");
-            } else {
-                jsonGenerator.writeNumberField("followerFighterProfilePhotoId", follow.getFollowerFighter().getProfilePhoto().getId());
-                jsonGenerator.writeStringField("followerFighterProfilePhotoUrl", follow.getFollowerFighter().getProfilePhoto().getUrl());
+            jsonGenerator.writeNumberField("id", follow.getFollowerFighter().getId());
+            jsonGenerator.writeStringField("name", follow.getFollowerFighter().getName());
+            if (follow.getFollowerFighter().getProfilePhoto() != null) {
+                jsonGenerator.writeFieldName("photo");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeNumberField("id", follow.getFollowerFighter().getProfilePhoto().getId());
+                jsonGenerator.writeStringField("url", follow.getFollowerFighter().getProfilePhoto().getUrl());
+                jsonGenerator.writeEndObject();
+            }
+            if (follow.getFollowerFighter().getClub() != null) {
+                jsonGenerator.writeFieldName("club");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeNumberField("id", follow.getFollowerFighter().getClub().getId());
+                jsonGenerator.writeStringField("name", follow.getFollowerFighter().getClub().getName());
+                jsonGenerator.writeEndObject();
             }
             jsonGenerator.writeEndObject();
             // Followed Fighter
             jsonGenerator.writeFieldName("followedFighter");
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("followedFighterUserName", follow.getFollowedFighter().getUserName());
-            if (follow.getFollowedFighter().getProfilePhoto() == null) {
-                jsonGenerator.writeNumberField("followedFighterProfilePhotoId", -1);
-                jsonGenerator.writeStringField("followedFighterProfilePhotoUrl", "-1");
-            } else {
-                jsonGenerator.writeNumberField("followedFighterProfilePhotoId", follow.getFollowedFighter().getProfilePhoto().getId());
-                jsonGenerator.writeStringField("followedFighterProfilePhotoUrl", follow.getFollowedFighter().getProfilePhoto().getUrl());
+            jsonGenerator.writeNumberField("id", follow.getFollowedFighter().getId());
+            jsonGenerator.writeStringField("name", follow.getFollowedFighter().getName());
+            if (follow.getFollowedFighter().getProfilePhoto() != null) {
+                jsonGenerator.writeFieldName("photo");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeNumberField("id", follow.getFollowedFighter().getProfilePhoto().getId());
+                jsonGenerator.writeStringField("url", follow.getFollowedFighter().getProfilePhoto().getUrl());
+                jsonGenerator.writeEndObject();
+            }
+            if (follow.getFollowedFighter().getClub() != null) {
+                jsonGenerator.writeFieldName("club");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeNumberField("id", follow.getFollowedFighter().getClub().getId());
+                jsonGenerator.writeStringField("name", follow.getFollowedFighter().getClub().getName());
+                jsonGenerator.writeEndObject();
             }
             jsonGenerator.writeEndObject();
-            jsonGenerator.writeStringField("followDate", follow.getFollowDate().toString());
+            // End
             jsonGenerator.writeEndObject();
         } catch (Exception e) {
             e.printStackTrace();

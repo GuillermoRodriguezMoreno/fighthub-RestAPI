@@ -4,6 +4,7 @@ package iesvdm.org.fighthubrestapi.service;
 import iesvdm.org.fighthubrestapi.entity.Fighter;
 import iesvdm.org.fighthubrestapi.entity.Role;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
+import iesvdm.org.fighthubrestapi.model.E_Status;
 import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import iesvdm.org.fighthubrestapi.repository.RoleRepository;
 import jakarta.transaction.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 public class RoleService {
 
     // *** INJECTS ***
@@ -43,8 +45,11 @@ public class RoleService {
         return roleRepository.save(roleToUpdate);
     }
     // Delete role
-    @Transactional
     public void delete(Long id) {
-
+        Role role = this.roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Role.class));
+        // Disassociate the role from the fighters
+        role.getFighters().forEach(fighter -> fighter.getRoles().remove(role));
+        this.fighterRepository.saveAll(role.getFighters());
+        this.roleRepository.delete(role);
     }
 }

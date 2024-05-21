@@ -12,6 +12,7 @@ toDo -- Comprobar campos null en JsonSerializer
 toDO -- Problemas con la herencia en USER, REPLANTEAR!!! He pensado mejor no hacer una herencia sino crear la entidad Club
         y que la administre un Fighter con Role CLUB_ADMIN
 toDo -- Solucionar el NoEntityFoundException con clave compuesta
+toDo -- En role, al ser un enum, no puedo crear desde la api
 
 ------- Con esto habria terminado las entidades :) ---------
 toDo -- Terminar Services

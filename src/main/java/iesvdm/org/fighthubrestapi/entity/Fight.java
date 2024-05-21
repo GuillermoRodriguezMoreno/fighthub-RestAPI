@@ -2,7 +2,9 @@ package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import iesvdm.org.fighthubrestapi.model.Round;
+import iesvdm.org.fighthubrestapi.serializer.FightSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
@@ -19,6 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonSerialize(using = FightSerializer.class)
 public class Fight {
 
     // *** PROPS ***

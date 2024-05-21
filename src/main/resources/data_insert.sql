@@ -30,17 +30,17 @@ INSERT INTO fighter (birth_date, email, password, register_date,
                      user_name, profile_photo_id,
                      active, biography, draws, gender, height, kos,
                      latitude, longitude, losses, name,number_of_fights,
-                     weight, wins, wins_in_a_row, category_id, club_id)
+                     weight, wins, wins_in_a_row, category_id)
 VALUES
     ('1990-01-01', 'admin@example.com', '12345678', NOW(), 'admin', null, true,
      'Biography for Fighter 1', 0, 'MALE', 174, 3, '132421', '12312', 2, 'Fighter1',
-     8, 78, 6, 2, 1, null),
+     8, 78, 6, 2, 1),
     ('1994-02-05', 'fighter1@example.com', '12345678', NOW(), 'fighter1', null, true,
      'Biography for Fighter 2', 0, 'MALE', 174, 0, '132421', '12312', 2, 'Fighter2',
-     9, 78, 6, 3, 2, null),
+     9, 78, 6, 3, 2),
     ('1996-05-08', 'fighter2@example.com', '12345678', NOW(), 'fighter2', null, true,
      'Biography for Fighter 3', 0, 'MALE', 174, 0, '132421', '12312', 2, 'Fighter3',
-     9, 78, 6, 3, 2, null);
+     9, 78, 6, 3, 2);
 
 -- ROLE
 INSERT INTO role (role) values
@@ -66,10 +66,10 @@ UPDATE fighter set profile_photo_id = 2 where id = 2;
 UPDATE fighter set profile_photo_id = 3 where id = 3;
 
 -- CLUB
-INSERT INTO club (city, country, postal_code, state, street, phone, description, name, president_id)
+INSERT INTO club (name, city, country, postal_code, state, street, phone, email, register_date, description, deleted, president_id)
 VALUES
-    ('Málaga', 'España', '29620', 'Andalucia', 'Juan de Pepito', '664345323', 'Club 1 Description', 'Club1', 3),
-    ('Almeria', 'España', '29630', 'Andalucia', 'Doña Pepita', '678986545', 'Club 2 Description', 'Club2', null);
+    ('Club1', 'Málaga', 'España', '29620', 'Andalucia', 'Juan de Pepito', '664345323', 'email@example.com', NOW(), 'Club 1 Description', false, 3),
+    ('Club2', 'Almeria', 'España', '29630', 'Andalucia', 'Doña Pepita', '678986545', 'email2@example.com', NOW(), 'Club 2 Description', false, null);
 
 -- RELATIONSHIP WITH FIGHTER
 UPDATE fighter set club_id = 1 where id = 3;

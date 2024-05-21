@@ -2,6 +2,7 @@ package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import iesvdm.org.fighthubrestapi.model.E_Status;
 import iesvdm.org.fighthubrestapi.serializer.FightInscriptionRequestSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -27,8 +28,8 @@ public class FightInscriptionRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     // Status
-    @Pattern(regexp = "APPROVED|PENDING|REJECTED", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED', 'REJECTED' or 'PENDING'")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private E_Status status;
     // Message
     @NotBlank(message = "The message cannot be blank")
     @Size(min = 10, max = 255, message = "The message must be between 10 and 255 characters long")
@@ -36,7 +37,6 @@ public class FightInscriptionRequest {
     // Response
     private String response;
     // ResponseDate
-    @NotNull(message = "The response date cannot be null")
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime responseDate;
     // RequestDate

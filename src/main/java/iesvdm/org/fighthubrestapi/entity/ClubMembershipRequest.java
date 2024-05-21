@@ -1,6 +1,7 @@
 package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import iesvdm.org.fighthubrestapi.model.E_Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,8 +29,8 @@ public class ClubMembershipRequest {
     @EqualsAndHashCode.Include
     private long id;
     // Status
-    @Pattern(regexp = "APPROVED|PENDING|REJECTED", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Status must be 'APPROVED', 'REJECTED' or 'PENDING'")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private E_Status status;
     // RequestDate
     @NotNull(message = "The date cannot be null")
     @PastOrPresent(message = "The date must be in the past or present")

@@ -2,8 +2,10 @@ package iesvdm.org.fighthubrestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import iesvdm.org.fighthubrestapi.model.Address;
 import iesvdm.org.fighthubrestapi.model.Location;
+import iesvdm.org.fighthubrestapi.serializer.EventSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
@@ -20,6 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonSerialize(using = EventSerializer.class)
 public class Event {
 
     // *** PROPS ***

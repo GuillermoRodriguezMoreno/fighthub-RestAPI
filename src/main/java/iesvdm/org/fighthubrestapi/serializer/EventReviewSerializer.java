@@ -10,12 +10,6 @@ import java.time.format.DateTimeFormatter;
 
 public class EventReviewSerializer extends JsonSerializer<EventReview> {
 
-    // ***********
-    // DATE FORMAT
-    // ***********
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-
-
     // **********
     // SERIALIZER
     // **********
@@ -25,23 +19,32 @@ public class EventReviewSerializer extends JsonSerializer<EventReview> {
             jsonGenerator.writeStartObject();
             jsonGenerator.writeFieldName("eventReviewId");
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeNumberField("eventId", eventReview.getId().getEventId());
-            jsonGenerator.writeNumberField("fighterId", eventReview.getId().getFighterId());
+            jsonGenerator.writeFieldName("fighterId");
+            jsonGenerator.writeObject(eventReview.getFighter().getId());
+            jsonGenerator.writeFieldName("eventId");
+            jsonGenerator.writeObject(eventReview.getEvent().getId());
             jsonGenerator.writeEndObject();
             jsonGenerator.writeStringField("content", eventReview.getContent());
             jsonGenerator.writeNumberField("rating", eventReview.getRating());
-            jsonGenerator.writeStringField("reviewDate", eventReview.getReviewDate().format(formatter));
-            // User
-            jsonGenerator.writeFieldName("user");
+            jsonGenerator.writeStringField("reviewDate", eventReview.getReviewDate().toString());
+            // Fighter
+            jsonGenerator.writeFieldName("fighter");
             jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField("id", eventReview.getFighter().getId());
-            jsonGenerator.writeStringField("userName", eventReview.getFighter().getUserName());
-            if (eventReview.getFighter().getProfilePhoto() == null){
-                jsonGenerator.writeNumberField("photoId", -1);
-                jsonGenerator.writeStringField("photoUrl", "-1");
-            } else {
-                jsonGenerator.writeNumberField("photoId", eventReview.getFighter().getProfilePhoto().getId());
-                jsonGenerator.writeStringField("photoUrl", eventReview.getFighter().getProfilePhoto().getUrl());
+            jsonGenerator.writeStringField("name", eventReview.getFighter().getName());
+            if (eventReview.getFighter().getProfilePhoto() != null) {
+                jsonGenerator.writeFieldName("profilePhoto");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeNumberField("id", eventReview.getFighter().getProfilePhoto().getId());
+                jsonGenerator.writeStringField("url", eventReview.getFighter().getProfilePhoto().getUrl());
+                jsonGenerator.writeEndObject();
+            }
+            if (eventReview.getFighter().getClub() != null) {
+                jsonGenerator.writeFieldName("club");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeNumberField("id", eventReview.getFighter().getClub().getId());
+                jsonGenerator.writeStringField("name", eventReview.getFighter().getClub().getName());
+                jsonGenerator.writeEndObject();
             }
             jsonGenerator.writeEndObject();
             // Event
@@ -49,49 +52,30 @@ public class EventReviewSerializer extends JsonSerializer<EventReview> {
             jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField("id", eventReview.getEvent().getId());
             jsonGenerator.writeStringField("name", eventReview.getEvent().getName());
-            jsonGenerator.writeStringField("description", eventReview.getEvent().getDescription());
-            jsonGenerator.writeStringField("startDate", eventReview.getEvent().getStartDate().toString());
-            jsonGenerator.writeStringField("endDate", eventReview.getEvent().getEndDate().toString());
-            jsonGenerator.writeStringField("openDate", eventReview.getEvent().getOpenDate().toString());
-            if (eventReview.getEvent().getPhoto() == null){
-                jsonGenerator.writeNumberField("photoId", -1);
-                jsonGenerator.writeStringField("photoUrl", "-1");
-            } else {
-                jsonGenerator.writeNumberField("photoId", eventReview.getEvent().getPhoto().getId());
-                jsonGenerator.writeStringField("photoUrl", eventReview.getEvent().getPhoto().getUrl());
+            jsonGenerator.writeStringField("date", eventReview.getEvent().getStartDate().toString());
+            if (eventReview.getEvent().getPhoto() != null) {
+                jsonGenerator.writeFieldName("eventPhoto");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeNumberField("id", eventReview.getEvent().getPhoto().getId());
+                jsonGenerator.writeStringField("url", eventReview.getEvent().getPhoto().getUrl());
+                jsonGenerator.writeEndObject();
             }
-            // Address
-            jsonGenerator.writeFieldName("address");
-            jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("street", eventReview.getEvent().getAddress().getStreet());
-            jsonGenerator.writeStringField("city", eventReview.getEvent().getAddress().getCity());
-            jsonGenerator.writeStringField("postalCode", eventReview.getEvent().getAddress().getPostalCode());
-            jsonGenerator.writeStringField("country", eventReview.getEvent().getAddress().getCountry());
-            jsonGenerator.writeStringField("state", eventReview.getEvent().getAddress().getState());
-            jsonGenerator.writeEndObject();
-            // Organizer
-            jsonGenerator.writeFieldName("organizer");
-            jsonGenerator.writeStartObject();
-            jsonGenerator.writeNumberField("id", eventReview.getEvent().getOrganizer().getId());
-            jsonGenerator.writeStringField("userName", eventReview.getEvent().getOrganizer().getPresident().getUserName());
-            jsonGenerator.writeStringField("name", eventReview.getEvent().getOrganizer().getName());
-            if (eventReview.getEvent().getOrganizer().getProfilePhoto() == null){
-                jsonGenerator.writeNumberField("photoId", -1);
-                jsonGenerator.writeStringField("photoUrl", "-1");
-            } else {
-                jsonGenerator.writeNumberField("photoId", eventReview.getEvent().getOrganizer().getProfilePhoto().getId());
-                jsonGenerator.writeStringField("photoUrl", eventReview.getEvent().getOrganizer().getProfilePhoto().getUrl());
+            if (eventReview.getEvent().getOrganizer() != null) {
+
+
+                jsonGenerator.writeFieldName("organizer");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeNumberField("id", eventReview.getEvent().getOrganizer().getId());
+                jsonGenerator.writeStringField("name", eventReview.getEvent().getOrganizer().getName());
+                if (eventReview.getEvent().getOrganizer().getProfilePhoto() != null) {
+                    jsonGenerator.writeFieldName("profilePhoto");
+                    jsonGenerator.writeStartObject();
+                    jsonGenerator.writeNumberField("id", eventReview.getEvent().getOrganizer().getProfilePhoto().getId());
+                    jsonGenerator.writeStringField("url", eventReview.getEvent().getOrganizer().getProfilePhoto().getUrl());
+                    jsonGenerator.writeEndObject();
+                }
+                jsonGenerator.writeEndObject();
             }
-            // Address
-            jsonGenerator.writeFieldName("address");
-            jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("street", eventReview.getEvent().getOrganizer().getAddress().getStreet());
-            jsonGenerator.writeStringField("city", eventReview.getEvent().getOrganizer().getAddress().getCity());
-            jsonGenerator.writeStringField("postalCode", eventReview.getEvent().getOrganizer().getAddress().getPostalCode());
-            jsonGenerator.writeStringField("country", eventReview.getEvent().getOrganizer().getAddress().getCountry());
-            jsonGenerator.writeStringField("state", eventReview.getEvent().getOrganizer().getAddress().getState());
-            jsonGenerator.writeEndObject();
-            jsonGenerator.writeEndObject();
             jsonGenerator.writeEndObject();
             // End
             jsonGenerator.writeEndObject();

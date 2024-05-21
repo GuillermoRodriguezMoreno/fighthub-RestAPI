@@ -18,46 +18,49 @@ public class FightInscriptionRequestSerializer extends JsonSerializer<FightInscr
         try {
             jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField("id", fightInscriptionRequest.getId());
-            jsonGenerator.writeStringField("status", fightInscriptionRequest.getStatus());
+            jsonGenerator.writeStringField("status", fightInscriptionRequest.getStatus().name());
             jsonGenerator.writeStringField("message", fightInscriptionRequest.getMessage());
-            if (fightInscriptionRequest.getResponse() == null) {
-                jsonGenerator.writeStringField("response", "-1");
-            } else {
+            if (fightInscriptionRequest.getResponse() != null) {
                 jsonGenerator.writeStringField("response", fightInscriptionRequest.getResponse());
+                jsonGenerator.writeStringField("responseDate", fightInscriptionRequest.getResponseDate().toString());
             }
-            jsonGenerator.writeStringField("responseDate", fightInscriptionRequest.getResponseDate().toString());
             jsonGenerator.writeStringField("requestDate", fightInscriptionRequest.getRequestDate().toString());
             // Club
             jsonGenerator.writeFieldName("club");
             jsonGenerator.writeStartObject();
-                jsonGenerator.writeNumberField("id", fightInscriptionRequest.getClub().getId());
-                jsonGenerator.writeStringField("name", fightInscriptionRequest.getClub().getName());
+            jsonGenerator.writeNumberField("id", fightInscriptionRequest.getClub().getId());
+            jsonGenerator.writeStringField("name", fightInscriptionRequest.getClub().getName());
+            if (fightInscriptionRequest.getClub().getPhone() != null) {
                 jsonGenerator.writeStringField("phone", fightInscriptionRequest.getClub().getPhone());
-                jsonGenerator.writeNumberField("photoId", fightInscriptionRequest.getClub().getProfilePhoto().getId());
-                jsonGenerator.writeStringField("photoUrl", fightInscriptionRequest.getClub().getProfilePhoto().getUrl());
-                    // Address
-                    jsonGenerator.writeFieldName("address");
-                    jsonGenerator.writeStartObject();
-                    jsonGenerator.writeStringField("street", fightInscriptionRequest.getClub().getAddress().getStreet());
-                    jsonGenerator.writeStringField("city", fightInscriptionRequest.getClub().getAddress().getCity());
-                    jsonGenerator.writeStringField("postalCode", fightInscriptionRequest.getClub().getAddress().getPostalCode());
-                    jsonGenerator.writeStringField("country", fightInscriptionRequest.getClub().getAddress().getCountry());
-                    jsonGenerator.writeStringField("state", fightInscriptionRequest.getClub().getAddress().getState());
-                    jsonGenerator.writeEndObject();
+            }
+            if (fightInscriptionRequest.getClub().getProfilePhoto() != null) {
+                jsonGenerator.writeFieldName("photo");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeNumberField("id", fightInscriptionRequest.getClub().getProfilePhoto().getId());
+                jsonGenerator.writeStringField("url", fightInscriptionRequest.getClub().getProfilePhoto().getUrl());
+                jsonGenerator.writeEndObject();
+            }
             jsonGenerator.writeEndObject();
             // Fighter
             jsonGenerator.writeFieldName("fighter");
             jsonGenerator.writeStartObject();
-                jsonGenerator.writeNumberField("id", fightInscriptionRequest.getFighter().getId());
-                jsonGenerator.writeStringField("userName", fightInscriptionRequest.getFighter().getUserName());
-                jsonGenerator.writeNumberField("photoId", fightInscriptionRequest.getFighter().getProfilePhoto().getId());
-                jsonGenerator.writeStringField("photoUrl", fightInscriptionRequest.getFighter().getProfilePhoto().getUrl());
-                jsonGenerator.writeNumberField("weight", fightInscriptionRequest.getFighter().getWeight());
-                jsonGenerator.writeStringField("category", fightInscriptionRequest.getFighter().getCategory().getName());
-                jsonGenerator.writeNumberField("numberOfFights", fightInscriptionRequest.getFighter().getNumberOfFights());
-                jsonGenerator.writeNumberField("wins", fightInscriptionRequest.getFighter().getWins());
-                jsonGenerator.writeNumberField("losses", fightInscriptionRequest.getFighter().getLosses());
-                jsonGenerator.writeNumberField("draws", fightInscriptionRequest.getFighter().getDraws());
+            jsonGenerator.writeNumberField("id", fightInscriptionRequest.getFighter().getId());
+            jsonGenerator.writeStringField("name", fightInscriptionRequest.getFighter().getName());
+            jsonGenerator.writeNumberField("weight", fightInscriptionRequest.getFighter().getWeight());
+            jsonGenerator.writeNumberField("height", fightInscriptionRequest.getFighter().getHeight());
+            jsonGenerator.writeStringField("category", fightInscriptionRequest.getFighter().getCategory().getName());
+            jsonGenerator.writeNumberField("numberOfFights", fightInscriptionRequest.getFighter().getNumberOfFights());
+            jsonGenerator.writeNumberField("wins", fightInscriptionRequest.getFighter().getWins());
+            jsonGenerator.writeNumberField("losses", fightInscriptionRequest.getFighter().getLosses());
+            jsonGenerator.writeNumberField("draws", fightInscriptionRequest.getFighter().getDraws());
+            jsonGenerator.writeNumberField("kos", fightInscriptionRequest.getFighter().getKos());
+            if (fightInscriptionRequest.getFighter().getProfilePhoto() != null) {
+                jsonGenerator.writeFieldName("photo");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeNumberField("id", fightInscriptionRequest.getFighter().getProfilePhoto().getId());
+                jsonGenerator.writeStringField("url", fightInscriptionRequest.getFighter().getProfilePhoto().getUrl());
+                jsonGenerator.writeEndObject();
+            }
             jsonGenerator.writeEndObject();
             // Fight
             jsonGenerator.writeFieldName("fight");
@@ -65,12 +68,13 @@ public class FightInscriptionRequestSerializer extends JsonSerializer<FightInscr
             jsonGenerator.writeNumberField("id", fightInscriptionRequest.getFight().getId());
             jsonGenerator.writeNumberField("order", fightInscriptionRequest.getFight().getFightOrder());
             jsonGenerator.writeStringField("style", fightInscriptionRequest.getFight().getStyle().getName());
-            // Round
+            if (fightInscriptionRequest.getFight().getRound() != null) {
                 jsonGenerator.writeFieldName("round");
                 jsonGenerator.writeStartObject();
                 jsonGenerator.writeNumberField("total", fightInscriptionRequest.getFight().getRound().getTotal());
                 jsonGenerator.writeNumberField("minutes", fightInscriptionRequest.getFight().getRound().getMinutes());
                 jsonGenerator.writeEndObject();
+            }
             jsonGenerator.writeEndObject();
             // Event
             jsonGenerator.writeFieldName("event");
@@ -78,37 +82,38 @@ public class FightInscriptionRequestSerializer extends JsonSerializer<FightInscr
             jsonGenerator.writeNumberField("id", fightInscriptionRequest.getFight().getEvent().getId());
             jsonGenerator.writeStringField("name", fightInscriptionRequest.getFight().getEvent().getName());
             jsonGenerator.writeStringField("date", fightInscriptionRequest.getFight().getEvent().getStartDate().toString());
-            jsonGenerator.writeNumberField("photoId", fightInscriptionRequest.getFight().getEvent().getPhoto().getId());
-            jsonGenerator.writeStringField("photoUrl", fightInscriptionRequest.getFight().getEvent().getPhoto().getUrl());
-                // Address
-                jsonGenerator.writeFieldName("address");
+            jsonGenerator.writeFieldName("address");
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeStringField("street", fightInscriptionRequest.getFight().getEvent().getAddress().getStreet());
+            jsonGenerator.writeStringField("city", fightInscriptionRequest.getFight().getEvent().getAddress().getCity());
+            jsonGenerator.writeStringField("postalCode", fightInscriptionRequest.getFight().getEvent().getAddress().getPostalCode());
+            jsonGenerator.writeStringField("country", fightInscriptionRequest.getFight().getEvent().getAddress().getCountry());
+            jsonGenerator.writeStringField("state", fightInscriptionRequest.getFight().getEvent().getAddress().getState());
+            jsonGenerator.writeEndObject();
+            // Organizer
+            jsonGenerator.writeFieldName("organizer");
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeNumberField("id", fightInscriptionRequest.getFight().getEvent().getOrganizer().getId());
+            jsonGenerator.writeStringField("name", fightInscriptionRequest.getFight().getEvent().getOrganizer().getName());
+            jsonGenerator.writeStringField("phone", fightInscriptionRequest.getFight().getEvent().getOrganizer().getPhone());
+            if (fightInscriptionRequest.getFight().getEvent().getOrganizer().getProfilePhoto() != null) {
+                jsonGenerator.writeFieldName("photo");
                 jsonGenerator.writeStartObject();
-                jsonGenerator.writeStringField("street", fightInscriptionRequest.getFight().getEvent().getAddress().getStreet());
-                jsonGenerator.writeStringField("city", fightInscriptionRequest.getFight().getEvent().getAddress().getCity());
-                jsonGenerator.writeStringField("postalCode", fightInscriptionRequest.getFight().getEvent().getAddress().getPostalCode());
-                jsonGenerator.writeStringField("country", fightInscriptionRequest.getFight().getEvent().getAddress().getCountry());
-                jsonGenerator.writeStringField("state", fightInscriptionRequest.getFight().getEvent().getAddress().getState());
+                jsonGenerator.writeNumberField("id", fightInscriptionRequest.getFight().getEvent().getOrganizer().getProfilePhoto().getId());
+                jsonGenerator.writeStringField("url", fightInscriptionRequest.getFight().getEvent().getOrganizer().getProfilePhoto().getUrl());
                 jsonGenerator.writeEndObject();
-                        // Organizer
-                        jsonGenerator.writeFieldName("organizer");
-                        jsonGenerator.writeStartObject();
-                        jsonGenerator.writeNumberField("id", fightInscriptionRequest.getFight().getEvent().getOrganizer().getId());
-                        jsonGenerator.writeStringField("name", fightInscriptionRequest.getFight().getEvent().getOrganizer().getName());
-                        jsonGenerator.writeStringField("phone", fightInscriptionRequest.getFight().getEvent().getOrganizer().getPhone());
-                        jsonGenerator.writeNumberField("photoId", fightInscriptionRequest.getFight().getEvent().getOrganizer().getProfilePhoto().getId());
-                        jsonGenerator.writeStringField("photoUrl", fightInscriptionRequest.getFight().getEvent().getOrganizer().getProfilePhoto().getUrl());
-                            // Address
-                            jsonGenerator.writeFieldName("address");
-                            jsonGenerator.writeStartObject();
-                            jsonGenerator.writeStringField("street", fightInscriptionRequest.getFight().getEvent().getOrganizer().getAddress().getStreet());
-                            jsonGenerator.writeStringField("city", fightInscriptionRequest.getFight().getEvent().getOrganizer().getAddress().getCity());
-                            jsonGenerator.writeStringField("postalCode", fightInscriptionRequest.getFight().getEvent().getOrganizer().getAddress().getPostalCode());
-                            jsonGenerator.writeStringField("country", fightInscriptionRequest.getFight().getEvent().getOrganizer().getAddress().getCountry());
-                            jsonGenerator.writeStringField("state", fightInscriptionRequest.getFight().getEvent().getOrganizer().getAddress().getState());
-                            jsonGenerator.writeEndObject();
-                        jsonGenerator.writeEndObject();
-                jsonGenerator.writeEndObject();
-
+            }
+            jsonGenerator.writeFieldName("address");
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeStringField("street", fightInscriptionRequest.getFight().getEvent().getOrganizer().getAddress().getStreet());
+            jsonGenerator.writeStringField("city", fightInscriptionRequest.getFight().getEvent().getOrganizer().getAddress().getCity());
+            jsonGenerator.writeStringField("postalCode", fightInscriptionRequest.getFight().getEvent().getOrganizer().getAddress().getPostalCode());
+            jsonGenerator.writeStringField("country", fightInscriptionRequest.getFight().getEvent().getOrganizer().getAddress().getCountry());
+            jsonGenerator.writeStringField("state", fightInscriptionRequest.getFight().getEvent().getOrganizer().getAddress().getState());
+            jsonGenerator.writeEndObject();
+            jsonGenerator.writeEndObject();
+            jsonGenerator.writeEndObject();
+            // End
             jsonGenerator.writeEndObject();
         } catch (Exception e) {
             e.printStackTrace();
