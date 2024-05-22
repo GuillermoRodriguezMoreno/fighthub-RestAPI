@@ -32,8 +32,16 @@ public class StyleRepositoryTest {
     // *******************
     @BeforeEach
     public void setUp() {
-        boxing = new Style(0, "Boxing", new HashSet<>(), new HashSet<>());
-        kickboxing = new Style(0, "Kickboxing", new HashSet<>(), new HashSet<>());
+        this.boxing = Style.builder()
+                .id(0L)
+                .name("Boxing")
+                .build();
+
+        this.kickboxing = Style.builder()
+                .id(0L)
+                .name("Kickboxing")
+                .build();
+        // Save styles
         this.styleRepository.save(boxing);
         this.styleRepository.save(kickboxing);
     }
@@ -44,10 +52,19 @@ public class StyleRepositoryTest {
     @Test
     @Order(1)
     public void saveStyle() {
-        Style style1 = new Style(0, "Style1", new HashSet<>(), new HashSet<>());
-        Style style2 = new Style(0, "Style2", new HashSet<>(), new HashSet<>());
+        Style style1 = Style.builder()
+                .id(0L)
+                .name("Style1")
+                .build();
+
+        Style style2 = Style.builder()
+                .id(0L)
+                .name("Style2")
+                .build();
+        // Save styles
         this.styleRepository.save(style1);
         this.styleRepository.save(style2);
+        // Assertions
         Assertions.assertEquals(4, this.styleRepository.count());
     }
     // Find style

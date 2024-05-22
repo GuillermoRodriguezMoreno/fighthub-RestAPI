@@ -9,11 +9,12 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
 
 @SpringBootTest
 @Transactional // Changes are rolled back after the test
-public class PhotoReposirotyTest {
+public class PhotoRepositoryTest {
 
     // *** INJECTS ***
     // ***************
@@ -29,8 +30,20 @@ public class PhotoReposirotyTest {
     // *******************
     @BeforeEach
     public void setUp() {
-        this.photo1 = null;
-        this.photo2 = null;
+        this.photo1 = Photo.builder()
+                .id(0L)
+                .EntityType("FIGHTER")
+                .url("https://url.com")
+                .uploadDate(LocalDateTime.now())
+                .build();
+
+        this.photo2 = Photo.builder()
+                .id(0L)
+                .EntityType("CLUB")
+                .url("https://url2.com")
+                .uploadDate(LocalDateTime.now())
+                .build();
+        // Save photos
         this.photoRepository.save(photo1);
         this.photoRepository.save(photo2);
     }
@@ -41,10 +54,23 @@ public class PhotoReposirotyTest {
     @Test
     @Order(1)
     public void savePhoto() {
-        Photo photo3 = null;
-        Photo photo4 = null;
+        Photo photo3 = Photo.builder()
+                .id(0L)
+                .EntityType("EVENT")
+                .url("https://url3.com")
+                .uploadDate(LocalDateTime.now())
+                .build();
+
+        Photo photo4 = Photo.builder()
+                .id(0L)
+                .EntityType("EVENT")
+                .url("https://url4.com")
+                .uploadDate(LocalDateTime.now())
+                .build();
+        // Save photos
         this.photoRepository.save(photo3);
         this.photoRepository.save(photo4);
+        // Assertions
         Assertions.assertEquals(4, this.photoRepository.count());
     }
     // Find photo

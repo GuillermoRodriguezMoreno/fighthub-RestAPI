@@ -22,13 +22,13 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonSerialize(using = EventSerializer.class)
 public class Event {
 
     // *** PROPS ***
     // *************
-
     // Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

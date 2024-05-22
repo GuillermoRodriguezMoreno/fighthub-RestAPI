@@ -1,6 +1,7 @@
 package iesvdm.org.fighthubrestapi.repositoryTest;
 
 import iesvdm.org.fighthubrestapi.entity.Role;
+import iesvdm.org.fighthubrestapi.model.E_Role;
 import iesvdm.org.fighthubrestapi.repository.RoleRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -28,8 +29,16 @@ public class RoleRepositoryTest {
     // *******************
     @BeforeEach
     public void setUp() {
-        this.role1 = null;
-        this.role2 = null;
+        this.role1 = Role.builder()
+                .id(0L)
+                .role(E_Role.FIGHTER)
+                .build();
+
+        this.role2 = Role.builder()
+                .id(0L)
+                .role(E_Role.ADMIN)
+                .build();
+        // Save roles
         this.roleRepository.save(role1);
         this.roleRepository.save(role2);
     }
@@ -40,10 +49,19 @@ public class RoleRepositoryTest {
     @Test
     @Order(1)
     public void saveRole() {
-        Role role3 = null;
-        Role role4 = null;
+        Role role3 = Role.builder()
+                .id(0L)
+                .role(E_Role.CLUB_ADMIN)
+                .build();
+
+        Role role4 = Role.builder()
+                .id(0L)
+                .role(E_Role.ADMIN)
+                .build();
+        // Save roles
         this.roleRepository.save(role3);
         this.roleRepository.save(role4);
+        // Assertions
         Assertions.assertEquals(4, this.roleRepository.count());
     }
     // Find role

@@ -13,7 +13,6 @@ public class Round {
 
     // *** PROPS ***
     // *************
-
     private int total;
     private int minutes;
 }

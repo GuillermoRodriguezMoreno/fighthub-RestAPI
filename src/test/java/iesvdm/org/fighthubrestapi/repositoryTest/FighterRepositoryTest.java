@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
+
 @SpringBootTest
 @Transactional // Changes are rolled back after the test
 public class FighterRepositoryTest {
@@ -23,13 +25,45 @@ public class FighterRepositoryTest {
     // *************
     private Fighter fighter1;
     private Fighter fighter2;
+    private Fighter fighter3;
+    private Fighter fighter4;
 
     // *** BEFORE EACH ***
     // *******************
     @BeforeEach
     public void setUp() {
-        this.fighter1 = null;
-        this.fighter2 = null;
+        // Fighters
+        this.fighter1 = Fighter.builder()
+                .id(0L)
+                .userName("userName")
+                .birthDate(LocalDateTime.now())
+                .email("email@example.com")
+                .password("123456678")
+                .registerDate(LocalDateTime.now())
+                .deleted(false)
+                .name("nombreDePueba")
+                .active(true)
+                .weight(70.0)
+                .height(180)
+                .biography("biography of the fighter that is going to be created")
+                .build();
+
+        this.fighter2 = Fighter.builder()
+                .id(0L)
+                .userName("userName2")
+                .birthDate(LocalDateTime.now())
+                .email("prueba@email.es")
+                .password("123456678")
+                .registerDate(LocalDateTime.now())
+                .deleted(false)
+                .name("nombreDePueba2")
+                .active(true)
+                .weight(70.0)
+                .height(180)
+                .biography("biography of the fighter that is going to be created")
+                .build();
+
+        // Save fighters
         this.fighterRepository.save(fighter1);
         this.fighterRepository.save(fighter2);
     }
@@ -40,10 +74,39 @@ public class FighterRepositoryTest {
     @Test
     @Order(1)
     public void saveFighter() {
-        Fighter fighter3 = null;
-        Fighter fighter4 = null;
+        this.fighter3 = Fighter.builder()
+                .id(0L)
+                .userName("userName3")
+                .birthDate(LocalDateTime.now())
+                .email("prueba3@email.es")
+                .password("123456678")
+                .registerDate(LocalDateTime.now())
+                .deleted(false)
+                .name("nombreDePueba3")
+                .active(true)
+                .weight(70.0)
+                .height(180)
+                .biography("biography of the fighter that is going to be created")
+                .build();
+
+        this.fighter4 = Fighter.builder()
+                .id(0L)
+                .userName("userName4")
+                .birthDate(LocalDateTime.now())
+                .email("prueba4@email.es")
+                .password("123456678")
+                .registerDate(LocalDateTime.now())
+                .deleted(false)
+                .name("nombreDePueba4")
+                .active(true)
+                .weight(70.0)
+                .height(180)
+                .biography("biography of the fighter that is going to be created")
+                .build();
+        // Save fighters
         this.fighterRepository.save(fighter3);
         this.fighterRepository.save(fighter4);
+        // Assertions
         Assertions.assertEquals(4, this.fighterRepository.count());
     }
     // Find fighter

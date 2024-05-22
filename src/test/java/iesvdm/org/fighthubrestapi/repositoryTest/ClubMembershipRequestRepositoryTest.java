@@ -6,6 +6,8 @@ import iesvdm.org.fighthubrestapi.entity.Fighter;
 import iesvdm.org.fighthubrestapi.model.Address;
 import iesvdm.org.fighthubrestapi.model.E_Status;
 import iesvdm.org.fighthubrestapi.repository.ClubMembershipRequestRepository;
+import iesvdm.org.fighthubrestapi.repository.ClubRepository;
+import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +27,10 @@ public class ClubMembershipRequestRepositoryTest {
     // ***************
     @Autowired
     private ClubMembershipRequestRepository clubMembershipRequestRepository;
+    @Autowired
+    private ClubRepository clubRepository;
+    @Autowired
+    private FighterRepository fighterRepository;
 
     // *** PROPS ***
     // *************
@@ -38,10 +44,37 @@ public class ClubMembershipRequestRepositoryTest {
     @BeforeEach
     public void setUp() {
         // Create club
-        this.club = new Club(0L, "Club", new Address(
-                "street", "city", "state", "postalCode", "country"),
-                "Phone", "Email", LocalDateTime.now(), "description", false, null, null, null, null,
-                null, null, null, null, null);
+        this.club = Club.builder()
+                    .id(0L)
+                    .name("Club")
+                    .address(new Address("street", "city", "state",
+                                    "postalCode", "country")
+                    )
+                    .phone("Phone")
+                    .email("Email@example.com")
+                    .registerDate(LocalDateTime.now())
+                    .description("description of the club that is going to be created")
+                    .build();
+
+        // Create fighter
+        this.fighter = Fighter.builder()
+                    .id(0L)
+                    .userName("userName")
+                    .birthDate(LocalDateTime.now())
+                    .email("email@example.com")
+                    .password("123456678")
+                    .registerDate(LocalDateTime.now())
+                    .deleted(false)
+                    .name("nombreDePueba")
+                    .active(true)
+                    .weight(70.0)
+                    .height(180)
+                    .biography("biography of the fighter that is going to be created")
+                    .build();
+        // Save club and fighter
+        this.clubRepository.save(club);
+        this.fighterRepository.save(fighter);
+        // Create clubMembershipRequests
         this.clubMembershipRequest1 = new ClubMembershipRequest(
                 0L, E_Status.PENDING, LocalDateTime.now(), LocalDateTime.now(), club, fighter);
         this.clubMembershipRequest2 = new ClubMembershipRequest(

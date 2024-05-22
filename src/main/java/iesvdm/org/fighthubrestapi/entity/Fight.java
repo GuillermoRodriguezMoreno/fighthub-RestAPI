@@ -21,6 +21,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonSerialize(using = FightSerializer.class)
 public class Fight {

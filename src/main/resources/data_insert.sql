@@ -13,16 +13,7 @@ INSERT INTO style (name) VALUES
                              ('Muay Thai'),
                              ('Brazilian Jiu-Jitsu'),
                              ('Kickboxing'),
-                             ('Karate'),
-                             ('Judo'),
-                             ('Wrestling'),
-                             ('Taekwondo'),
-                             ('Kung Fu'),
-                             ('Capoeira'),
-                             ('Krav Maga'),
-                             ('Aikido'),
-                             ('Hapkido'),
-                             ('Sambo'),
+                             ('K1'),
                              ('MMA');
 
 -- FIGHTER

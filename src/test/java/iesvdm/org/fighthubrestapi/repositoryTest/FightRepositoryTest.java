@@ -1,6 +1,10 @@
 package iesvdm.org.fighthubrestapi.repositoryTest;
 
+import iesvdm.org.fighthubrestapi.entity.Event;
 import iesvdm.org.fighthubrestapi.entity.Fight;
+import iesvdm.org.fighthubrestapi.model.Address;
+import iesvdm.org.fighthubrestapi.model.Round;
+import iesvdm.org.fighthubrestapi.repository.EventRepository;
 import iesvdm.org.fighthubrestapi.repository.FightRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -10,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
+
 @SpringBootTest
 @Transactional // Changes are rolled back after the test
 public class FightRepositoryTest {
@@ -18,18 +24,51 @@ public class FightRepositoryTest {
     // ***************
     @Autowired
     private FightRepository fightRepository;
+    @Autowired
+    private EventRepository eventRepository;
 
     // *** PROPS ***
     // *************
+    // Fight
     private Fight fight1;
     private Fight fight2;
+    // Event
+    private Event event;
 
     // *** BEFORE EACH ***
     // *******************
     @BeforeEach
     public void setUp() {
-        this.fight1 = null;
-        this.fight2 = null;
+        // Event
+        this.event = Event.builder()
+                .id(0L)
+                .name("Event 1")
+                .address(new Address("Street 1", "City 1", "State 1",
+                        "PostalCode 1", "Country 1"))
+                .description("Description 1 of the event")
+                .startDate(LocalDateTime.now().plusDays(1))
+                .openDate(LocalDateTime.now().plusDays(1))
+                .endDate(LocalDateTime.now().plusDays(2))
+                .build();
+        // Save event
+        this.event = this.eventRepository.save(event);
+        // Fight
+        this.fight1 = Fight.builder()
+                .id(0L)
+                .startTime(LocalDateTime.now().plusDays(1))
+                .fightOrder(1)
+                .round(new Round(0,0))
+                .event(event)
+                .build();
+
+        this.fight2 = Fight.builder()
+                .id(0L)
+                .startTime(LocalDateTime.now().plusDays(2))
+                .fightOrder(2)
+                .round(new Round(0,0))
+                .event(event)
+                .build();
+        // Save fights
         this.fightRepository.save(fight1);
         this.fightRepository.save(fight2);
     }
@@ -40,10 +79,25 @@ public class FightRepositoryTest {
     @Test
     @Order(1)
     public void saveFight() {
-        Fight fight3 = null;
-        Fight fight4 = null;
+        Fight fight3 = Fight.builder()
+                .id(0L)
+                .startTime(LocalDateTime.now().plusDays(3))
+                .fightOrder(3)
+                .round(new Round(0,0))
+                .event(event)
+                .build();
+
+        Fight fight4 = Fight.builder()
+                .id(0L)
+                .startTime(LocalDateTime.now().plusDays(4))
+                .fightOrder(4)
+                .round(new Round(0,0))
+                .event(event)
+                .build();
+        // Save fights
         this.fightRepository.save(fight3);
         this.fightRepository.save(fight4);
+        // Assertions
         Assertions.assertEquals(4, this.fightRepository.count());
     }
     // Find fight

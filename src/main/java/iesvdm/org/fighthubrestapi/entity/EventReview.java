@@ -1,23 +1,22 @@
 package iesvdm.org.fighthubrestapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import iesvdm.org.fighthubrestapi.entity_key.EventReviewId;
 import iesvdm.org.fighthubrestapi.serializer.EventReviewSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @JsonSerialize(using = EventReviewSerializer.class)
 public class EventReview {
 

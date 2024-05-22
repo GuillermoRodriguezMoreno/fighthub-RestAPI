@@ -6,10 +6,7 @@ import iesvdm.org.fighthubrestapi.entity_key.ClubReviewId;
 import iesvdm.org.fighthubrestapi.serializer.ClubReviewSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -18,6 +15,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @JsonSerialize(using = ClubReviewSerializer.class)
 public class ClubReview {
 

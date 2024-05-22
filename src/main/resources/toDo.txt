@@ -15,6 +15,7 @@ toDo -- Solucionar el NoEntityFoundException con clave compuesta
 toDo -- En role, al ser un enum, no puedo crear desde la api
 toDo -- En las entidades con clave compuesta, como pasar el id compuesto a la api por la URL
 toDo -- Fecha en deserialize IMPORTANTE!!
+toDo -- MIRAR PORQUE EN CLAVE COMPUESTA NO PUEDEN HABER DOS PARES IGUALES EN DISTINTO ORDEN
 ------- Con esto habria terminado las entidades :) ---------
 toDo -- Terminar Services
 toDo -- Terminar Controllers
