@@ -9,6 +9,7 @@ import iesvdm.org.fighthubrestapi.model.RegisterRequest;
 import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import iesvdm.org.fighthubrestapi.repository.RoleRepository;
 import iesvdm.org.fighthubrestapi.service.UserDetailsImpl;
+import iesvdm.org.fighthubrestapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import iesvdm.org.fighthubrestapi.security.TokenUtils;
 
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +39,8 @@ public class AuthController {
     FighterRepository fighterRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    UserService userService;
     @Autowired
     PasswordEncoder encoder;
     @Autowired
@@ -112,9 +116,25 @@ public class AuthController {
         }
 
         user.setRoles(roles);
+        String token = UUID.randomUUID().toString();
+        user.setConfirmationToken(token);
         fighterRepository.save(user);
-
-        return ResponseEntity.ok(new MessageResponse("Usuario registrado correctamente!"));
+        try {
+            this.userService.sendConfirmationEmail(user, token);
+            return ResponseEntity.ok(new MessageResponse( "Registration successful. Please check your email for confirmation."));
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: No se ha podido enviar el email de confirmación."));
+        }
     }
 
+    // Confirm user
+    @GetMapping("/confirm")
+    public String confirmUser(@RequestParam String token) {
+        boolean isConfirmed = userService.confirmUser(token);
+        if (isConfirmed) {
+            return "User confirmed successfully.";
+        } else {
+            return "Invalid confirmation token.";
+        }
+    }
 }

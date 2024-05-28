@@ -56,13 +56,18 @@ public class Fighter {
     // Deleted
     @Column(columnDefinition = "BOOLEAN DEFAULT false")
     private boolean deleted;
+    // Enabled
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean enabled = false;
+    // ConfirmationToken
+    private String confirmationToken;
     // Name
     //@NotBlank(message = "The name cannot be empty")
     //@Size(min = 2, max = 50, message = "The name must be between 2 and 50 characters long")
     private String name;
     // Active
     //@NotNull(message = "Active cannot be null")
-    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    @Column(columnDefinition = "BOOLEAN DEFAULT true")
     private boolean active;
     // Weight
     //@NotNull(message = "Weight cannot be null")

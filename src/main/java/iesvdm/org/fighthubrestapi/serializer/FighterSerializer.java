@@ -19,22 +19,27 @@ public class FighterSerializer extends JsonSerializer<Fighter> {
             jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField("id", fighter.getId());
             jsonGenerator.writeStringField("userName", fighter.getUserName());
-            jsonGenerator.writeStringField("birthDate", fighter.getBirthDate().toString());
+            if (fighter.getBirthDate() != null)
+                jsonGenerator.writeStringField("birthDate", DateUtil.formatDateTime(fighter.getBirthDate()));
             jsonGenerator.writeStringField("email", fighter.getEmail());
             jsonGenerator.writeStringField("password", fighter.getPassword());
-            jsonGenerator.writeStringField("registerDate", DateUtil.formatDateTime(fighter.getRegisterDate()));
+            if(fighter.getRegisterDate() != null)
+                jsonGenerator.writeStringField("registerDate", DateUtil.formatDateTime(fighter.getRegisterDate()));
             jsonGenerator.writeBooleanField("deleted", fighter.isDeleted());
+            jsonGenerator.writeBooleanField("enabled", fighter.isEnabled());
             jsonGenerator.writeStringField("name", fighter.getName());
-            jsonGenerator.writeStringField("active", fighter.isActive() ? "true" : "false");
+            jsonGenerator.writeBooleanField("active", fighter.isActive());
             jsonGenerator.writeNumberField("weight", fighter.getWeight());
             jsonGenerator.writeNumberField("height", fighter.getHeight());
             jsonGenerator.writeStringField("gender", fighter.getGender());
             jsonGenerator.writeStringField("biography", fighter.getBiography());
-            jsonGenerator.writeFieldName("location");
-            jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("latitude", fighter.getLocation().getLatitude());
-            jsonGenerator.writeStringField("longitude", fighter.getLocation().getLongitude());
-            jsonGenerator.writeEndObject();
+            if (fighter.getLocation() != null) {
+                jsonGenerator.writeFieldName("location");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeStringField("latitude", fighter.getLocation().getLatitude());
+                jsonGenerator.writeStringField("longitude", fighter.getLocation().getLongitude());
+                jsonGenerator.writeEndObject();
+            }
             jsonGenerator.writeNumberField("wins", fighter.getWins());
             jsonGenerator.writeNumberField("losses", fighter.getLosses());
             jsonGenerator.writeNumberField("draws", fighter.getDraws());
@@ -42,15 +47,17 @@ public class FighterSerializer extends JsonSerializer<Fighter> {
             jsonGenerator.writeNumberField("numberOfFights", fighter.getNumberOfFights());
             jsonGenerator.writeNumberField("winsInARow", fighter.getWinsInARow());
             // Roles
-            jsonGenerator.writeFieldName("roles");
-            jsonGenerator.writeStartArray();
-            for (Role role : fighter.getRoles()) {
-                jsonGenerator.writeStartObject();
-                jsonGenerator.writeNumberField("id", role.getId());
-                jsonGenerator.writeStringField("role", role.getRole().name());
-                jsonGenerator.writeEndObject();
+            if (fighter.getRoles() != null) {
+                jsonGenerator.writeFieldName("roles");
+                jsonGenerator.writeStartArray();
+                for (Role role : fighter.getRoles()) {
+                    jsonGenerator.writeStartObject();
+                    jsonGenerator.writeNumberField("id", role.getId());
+                    jsonGenerator.writeStringField("role", role.getRole().name());
+                    jsonGenerator.writeEndObject();
+                }
+                jsonGenerator.writeEndArray();
             }
-            jsonGenerator.writeEndArray();
             // Photo
             if (fighter.getProfilePhoto() != null) {
                 jsonGenerator.writeFieldName("photo");

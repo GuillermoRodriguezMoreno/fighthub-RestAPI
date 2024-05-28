@@ -26,3 +26,16 @@ toDo -- Hacer un borrado logico en entidades principales en vez de borrado compl
 _______________________ PROBLEMAS SERVICES _______________________________
 toDo -- COMPROBAR MUY BIEN LA VALIDACION DE LOS BEAN, CREA CONFLICTO CON LOS SERVICES
 toDo -- No olvidar al crear eventos permitir crear peleas
+_________________________ A DESTACAR ______________________________
+- TODOS LOS REPOSITORY TESTEADOS
+- MICROSERVICIO DE EMAIL FUNCIONANDO
+- FILTROS SEGURIDAD Y CONFIRMACION DE EMAIL
+- BIDIRECCIONALIDAD EN ENTIDADES
+- VALIDACION DE BEAN
+- COMPOSITE KEYS
+_________________________ A IMPLEMENTAR ______________________________
+- BORRADO LOGICO
+- UPLOAD FICHERO
+- TINDER
+- MODELO LLM SUGERENCIA DE USUARIOS TINDER
+- CHAT ENTRE USUARIOS

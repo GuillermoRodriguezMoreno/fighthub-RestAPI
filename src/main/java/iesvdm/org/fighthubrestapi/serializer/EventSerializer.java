@@ -19,18 +19,23 @@ public class EventSerializer extends JsonSerializer<Event> {
             jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField("id", event.getId());
             jsonGenerator.writeStringField("name", event.getName());
-            jsonGenerator.writeFieldName("address");
-            jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("street", event.getAddress().getStreet());
-            jsonGenerator.writeStringField("city", event.getAddress().getCity());
-            jsonGenerator.writeStringField("state", event.getAddress().getState());
-            jsonGenerator.writeStringField("postalCode", event.getAddress().getPostalCode());
-            jsonGenerator.writeStringField("country", event.getAddress().getCountry());
-            jsonGenerator.writeEndObject();
+            if (event.getAddress() != null) {
+                jsonGenerator.writeFieldName("address");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeStringField("street", event.getAddress().getStreet());
+                jsonGenerator.writeStringField("city", event.getAddress().getCity());
+                jsonGenerator.writeStringField("state", event.getAddress().getState());
+                jsonGenerator.writeStringField("postalCode", event.getAddress().getPostalCode());
+                jsonGenerator.writeStringField("country", event.getAddress().getCountry());
+                jsonGenerator.writeEndObject();
+            }
             jsonGenerator.writeStringField("description", event.getDescription());
-            jsonGenerator.writeStringField("startDate", DateUtil.formatDateTime(event.getStartDate()));
-            jsonGenerator.writeStringField("openDate", DateUtil.formatDateTime(event.getOpenDate()));
-            jsonGenerator.writeStringField("endDate", DateUtil.formatDateTime(event.getEndDate()));
+            if (event.getStartDate() != null)
+                jsonGenerator.writeStringField("startDate", DateUtil.formatDateTime(event.getStartDate()));
+            if (event.getOpenDate() != null)
+                jsonGenerator.writeStringField("openDate", DateUtil.formatDateTime(event.getOpenDate()));
+            if (event.getEndDate() != null)
+                jsonGenerator.writeStringField("endDate", DateUtil.formatDateTime(event.getEndDate()));
             // Photo
             if(event.getPhoto() != null) {
                 jsonGenerator.writeFieldName("photo");

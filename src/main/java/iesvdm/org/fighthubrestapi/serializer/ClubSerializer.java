@@ -19,19 +19,20 @@ public class ClubSerializer extends JsonSerializer<Club> {
             jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField("id", club.getId());
             jsonGenerator.writeStringField("name", club.getName());
-            jsonGenerator.writeFieldName("address");
-            jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("street", club.getAddress().getStreet());
-            jsonGenerator.writeStringField("city", club.getAddress().getCity());
-            jsonGenerator.writeStringField("state", club.getAddress().getState());
-            jsonGenerator.writeStringField("postalCode", club.getAddress().getPostalCode());
-            jsonGenerator.writeStringField("country", club.getAddress().getCountry());
-            jsonGenerator.writeEndObject();
-            if (club.getPhone() != null) {
-                jsonGenerator.writeStringField("phone", club.getPhone());
+            if (club.getAddress() != null) {
+                jsonGenerator.writeFieldName("address");
+                jsonGenerator.writeStartObject();
+                jsonGenerator.writeStringField("street", club.getAddress().getStreet());
+                jsonGenerator.writeStringField("city", club.getAddress().getCity());
+                jsonGenerator.writeStringField("state", club.getAddress().getState());
+                jsonGenerator.writeStringField("postalCode", club.getAddress().getPostalCode());
+                jsonGenerator.writeStringField("country", club.getAddress().getCountry());
+                jsonGenerator.writeEndObject();
             }
+            jsonGenerator.writeStringField("phone", club.getPhone());
             jsonGenerator.writeStringField("email", club.getEmail());
-            jsonGenerator.writeStringField("registerDate", DateUtil.formatDateTime(club.getRegisterDate()));
+            if (club.getRegisterDate() != null)
+                jsonGenerator.writeStringField("registerDate", DateUtil.formatDateTime(club.getRegisterDate()));
             jsonGenerator.writeStringField("description", club.getDescription());
             jsonGenerator.writeBooleanField("deleted", club.isDeleted());
             // Photo

@@ -15,7 +15,8 @@ public interface FighterRepository extends JpaRepository<Fighter, Long> {
     // ************************
     //Security
     Optional<Fighter> findByUserName(String userName);
-    Optional<Fighter> findByEmail(String username);
+    Optional<Fighter> findByEmail(String email);
+    Optional<Fighter> findByConfirmationToken(String confirmationToken);
     Boolean existsByUserName(String username);
     Boolean existsByEmail(String email);
 
