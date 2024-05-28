@@ -17,7 +17,7 @@ public class EventReviewSerializer extends JsonSerializer<EventReview> {
     public void serialize(EventReview eventReview, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         try {
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeFieldName("eventReviewId");
+            jsonGenerator.writeFieldName("id");
             jsonGenerator.writeStartObject();
             jsonGenerator.writeFieldName("fighterId");
             jsonGenerator.writeObject(eventReview.getFighter().getId());

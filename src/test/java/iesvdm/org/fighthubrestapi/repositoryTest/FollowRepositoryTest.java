@@ -91,14 +91,14 @@ public class FollowRepositoryTest {
         this.fighterRepository.save(fighter3);
         // Follows
         this.follow1 = Follow.builder()
-                .followId(new FollowId(fighter1.getId(), fighter2.getId()))
+                .id(new FollowId(fighter1.getId(), fighter2.getId()))
                 .followDate(LocalDateTime.now())
                 .followerFighter(fighter1)
                 .followedFighter(fighter2)
                 .build();
 
         this.follow2 = Follow.builder()
-                .followId(new FollowId(fighter1.getId(), fighter3.getId()))
+                .id(new FollowId(fighter1.getId(), fighter3.getId()))
                 .followDate(LocalDateTime.now())
                 .followerFighter(fighter1)
                 .followedFighter(fighter3)
@@ -115,14 +115,14 @@ public class FollowRepositoryTest {
     @Order(1)
     public void saveFollow() {
         Follow follow3 = Follow.builder()
-                .followId(new FollowId(fighter2.getId(), fighter1.getId()))
+                .id(new FollowId(fighter2.getId(), fighter1.getId()))
                 .followDate(LocalDateTime.now())
                 .followerFighter(fighter2)
                 .followedFighter(fighter1)
                 .build();
 
         Follow follow4 = Follow.builder()
-                .followId(new FollowId(fighter2.getId(), fighter3.getId()))
+                .id(new FollowId(fighter2.getId(), fighter3.getId()))
                 .followDate(LocalDateTime.now())
                 .followerFighter(fighter2)
                 .followedFighter(fighter3)
@@ -137,7 +137,7 @@ public class FollowRepositoryTest {
     @Test
     @Order(2)
     public void findFollow() {
-        Assertions.assertNotNull(this.followRepository.findById(follow1.getFollowId()));
+        Assertions.assertNotNull(this.followRepository.findById(follow1.getId()));
     }
     // Count follows
     @Test

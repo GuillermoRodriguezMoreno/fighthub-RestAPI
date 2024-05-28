@@ -9,6 +9,8 @@ import iesvdm.org.fighthubrestapi.repository.ClubRepository;
 import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.List;
 @Service
 @Transactional
 public class ClubMembershipRequestService {
+
+    // toDo -- Implementar que si ya existe una petición a un club no se pueda crear otra
 
     // *** INJECTS ***
     // ***************
@@ -72,5 +76,12 @@ public class ClubMembershipRequestService {
         this.fighterRepository.save(clubMembershipRequestToDelete.getFighter());
         // Delete club membership request
         clubMembershipRequestRepository.deleteById(id);
+    }
+
+    // *** CUSTOM METHODS ***
+    // **********************
+    // Find club membership requests by club id
+    public Page<ClubMembershipRequest> findClubMembershipRequestsByClubId(Long clubId, Pageable pageable) {
+        return clubMembershipRequestRepository.findClubMembershipRequestsByClubId(clubId, pageable);
     }
 }

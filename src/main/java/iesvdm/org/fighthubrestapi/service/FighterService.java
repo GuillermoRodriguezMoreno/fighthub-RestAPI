@@ -8,15 +8,21 @@ import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
 @Transactional
 public class FighterService {
-    // toDo:
+
+    // toDo -- Implementar que un luchador pueda convertirse en administrador de un club
+    // toDo -- Implementar que un luchador administrador de club pueda crear un club
+
     // *** INJECTS ***
     // ***************
     @Autowired
@@ -76,12 +82,16 @@ public class FighterService {
         fighterToUpdate.setWinsInARow(fighter.getWinsInARow());
         // Relationships
         // Disassociate with the old club
-        fighterToUpdate.getClub().getFighters().remove(fighterToUpdate);
-        this.clubRepository.save(fighterToUpdate.getClub());
+        if (fighterToUpdate.getClub() != null) {
+            fighterToUpdate.getClub().getFighters().remove(fighterToUpdate);
+            this.clubRepository.save(fighterToUpdate.getClub());
+        }
         // Associate with the new club
-        fighterToUpdate.setClub(fighter.getClub());
-        fighterToUpdate.getClub().getFighters().add(fighterToUpdate);
-        this.clubRepository.save(fighterToUpdate.getClub());
+        if (fighter.getClub() != null) {
+            fighterToUpdate.setClub(fighter.getClub());
+            fighterToUpdate.getClub().getFighters().add(fighterToUpdate);
+            this.clubRepository.save(fighterToUpdate.getClub());
+        }
         // Disassociate with the old category
         fighterToUpdate.getCategory().getFighters().remove(fighterToUpdate);
         this.categoryRepository.save(fighterToUpdate.getCategory());
@@ -104,8 +114,10 @@ public class FighterService {
         // Find fighter
         Fighter fighterToDelete = findById(id);
         // Disassociate with the club
-        fighterToDelete.getClub().getFighters().remove(fighterToDelete);
-        this.clubRepository.save(fighterToDelete.getClub());
+        if (fighterToDelete.getClub() != null) {
+            fighterToDelete.getClub().getFighters().remove(fighterToDelete);
+            this.clubRepository.save(fighterToDelete.getClub());
+        }
         // Disassociate with the category
         fighterToDelete.getCategory().getFighters().remove(fighterToDelete);
         this.categoryRepository.save(fighterToDelete.getCategory());
@@ -123,5 +135,16 @@ public class FighterService {
         this.clubReviewRepository.saveAll(fighterToDelete.getClubReviews());
         // Delete fighter
         fighterRepository.deleteById(id);
+    }
+
+    // *** CUSTOM METHODS ***
+    // **********************
+    // Find fighters by name
+    public Page<Fighter> findFightersByName(Optional<String> name, Pageable pageable) {
+        return fighterRepository.findByNameContainingIgnoreCaseOrderByNameAsc(name.orElse(""), pageable);
+    }
+    // Find fighters by username
+    public Page<Fighter> findFightersByUserName(Optional<String> userName, Pageable pageable) {
+        return fighterRepository.findByUserNameContainingIgnoreCaseOrderByNameAsc(userName.orElse(""), pageable);
     }
 }

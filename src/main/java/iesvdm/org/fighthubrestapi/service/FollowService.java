@@ -7,12 +7,16 @@ import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import iesvdm.org.fighthubrestapi.repository.FollowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class FollowService {
+
+    // toDo -- Implementar que si ya existe un follow entre dos luchadores no se pueda crear otro
 
     // *** INJECTS ***
     // ***************
@@ -21,8 +25,8 @@ public class FollowService {
     @Autowired
     private FighterRepository fighterRepository;
 
-    // *** METHODS ***
-    // ***************
+    // *** CRUD METHODS ***
+    // ********************
     // List all follows
     public List<Follow> findAll() {
         return followRepository.findAll();
@@ -82,5 +86,12 @@ public class FollowService {
         this.fighterRepository.save(followedFighter);
         // Delete the follow
         followRepository.deleteById(id);
+    }
+
+    // *** CUSTOM METHODS ***
+    // ***********************
+    // Find all follows by follower id
+    public Page<Follow> findByFollowerId(Long followerId, Pageable pageable) {
+        return followRepository.findByFollowerFighter_Id(followerId, pageable);
     }
 }

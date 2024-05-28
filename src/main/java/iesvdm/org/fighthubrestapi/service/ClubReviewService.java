@@ -10,6 +10,8 @@ import iesvdm.org.fighthubrestapi.repository.ClubReviewRepository;
 import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.List;
 @Service
 @Transactional
 public class ClubReviewService{
+
+    // toDo -- Implementar que si ya existe una review de un club por un luchador no se pueda crear otra
 
     // *** INJECTS ***
     // ***************
@@ -73,5 +77,12 @@ public class ClubReviewService{
         this.clubRepository.save(clubReviewToDelete.getClub());
         // Delete club review
         this.clubReviewRepository.deleteById(id);
+    }
+
+    // *** CUSTOM METHODS ***
+    // **********************
+    // Find all club reviews by club id
+    public Page<ClubReview> findByClubId(Long clubId, Pageable pageable) {
+        return this.clubReviewRepository.findByClubId(clubId, pageable);
     }
 }

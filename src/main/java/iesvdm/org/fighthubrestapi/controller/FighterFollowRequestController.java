@@ -5,6 +5,8 @@ import iesvdm.org.fighthubrestapi.service.FighterFollowRequestService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,6 +55,14 @@ public class FighterFollowRequestController {
     @DeleteMapping(value = {"/{id}"})
     public void delete(@PathVariable Long id) {
         log.info("FighterFollowRequestController: delete - id: " + id);
-        fighterFollowRequestService.delete(id);
+        this.fighterFollowRequestService.delete(id);
+    }
+    // *** CUSTOM METHODS ***
+    // **********************
+    // Find all fighterFollowRequests by receiver id
+    @GetMapping(value = {"", "/"}, params = {"receiverId"})
+    public Page<FighterFollowRequest> findByReceiver_Id(@RequestParam Long receiverId, Pageable pageable) {
+        log.info("FighterFollowRequestController: findByReceiver_Id - receiverId: " + receiverId);
+        return fighterFollowRequestService.findByReceiver_Id(receiverId, pageable);
     }
 }

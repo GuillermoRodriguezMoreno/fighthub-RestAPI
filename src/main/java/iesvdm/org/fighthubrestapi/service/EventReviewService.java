@@ -11,6 +11,8 @@ import iesvdm.org.fighthubrestapi.repository.EventReviewRepository;
 import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +20,8 @@ import java.util.List;
 @Service
 @Transactional
 public class EventReviewService {
+
+    // toDo -- Implementar que si ya existe una review de un evento por un luchador no se pueda crear otra
 
     // *** INJECTS ***
     // ***************
@@ -73,5 +77,12 @@ public class EventReviewService {
         this.fighterRepository.save(eventReviewToDelete.getFighter());
         // Delete
         eventReviewRepository.deleteById(id);
+    }
+
+    // *** CUSTOM METHODS ***
+    // **********************
+    // Find all event reviews by event id
+    public Page<EventReview> findByEventId(Long eventId, Pageable pageable) {
+        return eventReviewRepository.findByEventId(eventId, pageable);
     }
 }

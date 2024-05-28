@@ -5,6 +5,8 @@ import iesvdm.org.fighthubrestapi.service.ClubMembershipRequestService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +26,7 @@ public class ClubMembershipRequestController {
     // *** METHODS ***
     // ***************
     // List all clubMembershipRequests
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {"", "/"}, params = {"!clubId"})
     public List<ClubMembershipRequest> findAll() {
         log.info("ClubMembershipRequestController: findAll");
         return clubMembershipRequestService.findAll();
@@ -55,4 +57,14 @@ public class ClubMembershipRequestController {
         log.info("ClubMembershipRequestController: delete - id: " + id);
         clubMembershipRequestService.delete(id);
     }
+
+    // *** CUSTOM METHODS ***
+    // **********************
+    // Find clubMembershipRequest by club id
+    @GetMapping(value = {"", "/"}, params = {"clubId"})
+    public Page<ClubMembershipRequest> findByClubId(@RequestParam("clubId") Long clubId, Pageable pageable) {
+        log.info("ClubMembershipRequestController: findByClubId - id: " + clubId);
+        return clubMembershipRequestService.findClubMembershipRequestsByClubId(clubId, pageable);
+    }
+
 }

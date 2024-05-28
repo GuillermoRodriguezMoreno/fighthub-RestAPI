@@ -19,6 +19,9 @@ import java.util.Set;
 @Transactional
 public class ClubService {
 
+    // toDo -- Implementar que si ya existe un club con el mismo nombre no se pueda crear otro
+    // toDo -- Implementar que un club solo lo pueda crear un luchador con rol de administrador de club
+
     // *** INJECTS ***
     // ***************
     @Autowired
@@ -85,11 +88,17 @@ public class ClubService {
         Club clubToDelete = clubRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id, Club.class));
         // Disassociate profile photo from club
-        clubToDelete.getProfilePhoto().setClub(null);
-        this.photoRepository.save(clubToDelete.getProfilePhoto());
+        if (clubToDelete.getProfilePhoto() != null) {
+            clubToDelete.getProfilePhoto().setClub(null);
+            this.photoRepository.save(clubToDelete.getProfilePhoto());
+        }
         // Disassociate president from club
-        clubToDelete.getPresident().setClubAdministered(null);
-        this.fighterRepository.save(clubToDelete.getPresident());
+        if (clubToDelete.getPresident() != null) {
+            Fighter president = clubToDelete.getPresident();
+            clubToDelete.setPresident(null);
+            president.setClubAdministered(null);
+            this.fighterRepository.save(president);
+        }
         // Disassociate club from events participated
         clubToDelete.getEventsParticipated().forEach(event -> event.getClubsParticipating().remove(clubToDelete));
         this.eventRepository.saveAll(clubToDelete.getEventsParticipated());
@@ -97,8 +106,8 @@ public class ClubService {
         clubToDelete.getFighters().forEach(fighter -> fighter.setClub(null));
         this.fighterRepository.saveAll(clubToDelete.getFighters());
         // Dissociate events organized from club
-        clubToDelete.getEventsParticipated().forEach(event -> event.setOrganizer(null));
-        this.eventRepository.saveAll(clubToDelete.getEventsParticipated());
+        clubToDelete.getEventsOrganized().forEach(event -> event.setOrganizer(null));
+        this.eventRepository.saveAll(clubToDelete.getEventsOrganized());
         // Delete club
         clubRepository.deleteById(id);
     }

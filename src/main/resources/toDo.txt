@@ -1,40 +1,28 @@
 toDo -- Controlar el envio de solicitudes segun el estado pending.
-toDo -- Terminar Services añadiendo bidireccionalidad en create
+toDo -- MIRAR RELACIONES ONE TO ONE EN BAELDUNG
 toDo -- Terminar Services en FighterFollowRequest y FightInscriptionRequest,
         añadiendo bidireccionalidad en create, pero primero añadir composite keys
 toDo -- Añadir lista de victorias, derrotas y empates en Fighter
 toDo -- Añadir perdedor y empate en Fight
-toDo -- He añadido un Enum para satus, deberia implementarlo en las entidades etc
 toDo -- Al crear un evento permitir crear peleas
-toDo -- Decidir como hacer los JSON
-toDo -- Fecha en JsonSerializer
 toDo -- Comprobar campos null en JsonSerializer
-toDO -- Problemas con la herencia en USER, REPLANTEAR!!! He pensado mejor no hacer una herencia sino crear la entidad Club
-        y que la administre un Fighter con Role CLUB_ADMIN
 toDo -- Solucionar el NoEntityFoundException con clave compuesta
 toDo -- En role, al ser un enum, no puedo crear desde la api
-toDo -- En las entidades con clave compuesta, como pasar el id compuesto a la api por la URL
 toDo -- Fecha en deserialize IMPORTANTE!!
 toDo -- MIRAR PORQUE EN CLAVE COMPUESTA NO PUEDEN HABER DOS PARES IGUALES EN DISTINTO ORDEN
+toDo -- He Añadido upload fichero pero necesito entender como funciona y testearlo
 ------- Con esto habria terminado las entidades :) ---------
 toDo -- Terminar Services
 toDo -- Terminar Controllers
 toDo -- Terminar Controller Advice
-toDo -- Paginacion
-toDo -- Filtros
-toDo -- JSON serializadores
 toDo -- Seguridad
 toDo -- Mail Sender
-toDo -- Tests Repository Mirar los constructores
-toDo -- Tests Services con Insomnia
 toDo -- HAY QUE MIRAR MUY BIEN LOS NULL EN LOS SERVICES
+toDo -- MAILSENDER AL CREAR USUARIO Y VERIFICAR
 ________________________ IMPORTANTE __________________________
 toDo -- He modificado los filtros de seguridad en config para que pueda testear la API
 toDo -- Hacer un borrado logico en entidades principales en vez de borrado completo
         (Añadir otro endpoint)
-toDo -- Service de entidades de clave compuesta
 _______________________ PROBLEMAS SERVICES _______________________________
 toDo -- COMPROBAR MUY BIEN LA VALIDACION DE LOS BEAN, CREA CONFLICTO CON LOS SERVICES
 toDo -- No olvidar al crear eventos permitir crear peleas
--------------------------- SERVICE QUE QUEDAN -----------------------------------
-toDo -- Role, Photo

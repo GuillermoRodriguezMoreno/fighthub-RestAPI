@@ -1,12 +1,11 @@
 package iesvdm.org.fighthubrestapi.model;
 
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -26,6 +25,11 @@ public class RegisterRequest {
     @NotBlank
     @Email
     private String email;
+    // BirthDate
+    @NotNull(message = "The birth date cannot be null")
+    @Past(message = "The birth date must be in the past")
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime birthDate;
     // Roles
-    private Set<String> roles;
+    private Set<String> role;
 }

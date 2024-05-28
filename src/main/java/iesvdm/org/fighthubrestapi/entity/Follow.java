@@ -25,7 +25,7 @@ public class Follow {
     // *************
     // FollowId
     @EmbeddedId
-    private FollowId followId;
+    private FollowId id;
     // FollowDate
     @NotNull(message = "The follow date cannot be null")
     @PastOrPresent(message = "The follow date must be in the past or present")

@@ -14,6 +14,10 @@ import java.util.List;
 @Service
 public class FightService {
 
+    // toDo -- Implementar que al actualizar una pelea con un ganador, al ganador se le sume una victoria, y al perdedor una derrota
+    // toDo -- Implementar que si ya existe una pelea con los mismos luchadores en el mismo evento no se pueda crear otra
+    // toDo -- Implementar las victorias consecutivas de un luchador
+
     // *** INJECTS ***
     // ***************
     @Autowired

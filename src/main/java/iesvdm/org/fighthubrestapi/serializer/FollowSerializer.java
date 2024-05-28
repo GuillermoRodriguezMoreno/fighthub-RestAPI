@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import iesvdm.org.fighthubrestapi.entity.Follow;
+import iesvdm.org.fighthubrestapi.util.DateUtil;
 
 import java.io.IOException;
 
@@ -17,10 +18,10 @@ public class FollowSerializer extends JsonSerializer<Follow> {
         try {
             jsonGenerator.writeStartObject();
             // FollowId
-            jsonGenerator.writeFieldName("followId");
+            jsonGenerator.writeFieldName("id");
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeNumberField("followerFighterId", follow.getFollowId().getFollowerFighterId());
-            jsonGenerator.writeNumberField("followedFighterId", follow.getFollowId().getFollowedFighterId());
+            jsonGenerator.writeNumberField("followerFighterId", follow.getId().getFollowerFighterId());
+            jsonGenerator.writeNumberField("followedFighterId", follow.getId().getFollowedFighterId());
             jsonGenerator.writeEndObject();
             // Follower Fighter
             jsonGenerator.writeFieldName("followerFighter");
@@ -62,6 +63,7 @@ public class FollowSerializer extends JsonSerializer<Follow> {
                 jsonGenerator.writeEndObject();
             }
             jsonGenerator.writeEndObject();
+            jsonGenerator.writeStringField("followDate", DateUtil.formatDateTime(follow.getFollowDate()));
             // End
             jsonGenerator.writeEndObject();
         } catch (Exception e) {

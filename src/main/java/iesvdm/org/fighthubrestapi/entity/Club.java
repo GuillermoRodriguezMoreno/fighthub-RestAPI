@@ -60,12 +60,14 @@ public class Club {
     //  *** RELATIONSHIPS ***
     // **********************
     // ProfilePhoto
-    @OneToOne()
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "profile_photo_id")
+    @ToString.Exclude
     private Photo profilePhoto;
     // President
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "president_id")
+    @ToString.Exclude
     private Fighter president;
     // EventsParticipated
     @ManyToMany(mappedBy = "clubsParticipating", cascade = CascadeType.MERGE)
@@ -80,19 +82,19 @@ public class Club {
     @ToString.Exclude
     private Set<Event> eventsOrganized = new HashSet<>();
     // Photos
-    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "club", cascade = {CascadeType.ALL, CascadeType.MERGE}, orphanRemoval = true)
     @ToString.Exclude
     private Set<Photo> photos = new HashSet<>();
     // Reviews
-    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "club", cascade = {CascadeType.ALL, CascadeType.MERGE}, orphanRemoval = true)
     @ToString.Exclude
     private Set<ClubReview> reviews = new HashSet<>();
     // ClubMembershipRequests
-    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "club", cascade = {CascadeType.ALL, CascadeType.MERGE}, orphanRemoval = true)
     @ToString.Exclude
     private Set<ClubMembershipRequest> clubMembershipRequests = new HashSet<>();
     // FightInscriptionRequestsSent
-    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "club", cascade = {CascadeType.ALL, CascadeType.MERGE}, orphanRemoval = true)
     @ToString.Exclude
     private Set<FightInscriptionRequest> fightInscriptionRequestsSent = new HashSet<>();
 }

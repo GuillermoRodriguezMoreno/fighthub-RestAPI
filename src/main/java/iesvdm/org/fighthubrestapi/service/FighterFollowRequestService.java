@@ -1,10 +1,13 @@
 package iesvdm.org.fighthubrestapi.service;
 
+import iesvdm.org.fighthubrestapi.entity.Fighter;
 import iesvdm.org.fighthubrestapi.entity.FighterFollowRequest;
 import iesvdm.org.fighthubrestapi.exception.EntityNotFoundException;
 import iesvdm.org.fighthubrestapi.repository.FighterFollowRequestRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +15,8 @@ import java.util.List;
 @Service
 @Transactional
 public class FighterFollowRequestService {
+
+    // toDo -- Implementar que si ya existe una petición de seguimiento entre dos luchadores no se pueda crear otra
 
     // *** INJECTS ***
     // ***************
@@ -32,7 +37,6 @@ public class FighterFollowRequestService {
     }
     // Save fighter follow request
     public FighterFollowRequest save(FighterFollowRequest fighterFollowRequest) {
-        // toDo -- Implementar que si ya existe una petición de seguimiento entre dos luchadores no se pueda crear otra
         return fighterFollowRequestRepository.save(fighterFollowRequest);
     }
     // Update fighter follow request
@@ -45,14 +49,13 @@ public class FighterFollowRequestService {
     }
     // Delete fighter follow request
     public void delete(Long id) {
-        // FindById
-        FighterFollowRequest fighterFollowRequestToDelete = this.fighterFollowRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, FighterFollowRequest.class));
-        // Disassociate
-        fighterFollowRequestToDelete.getReceiver().getReceivedFighterFollowRequests().remove(fighterFollowRequestToDelete);
-        fighterFollowRequestToDelete.getSender().getSentFighterFollowRequests().remove(fighterFollowRequestToDelete);
-        this.fighterService.save(fighterFollowRequestToDelete.getReceiver());
-        this.fighterService.save(fighterFollowRequestToDelete.getSender());
-        // Delete
         fighterFollowRequestRepository.deleteById(id);
+    }
+
+    // *** CUSTOM METHODS ***
+    // **********************
+    // Find all fighterFollowRequests by receiver id
+    public Page<FighterFollowRequest> findByReceiver_Id(Long receiverId, Pageable pageable) {
+        return fighterFollowRequestRepository.findByReceiver_Id(receiverId, pageable);
     }
 }

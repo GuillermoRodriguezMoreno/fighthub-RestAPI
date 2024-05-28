@@ -32,7 +32,7 @@ public class Photo {
     @EqualsAndHashCode.Include
     private long id;
     // EntityType
-    @Pattern(regexp = "FIGHTER|CLUB|EVENT", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Entity type must be 'FIGHTER', 'CLUB', 'USER' or 'EVENT'")
+    @Pattern(regexp = "FIGHTER|CLUB|EVENT", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Entity type must be 'FIGHTER', 'CLUB' or 'EVENT'")
     private String EntityType;
     // Url
     @NotBlank(message = "The url cannot be blank")

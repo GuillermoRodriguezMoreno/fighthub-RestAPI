@@ -17,7 +17,7 @@ public class ClubReviewSerializer extends JsonSerializer<ClubReview> {
     public void serialize(ClubReview clubReview, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         try {
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeFieldName("clubReviewId");
+            jsonGenerator.writeFieldName("id");
             jsonGenerator.writeStartObject();
             jsonGenerator.writeFieldName("fighterId");
             jsonGenerator.writeObject(clubReview.getFighter().getId());

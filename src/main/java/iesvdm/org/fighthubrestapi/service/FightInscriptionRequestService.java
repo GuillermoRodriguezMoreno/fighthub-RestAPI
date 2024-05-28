@@ -13,6 +13,9 @@ import java.util.List;
 @Transactional
 public class FightInscriptionRequestService {
 
+    // toDo -- Implementar que un administrador de club pueda inscribir a un luchador en un combate
+    // toDo -- Implementar que si ya hay una solicitud de inscripción en un combate, segun el status, no se pueda hacer otra
+
     // *** INJECTS ***
     // ***************
     @Autowired

@@ -15,6 +15,10 @@ import java.util.List;
 @Transactional
 public class EventService {
 
+    // toDo -- Implementar que si ya existe un evento con el mismo nombre no se pueda crear otro
+    // toDo -- Implementar que un evento solo lo pueda crear un luchador con rol de administrador de club
+    // toDo -- Añadir funcionalidad de poder crear peleas al crear un evento
+
     // *** INJECTS ***
     // ***************
     @Autowired
@@ -41,7 +45,6 @@ public class EventService {
     }
     // Save event
     public Event save(Event event) {
-        // toDo -- Añadir funcionalidad de poder crear peleas
         // Find organizer
         Club organizer = this.clubRepository.findById(event.getOrganizer().getId()).orElseThrow(() -> new EntityNotFoundException(event.getOrganizer().getId(), Club.class));
         // Associate
@@ -50,6 +53,9 @@ public class EventService {
         // Add to organizer
         organizer.getEventsParticipated().add(event);
         this.clubRepository.save(organizer);
+        // Add to fights
+        event.getFights().forEach(fight -> fight.setEvent(event));
+        this.fightRepository.saveAll(event.getFights());
         return event;
     }
     // Update event
@@ -84,6 +90,13 @@ public class EventService {
         eventToUpdate.setClubsParticipating(event.getClubsParticipating());
         eventToUpdate.getClubsParticipating().forEach(club -> club.getEventsParticipated().add(eventToUpdate));
         this.clubRepository.saveAll(eventToUpdate.getClubsParticipating());
+        // Disassociate with the old fights
+        eventToUpdate.getFights().forEach(fight -> fight.setEvent(null));
+        this.fightRepository.saveAll(eventToUpdate.getFights());
+        // Associate with the new fights
+        eventToUpdate.setFights(event.getFights());
+        eventToUpdate.getFights().forEach(fight -> fight.setEvent(eventToUpdate));
+        this.fightRepository.saveAll(eventToUpdate.getFights());
         // Save
         return eventRepository.save(eventToUpdate);
     }

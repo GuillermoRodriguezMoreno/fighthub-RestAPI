@@ -13,6 +13,8 @@ import java.util.List;
 @Service
 public class PhotoService {
 
+    // toDo -- Implementar toda la logica de guardar foto, es decir, si es de perfil y el tipo de entidad a la que pertenece
+
     // *** INJECTS ***
     // ***************
     @Autowired

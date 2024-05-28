@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api/auth")
+    @RequestMapping("/v1/api/auth")
 public class AuthController {
 
     // *** INJECTS ***
@@ -83,9 +83,10 @@ public class AuthController {
         // Create new user's account
         Fighter user = new Fighter(registerRequest.getUserName(),
                 registerRequest.getEmail(),
-                encoder.encode(registerRequest.getPassword()));
+                encoder.encode(registerRequest.getPassword()),
+                registerRequest.getBirthDate());
 
-        Set<String> strRoles = registerRequest.getRoles();
+        Set<String> strRoles = registerRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
@@ -95,7 +96,7 @@ public class AuthController {
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "admin":
+                    case "ADMIN":
                         Role adminRole = roleRepository.findByRole(E_Role.ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
                         roles.add(adminRole);

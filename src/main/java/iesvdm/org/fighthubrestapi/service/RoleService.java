@@ -17,6 +17,8 @@ import java.util.List;
 @Transactional
 public class RoleService {
 
+    // toDo -- Implementar poder crear nuevos Roles. Solucionar lo del Enum
+
     // *** INJECTS ***
     // ***************
     @Autowired

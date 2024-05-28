@@ -49,35 +49,36 @@ public class Fighter {
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
     // RegisterDate
-    @NotNull(message = "The register date cannot be null")
-    @PastOrPresent(message = "The upload date must be in the past or present")
+    //@NotNull(message = "The register date cannot be null")
+    //@PastOrPresent(message = "The upload date must be in the past or present")
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime registerDate;
     // Deleted
     @Column(columnDefinition = "BOOLEAN DEFAULT false")
     private boolean deleted;
     // Name
-    @NotBlank(message = "The name cannot be empty")
-    @Size(min = 2, max = 50, message = "The name must be between 2 and 50 characters long")
+    //@NotBlank(message = "The name cannot be empty")
+    //@Size(min = 2, max = 50, message = "The name must be between 2 and 50 characters long")
     private String name;
     // Active
-    @NotNull(message = "Active cannot be null")
+    //@NotNull(message = "Active cannot be null")
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
     private boolean active;
     // Weight
-    @NotNull(message = "Weight cannot be null")
-    @Min(value = 20, message = "Weight must be at least 20")
-    @Max(value = 200, message = "Maximum allowed weight is 200")
+    //@NotNull(message = "Weight cannot be null")
+    //@Min(value = 20, message = "Weight must be at least 20")
+    //@Max(value = 200, message = "Maximum allowed weight is 200")
     private double weight;
     // Height
-    @NotNull(message = "Height cannot be null")
-    @Min(value = 100, message = "Height must be at least 100")
-    @Max(value = 300, message = "Maximum allowed Height is 300")
+    //@NotNull(message = "Height cannot be null")
+    //@Min(value = 100, message = "Height must be at least 100")
+    //@Max(value = 300, message = "Maximum allowed Height is 300")
     private int height;
     // Gender
     private String gender;
     // Biography
-    @NotBlank(message = "The biography cannot be blank")
-    @Size(min = 10, max = 500, message = "The biography must be between 10 and 500 characters long")
+    //@NotBlank(message = "The biography cannot be blank")
+    //@Size(min = 10, max = 500, message = "The biography must be between 10 and 500 characters long")
     private String biography;
     // Location
     private Location location;
@@ -102,7 +103,7 @@ public class Fighter {
     @JoinColumn(name = "profile_photo_id", referencedColumnName = "id")
     private Photo profilePhoto;
     // ClubAdministered (President)
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.MERGE)
     private Club clubAdministered;
     // Club
     @ManyToOne()
@@ -173,15 +174,16 @@ public class Fighter {
     @ToString.Exclude
     private Set<ClubMembershipRequest> clubMembershipRequests = new HashSet<>();
     // ClubReviews
-    @OneToMany(mappedBy = "fighter", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "fighter", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @ToString.Exclude
     private Set<ClubReview> clubReviews = new HashSet<>();
 
     // *** CONSTRUCTORS ***
     // ********************
-    public Fighter(String username, String email, String password) {
+    public Fighter(String username, String email, String password, LocalDateTime birthDate) {
         this.userName = username;
         this.email = email;
         this.password = password;
+        this.birthDate = birthDate;
     }
 }

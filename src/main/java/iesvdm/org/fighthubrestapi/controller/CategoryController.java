@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -21,10 +22,10 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    // *** METHODS ***
-    // ***************
+    // *** CRUD METHODS ***
+    // ********************
     // List all categories
-    @GetMapping(value = {"", "/"}, params = {"!search"})
+    @GetMapping(value = {"", "/"}, params = {"!name"})
     public List<Category> findAll() {
         log.info("CategoryController: findAll");
         return categoryService.findAll();
@@ -54,5 +55,14 @@ public class CategoryController {
     public void delete(@PathVariable Long id) {
         log.info("CategoryController: delete - id: " + id);
         categoryService.delete(id);
+    }
+
+    // *** CUSTOM METHODS ***
+    // **********************
+    // Find by name
+    @GetMapping(value = {"","/"}, params = {"name"})
+    public List<Category> findCategoriesByName(@RequestParam("name") String name) {
+        log.info("CategoryController: findCategoriesByName - name: " + name);
+        return categoryService.findByName(Optional.of(name));
     }
 }

@@ -8,9 +8,12 @@ import iesvdm.org.fighthubrestapi.repository.FighterRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,8 +28,8 @@ public class CategoryService {
     @Autowired
     private FightRepository fightRepository;
 
-    // *** METHODS ***
-    // ***************
+    // *** CRUD METHODS ***
+    // ********************
     // List all categories
     public List<Category> findAll() {
         return categoryRepository.findAll();
@@ -59,5 +62,12 @@ public class CategoryService {
         fightRepository.saveAll(categoryToDelete.getFights());
         // Delete category
         categoryRepository.deleteById(id);
+    }
+
+    // *** CUSTOM METHODS ***
+    // **********************
+    // Find category by name
+    public List<Category> findByName(Optional<String> name) {
+        return categoryRepository.findCategoriesByNameContainingIgnoreCaseOrderByName(name.orElse(""));
     }
 }
