@@ -182,6 +182,10 @@ public class Fighter {
     @OneToMany(mappedBy = "fighter", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @ToString.Exclude
     private Set<ClubReview> clubReviews = new HashSet<>();
+    // Wins
+    @OneToMany(mappedBy = "winner", cascade = {CascadeType.MERGE})
+    @ToString.Exclude
+    private Set<Fight> winsList = new HashSet<>();
 
     // *** CONSTRUCTORS ***
     // ********************

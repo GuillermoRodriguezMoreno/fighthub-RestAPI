@@ -1,4 +1,4 @@
-USE fighthub_sql;
+USE fighthpub_sql;
 
 -- CATEGORY
 INSERT INTO category (name) VALUES
@@ -16,6 +16,12 @@ INSERT INTO style (name) VALUES
                              ('K1'),
                              ('MMA');
 
+-- ROLE
+INSERT INTO role (role) values
+                            ('ADMIN'),
+                            ('FIGHTER'),
+                            ('CLUB_ADMIN');
+
 -- FIGHTER
 INSERT INTO fighter (birth_date, email, password, register_date,
                      user_name, profile_photo_id,
@@ -32,12 +38,6 @@ VALUES
     ('1996-05-08', 'fighter2@example.com', '12345678', NOW(), 'fighter2', null, true,
      'Biography for Fighter 3', 0, 'MALE', 174, 0, '132421', '12312', 2, 'Fighter3',
      9, 78, 6, 3, 2);
-
--- ROLE
-INSERT INTO role (role) values
-                            ('ADMIN'),
-                            ('FIGHTER'),
-                            ('CLUB_ADMIN');
 
 -- FIGHTER_ROLE
 INSERT INTO fighter_role (fighter_id, role_id) VALUES

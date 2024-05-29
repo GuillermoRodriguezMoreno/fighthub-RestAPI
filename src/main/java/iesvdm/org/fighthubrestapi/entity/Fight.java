@@ -71,7 +71,7 @@ public class Fight {
     @JoinColumn(name = "style_id")
     private Style style;
     // Winner
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "winner_id")
     private Fighter winner;
     // FightInscriptionRequests

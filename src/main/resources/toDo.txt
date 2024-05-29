@@ -1,11 +1,13 @@
+toDo -- SERVICES!!!!! HE ACTUALIZADO ENTIDADES!!!
 toDo -- Controlar el envio de solicitudes segun el estado pending.
+toDO -- COMPROBAR QUE UN USUARIO PUEDA TENER MAS DE UNA FOTO, ES DECIR CAMPO USER_ID EN PHOTO PUEDA REPETIRSE
 toDo -- MIRAR RELACIONES ONE TO ONE EN BAELDUNG
+toDo -- HACER UN SCRIPT EN PYTHON PARA LAS RELACIONES DEL SCRIPT SQL USAR FAKE
 toDo -- Terminar Services en FighterFollowRequest y FightInscriptionRequest,
         añadiendo bidireccionalidad en create, pero primero añadir composite keys
 toDo -- Añadir lista de victorias, derrotas y empates en Fighter
 toDo -- Añadir perdedor y empate en Fight
 toDo -- Al crear un evento permitir crear peleas
-toDo -- Comprobar campos null en JsonSerializer
 toDo -- Solucionar el NoEntityFoundException con clave compuesta
 toDo -- En role, al ser un enum, no puedo crear desde la api
 toDo -- Fecha en deserialize IMPORTANTE!!
@@ -16,9 +18,10 @@ toDo -- Terminar Services
 toDo -- Terminar Controllers
 toDo -- Terminar Controller Advice
 toDo -- Seguridad
-toDo -- Mail Sender
 toDo -- HAY QUE MIRAR MUY BIEN LOS NULL EN LOS SERVICES
-toDo -- MAILSENDER AL CREAR USUARIO Y VERIFICAR
+__________________ PREGUNTAS JOSE MANUEL _______________________
+toDo -- PREGUNTAR A JOSE MANUEL SOBRE LA RELACION ONE TO ONE
+toDo -- PREGUNTAR A JOSE MANUEL POR QUE NO PUEDE HABER CLABES DUPLICADAS WINNER EN FIGHT
 ________________________ IMPORTANTE __________________________
 toDo -- He modificado los filtros de seguridad en config para que pueda testear la API
 toDo -- Hacer un borrado logico en entidades principales en vez de borrado completo
@@ -33,6 +36,7 @@ _________________________ A DESTACAR ______________________________
 - BIDIRECCIONALIDAD EN ENTIDADES
 - VALIDACION DE BEAN
 - COMPOSITE KEYS
+- SCRYPT INSERT SQL CREADO CON PYTHON
 _________________________ A IMPLEMENTAR ______________________________
 - BORRADO LOGICO
 - UPLOAD FICHERO
