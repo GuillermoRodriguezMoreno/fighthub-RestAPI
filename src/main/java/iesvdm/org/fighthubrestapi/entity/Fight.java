@@ -33,6 +33,9 @@ public class Fight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
+    //closed
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean isClosed;
     // StartTime
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime startTime;

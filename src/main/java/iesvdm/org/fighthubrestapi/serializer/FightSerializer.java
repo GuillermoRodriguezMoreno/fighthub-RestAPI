@@ -21,6 +21,11 @@ public class FightSerializer extends JsonSerializer<Fight> {
             jsonGenerator.writeStringField("startTime", DateUtil.formatDateTime(fight.getStartTime()));
             jsonGenerator.writeNumberField("fightOrder", fight.getFightOrder());
             jsonGenerator.writeBooleanField("isKo", fight.isKo());
+            jsonGenerator.writeNumberField("weight", fight.getWeight());
+            jsonGenerator.writeBooleanField("isTitleFight", fight.isTitleFight());
+            jsonGenerator.writeBooleanField("isDraw", fight.isDraw());
+            jsonGenerator.writeBooleanField("isClosed", fight.isClosed());
+            // Round
             if (fight.getRound() != null) {
                 jsonGenerator.writeFieldName("round");
                 jsonGenerator.writeStartObject();

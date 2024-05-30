@@ -21,6 +21,8 @@ public class PhotoSerializer extends JsonSerializer<Photo> {
             jsonGenerator.writeStringField("EntityType", photo.getEntityType());
             jsonGenerator.writeStringField("url", photo.getUrl());
             jsonGenerator.writeStringField("uploadDate", DateUtil.formatDateTime(photo.getUploadDate()));
+            jsonGenerator.writeNumberField("fighterProfileId", photo.getFighterProfileId().getId());
+            jsonGenerator.writeNumberField("clubProfileId", photo.getClubProfileId().getId());
             if (photo.getFighter() != null) {
                 jsonGenerator.writeFieldName("fighter");
                 jsonGenerator.writeStartObject();
