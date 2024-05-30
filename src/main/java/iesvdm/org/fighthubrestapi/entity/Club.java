@@ -60,8 +60,7 @@ public class Club {
     //  *** RELATIONSHIPS ***
     // **********************
     // ProfilePhoto
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JoinColumn(name = "profile_photo_id")
+    @OneToOne(mappedBy = "clubProfileId", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @ToString.Exclude
     private Photo profilePhoto;
     // President

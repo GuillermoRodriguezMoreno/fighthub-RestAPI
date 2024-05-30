@@ -44,12 +44,20 @@ public class Photo {
 
     // *** RELATIONSHIPS ***
     // *********************
-    // fighter
+    // Fighter profile
+    @OneToOne
+    @JoinColumn(name = "fighter_profile_id")
+    private Fighter fighterProfileId;
+    // Club profile
+    @OneToOne
+    @JoinColumn(name = "club_profile_id")
+    private Club clubProfileId;
+    // Fighter
     @ManyToOne
     @JoinColumn(name = "fighter_id")
     @ToString.Exclude
     private Fighter fighter;
-    // club
+    // Club
     @ManyToOne
     @JoinColumn(name = "club_id")
     @ToString.Exclude

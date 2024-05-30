@@ -109,8 +109,7 @@ public class Fighter {
     // *** RELATIONSHIPS ***
     // *********************
     // ProfilePhoto
-    @OneToOne()
-    @JoinColumn(name = "profile_photo_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "fighterProfileId", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private Photo profilePhoto;
     // ClubAdministered (President)
     @OneToOne(cascade = CascadeType.MERGE)
