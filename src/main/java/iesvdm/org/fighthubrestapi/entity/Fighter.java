@@ -88,17 +88,22 @@ public class Fighter {
     // Location
     private Location location;
     // Wins
+    @Column(columnDefinition = "INT DEFAULT 0")
     private int wins;
     // Losses
+    @Column(columnDefinition = "INT DEFAULT 0")
     private int losses;
     // Draws
+    @Column(columnDefinition = "INT DEFAULT 0")
     private int draws;
     // Kos
+    @Column(columnDefinition = "INT DEFAULT 0")
     private int kos;
     // Fights
+    @Column(columnDefinition = "INT DEFAULT 0")
     private int numberOfFights;
     // WinsInARow
-    @Column(name = "wins_in_a_row")
+    @Column(name = "wins_in_a_row", columnDefinition = "INT DEFAULT 0")
     private int winsInARow;
 
     // *** RELATIONSHIPS ***
@@ -185,7 +190,11 @@ public class Fighter {
     // Wins
     @OneToMany(mappedBy = "winner", cascade = {CascadeType.MERGE})
     @ToString.Exclude
-    private Set<Fight> winsList = new HashSet<>();
+    private Set<Fight> winList = new HashSet<>();
+    // Losses
+    @OneToMany(mappedBy = "loser", cascade = {CascadeType.MERGE})
+    @ToString.Exclude
+    private Set<Fight> lossList = new HashSet<>();
 
     // *** CONSTRUCTORS ***
     // ********************

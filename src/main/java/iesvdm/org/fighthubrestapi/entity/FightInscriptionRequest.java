@@ -28,6 +28,7 @@ public class FightInscriptionRequest {
     private Long id;
     // Status
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('PENDING', 'ACCEPTED', 'REJECTED') DEFAULT 'PENDING'")
     private E_Status status;
     // Message
     @NotBlank(message = "The message cannot be blank")

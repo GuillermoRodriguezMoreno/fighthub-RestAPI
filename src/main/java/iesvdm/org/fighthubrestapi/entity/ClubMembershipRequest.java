@@ -32,6 +32,7 @@ public class ClubMembershipRequest {
     private long id;
     // Status
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('PENDING', 'ACCEPTED', 'REJECTED') DEFAULT 'PENDING'")
     private E_Status status;
     // RequestDate
     @NotNull(message = "The date cannot be null")

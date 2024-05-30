@@ -40,13 +40,18 @@ public class Fight {
     @Min(value = 1, message = "The fight order must be at least 1")
     private int fightOrder;
     // IsKo
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isKo;
     // Round
     private Round round;
     // Weight
     private double weight;
     // IsTittleFight
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isTitleFight;
+    // IsDraw
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean isDraw;
 
     // *** RELATIONSHIPS ***
     // *********************
@@ -74,6 +79,10 @@ public class Fight {
     @ManyToOne
     @JoinColumn(name = "winner_id")
     private Fighter winner;
+    // Loser
+    @ManyToOne
+    @JoinColumn(name = "loser_id")
+    private Fighter loser;
     // FightInscriptionRequests
     @OneToMany(mappedBy = "fight", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @ToString.Exclude

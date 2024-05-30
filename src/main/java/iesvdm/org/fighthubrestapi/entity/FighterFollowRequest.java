@@ -31,6 +31,7 @@ public class FighterFollowRequest {
         private Long id;
         // Status
         @Enumerated(EnumType.STRING)
+        @Column(columnDefinition = "ENUM('PENDING', 'ACCEPTED', 'REJECTED') DEFAULT 'PENDING'")
         private E_Status status;
         // ResponseDate
         @Column(columnDefinition = "TIMESTAMP")
