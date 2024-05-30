@@ -10,6 +10,7 @@ toDo -- Solucionar el NoEntityFoundException con clave compuesta
 toDo -- En role, al ser un enum, no puedo crear desde la api
 toDo -- MIRAR PORQUE EN CLAVE COMPUESTA NO PUEDEN HABER DOS PARES IGUALES EN DISTINTO ORDEN
 toDo -- He Añadido upload fichero pero necesito entender como funciona y testearlo
+toDo -- CI/CD con github actions o algo parecido
 ------- Con esto habria terminado las entidades :) ---------
 toDo -- Terminar Services
 toDo -- Terminar Controllers

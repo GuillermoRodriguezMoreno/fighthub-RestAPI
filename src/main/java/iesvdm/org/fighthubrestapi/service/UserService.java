@@ -32,7 +32,7 @@ public class UserService {
                         + confirmationUrl)
                 .link(confirmationUrl)
                 .name(user.getUserName())
-                .build();
+               .build();
 
         emailService.sendEmailHtml(emailRequest);
     }
